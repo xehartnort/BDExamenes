@@ -1,0 +1,36 @@
+<html>
+<!-- Sección cabecera de la página-->
+<head>
+  <!--La línea de abajo permite mostrar tildes sin problemas-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  
+  <!--Título de la página que se muestra en la pestaña del navegador-->
+  <title>Base de datos de exámenes</title>
+  
+  <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
+  <body>  
+  
+    <!-- http://www.w3schools.com/html/html_form_elements.asp -->
+    <form action="accion.php" method="post">
+      <br> Profesor: <br>
+      
+      <!-- Muestra una lista de elementos a elegir-->
+      <select name="Ojos"> <!-- name es el nombre con el que accion.php recoge la opción elegida -->
+        <option id="Opcion">Azules</option>
+        <option id="Opcion1">Negros</option>
+        <!-- se pueden añadir tantas etiquetas de opciones como se quiera -->
+      </select>
+
+      <br> Año: <br> <!-- <br> es un \n de html-->
+      <select name="Pelo">
+        <option id="Opcion">Marrón</option>
+        <option id="Opcion1">Castanio</option>
+      </select>
+      
+      <!-- Botón "Buscar", cuando se pulsa se ejecuta el script accion.php -->
+      <p><input type="submit" value="Buscar" /></p>
+    </form>
+    
+  </body>
+</head>
+</html>
