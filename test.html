@@ -10,22 +10,67 @@
   <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
   <body>  
   
+    <!-- Código Javascript-->
+    <!-- tag indica el valor en el campo id, del elemento html que se está modificando -->
+    <!-- opcion es una variable de control, con ella se elige la modificación a hacer-->
+    <!-- en resumen, lo que hace es cambiar las opciones que se muestran en los formularios de tipo <select>-->
+    <script>
+      function mod(opcion, tag) {
+        var ini, fin="</opcion>", content, str="";
+        
+        if(opcion=='infor'){
+          ini = "<option>";
+          content = ["1", "2", "3", "4"];
+          for(i=0; i<content.length; i++){
+            str+=ini+content[i]+fin;
+          }
+          document.getElementById(tag).innerHTML = str;
+        }else if(opcion=='tele'){
+          ini = "<option>";
+          content = ["1", "2", "3", "4"];
+          for(i=0; i<content.length; i++){
+            str+=ini+content[i]+fin;
+          }
+          document.getElementById(tag).innerHTML = str;
+        }else{
+          ini = "<option>";
+          content = ["1", "2", "3", "4", "5"];
+          for(i=0; i<content.length; i++){
+            str+=ini+content[i]+fin;
+          }
+          document.getElementById(tag).innerHTML = str;
+        }
+        
+      }
+    </script>
+
+  
     <!-- http://www.w3schools.com/html/html_form_elements.asp -->
     <form action="accion.php" method="post">
-      <br> Profesor: <br>
+      
+      <br> Grado: <br> <!-- <br> es un \n de html-->
       
       <!-- Muestra una lista de elementos a elegir-->
-      <select name="Ojos"> <!-- name es el nombre con el que accion.php recoge la opción elegida -->
-        <option id="Opcion">Azules</option>
-        <option id="Opcion1">Negros</option>
+      <select name="Grado" id="Grado" > <!-- name es el nombre con el que accion.php recoge la opción elegida -->
+        <!-- la opción onclick, hace se ejecute la función mod cada vez que elija una opción -->
+        <option onclick="mod('infor', 'Curso')"> Informática </option>
+        <option onclick="mod('tele', 'Curso')"> Telecomunicaciones </option>
+        <option onclick="mod('doble', 'Curso')"> Doble grado </option>
         <!-- se pueden añadir tantas etiquetas de opciones como se quiera -->
       </select>
 
-      <br> Año: <br> <!-- <br> es un \n de html-->
-      <select name="Pelo">
-        <option id="Opcion">Marrón</option>
-        <option id="Opcion1">Castanio</option>
+      <br> Curso: <br>
+      
+      <select name="Curso" id="Curso">
+        <option>Por defecto</option>
       </select>
+      
+      <br> Asignatura: <br>
+      
+      <select name="Asignatura" id="Asignatura">
+        <option>Por defecto</option>
+      </select>
+      
       
       <!-- Botón "Buscar", cuando se pulsa se ejecuta el script accion.php -->
       <p><input type="submit" value="Buscar" /></p>

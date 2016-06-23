@@ -2,7 +2,7 @@
 // http://www.w3schools.com/php/php_mysql_prepared_statements.asp
 
 // $_POST['Pelo'] nos permite recoger información del selector que se llama "Pelo" en el .html
-echo "hola"." ".$_POST['Ojos']."<br>"; // el "." es el operador de concatenación
+echo "hola"." ".$_POST['Grado']."<br>"; // el "." es el operador de concatenación
 echo $_POST['Pelo']."<br>"; // <br> es el \n de html  
 
 $servername = "localhost";
