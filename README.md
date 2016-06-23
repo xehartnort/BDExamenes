@@ -1,2 +1,3 @@
 # BDExamenes
-Aguacates
+
+El código está comentado a tope para que no sea muy difícil de entender, de todas maneras gran parte del mismo está sacado de los tutoriales [uno](http://www.w3schools.com/html/default.asp) y [dos](http://www.w3schools.com/php/default.asp). Los archivos adjuntos deben de colocarse en /var/www/html/ y es imprescindible tener un servidor apache instalado, en ejecución, y tener php5 instalado (LAMP). Además presuponen que se tiene instalado mysql-server, con usuario y constraseña "root", una base de datos que se llama "pruebas" que contiene una tabla llamada "prueba1" creada con la siguiente sentencia: " create table prueba1 (cad char(3), n int, x float); ", si la sentencia os da problemas (algo de no database selected) [aquí](http://stackoverflow.com/questions/4005409/error-1046-no-database-selected-how-to-resolve) está la solución.
