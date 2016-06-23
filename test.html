@@ -16,31 +16,79 @@
     <!-- en resumen, lo que hace es cambiar las opciones que se muestran en los formularios de tipo <select>-->
     <script>
       function mod(opcion, tag) {
-        var ini, fin="</opcion>", content, str="";
-        
-        if(opcion=='infor'){
-          ini = "<option>";
-          content = ["1", "2", "3", "4"];
-          for(i=0; i<content.length; i++){
-            str+=ini+content[i]+fin;
+        var content;
+        var str = "<option>Por defecto</option>";       
+        if(tag=="Curso"){
+          if(opcion=='infor' || opcion=='tele'){
+            content = ["1", "2", "3", "4"];
+          }else if(opcion=='doble'){
+            content = ["1", "2", "3", "4", "5"];
           }
-          document.getElementById(tag).innerHTML = str;
-        }else if(opcion=='tele'){
-          ini = "<option>";
-          content = ["1", "2", "3", "4"];
           for(i=0; i<content.length; i++){
-            str+=ini+content[i]+fin;
+              str += "<option onclick=\"mod(\'"+content[i]+"\', \'Asignatura\')\">"+
+                content[i]+"</option>";
           }
-          document.getElementById(tag).innerHTML = str;
-        }else{
-          ini = "<option>";
-          content = ["1", "2", "3", "4", "5"];
+        }else if(tag=='Asignatura'){
+          // http://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript
+          var e=document.getElementById("Grado");
+          var text=e.options[e.selectedIndex].text;
+          if(text=="Informática"){ 
+            switch(opcion){ // Para cada curso de informática, especificar las asignaturas
+              case '1':
+                content=[];
+                break;
+              case '2':
+                content=[];
+                break;
+              case '3':
+                content=[];
+                break;
+              case '4':
+                content=[];
+                break;
+            }
+          }else if(text=="Telecomunicaciones"){
+            switch(opcion){ // Para cada curso de teleco, especificar las asignaturas
+              case '1':
+                content=[];
+                break;
+              case '2':
+                content=[];
+                break;
+              case '3':
+                content=[];
+                break;
+              case '4':
+                content=[];
+                break;
+            }
+          }else if(text=="Doble grado"){
+            switch(opcion){ // Para cada curso del doble, especificar las asignaturas
+              case '1':
+                content=["Fundamentos del sofware"];
+                break;
+              case '2':
+                content=[];
+                break;
+              case '3':
+                content=[];
+                break;
+              case '4':
+                content=[];
+                break;
+              case '5':
+                content=[];
+                break;
+            }
+          }
+          // en principio si este es el último valor a seleccionar no hace falta
+          // que contenga la opción onclick, aunque se ha dejado por pereza
           for(i=0; i<content.length; i++){
-            str+=ini+content[i]+fin;
+              str += "<option onclick=\"mod(\'"+content[i]+"\', \'\')\">"+
+                content[i]+"</option>";
           }
-          document.getElementById(tag).innerHTML = str;
         }
-        
+        document.getElementById(tag).innerHTML = str;
       }
     </script>
 
@@ -53,9 +101,9 @@
       <!-- Muestra una lista de elementos a elegir-->
       <select name="Grado" id="Grado" > <!-- name es el nombre con el que accion.php recoge la opción elegida -->
         <!-- la opción onclick, hace se ejecute la función mod cada vez que elija una opción -->
-        <option onclick="mod('infor', 'Curso')"> Informática </option>
-        <option onclick="mod('tele', 'Curso')"> Telecomunicaciones </option>
-        <option onclick="mod('doble', 'Curso')"> Doble grado </option>
+        <option onclick="mod('infor', 'Curso')">Informática</option>
+        <option onclick="mod('tele', 'Curso')">Telecomunicaciones</option>
+        <option onclick="mod('doble', 'Curso')">Doble grado</option>
         <!-- se pueden añadir tantas etiquetas de opciones como se quiera -->
       </select>
 
