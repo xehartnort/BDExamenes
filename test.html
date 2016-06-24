@@ -4,95 +4,47 @@
   <!--La línea de abajo permite mostrar tildes sin problemas-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   
+  <!-- jQuery from google -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <!-- Código Javascript-jQuery -->
+    <script>
+      $(document).ready(function(){
+        // selección de grado, ajusta los cursos
+        $("#Grado").change(function() {
+          $("#Curso").load("getter.php?caller=curso" + "&" +
+                            "grado=" + $("#Grado").val() + "&" +
+                            "curso=" + $("#Curso").val() + "&" +
+                            "asignatura=" + $("#Asignatura").val() + "&" +
+                            "profesor=" + $("#Profesor").val()
+                          );
+        });
+        // selección de curso, ajusta las asignaturas
+        $("#Curso").change(function() {
+          $("#Asignatura").load("getter.php?caller=asignatura" + "&" +
+                            "grado=" + $("#Grado").val() + "&" +
+                            "curso=" + $("#Curso").val() + "&" +
+                            "asignatura=" + $("#Asignatura").val() + "&" +
+                            "profesor=" + $("#Profesor").val()
+                          );
+        });
+        // selección de asignatura, ajusta los profesores
+        $("#Asignatura").change(function() {
+          $("#Profesor").load("getter.php?caller=profesor" + "&" +
+                            "grado=" + $("#Grado").val() + "&" +
+                            "curso=" + $("#Curso").val() + "&" +
+                            "asignatura=" + $("#Asignatura").val() + "&" +
+                            "profesor=" + $("#Profesor").val()
+                          );
+        });
+      });
+    </script>
+  
   <!--Título de la página que se muestra en la pestaña del navegador-->
   <title>Base de datos de exámenes</title>
   
   <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
   <body>  
-  
-    <!-- Código Javascript-->
-    <!-- tag indica el valor en el campo id, del elemento html que se está modificando -->
-    <!-- opcion es una variable de control, con ella se elige la modificación a hacer-->
-    <!-- en resumen, lo que hace es cambiar las opciones que se muestran en los formularios de tipo <select>-->
-    <script>
-      function mod(opcion, tag) {
-        var content;
-        var str = "<option>Por defecto</option>";       
-        if(tag=="Curso"){
-          if(opcion=='infor' || opcion=='tele'){
-            content = ["1", "2", "3", "4"];
-          }else if(opcion=='doble'){
-            content = ["1", "2", "3", "4", "5"];
-          }
-          for(i=0; i<content.length; i++){
-              str += "<option onclick=\"mod(\'"+content[i]+"\', \'Asignatura\')\">"+
-                content[i]+"</option>";
-          }
-        }else if(tag=='Asignatura'){
-          // http://stackoverflow.com/questions/1085801/get-selected-value-in-dropdown-list-using-javascript
-          var e=document.getElementById("Grado");
-          var text=e.options[e.selectedIndex].text;
-          if(text=="Informática"){ 
-            switch(opcion){ // Para cada curso de informática, especificar las asignaturas
-              case '1':
-                content=[];
-                break;
-              case '2':
-                content=[];
-                break;
-              case '3':
-                content=[];
-                break;
-              case '4':
-                content=[];
-                break;
-            }
-          }else if(text=="Telecomunicaciones"){
-            switch(opcion){ // Para cada curso de teleco, especificar las asignaturas
-              case '1':
-                content=[];
-                break;
-              case '2':
-                content=[];
-                break;
-              case '3':
-                content=[];
-                break;
-              case '4':
-                content=[];
-                break;
-            }
-          }else if(text=="Doble grado"){
-            switch(opcion){ // Para cada curso del doble, especificar las asignaturas
-              case '1':
-                content=["Fundamentos del sofware"];
-                break;
-              case '2':
-                content=[];
-                break;
-              case '3':
-                content=[];
-                break;
-              case '4':
-                content=[];
-                break;
-              case '5':
-                content=[];
-                break;
-            }
-          }
-          // en principio si este es el último valor a seleccionar no hace falta
-          // que contenga la opción onclick, aunque se ha dejado por pereza
-          for(i=0; i<content.length; i++){
-              str += "<option onclick=\"mod(\'"+content[i]+"\', \'\')\">"+
-                content[i]+"</option>";
-          }
-        }
-        document.getElementById(tag).innerHTML = str;
-      }
-    </script>
-
-  
+    
     <!-- http://www.w3schools.com/html/html_form_elements.asp -->
     <form action="accion.php" method="post">
       
@@ -101,24 +53,30 @@
       <!-- Muestra una lista de elementos a elegir-->
       <select name="Grado" id="Grado" > <!-- name es el nombre con el que accion.php recoge la opción elegida -->
         <!-- la opción onclick, hace se ejecute la función mod cada vez que elija una opción -->
-        <option onclick="mod('infor', 'Curso')">Informática</option>
-        <option onclick="mod('tele', 'Curso')">Telecomunicaciones</option>
-        <option onclick="mod('doble', 'Curso')">Doble grado</option>
+        <option>Pordefecto</option>
+        <option>Informatica</option>
+        <option>Telecomunicaciones</option>
+        <option>Doblegrado</option>
         <!-- se pueden añadir tantas etiquetas de opciones como se quiera -->
       </select>
 
       <br> Curso: <br>
       
       <select name="Curso" id="Curso">
-        <option>Por defecto</option>
+        <option>Pordefecto</option>
       </select>
       
       <br> Asignatura: <br>
       
       <select name="Asignatura" id="Asignatura">
-        <option>Por defecto</option>
+        <option>Pordefecto</option>
       </select>
       
+      <br> Profesor: <br>
+      
+      <select name="Profesor" id="Profesor">
+        <option>Pordefecto</option>
+      </select>
       
       <!-- Botón "Buscar", cuando se pulsa se ejecuta el script accion.php -->
       <p><input type="submit" value="Buscar" /></p>

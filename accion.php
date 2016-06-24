@@ -26,6 +26,7 @@ if (mysqli_connect_error()) {
 
 // Intentamos una consulta chorra
 $sql = "select * from prueba1";
+
 if ($conn->query($sql) === FALSE) {
     echo "Failed query" . $conn->error;
 }
