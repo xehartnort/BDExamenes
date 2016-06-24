@@ -10,7 +10,7 @@
     <script>
       $(document).ready(function(){
         // selección de grado, ajusta los cursos
-        $("#Grado").change(function() {
+        $("#Grado").click(function() {
           $("#Curso").load("getter.php?caller=curso" + "&" +
                             "grado=" + $("#Grado").val() + "&" +
                             "curso=" + $("#Curso").val() + "&" +
@@ -19,7 +19,7 @@
                           );
         });
         // selección de curso, ajusta las asignaturas
-        $("#Curso").change(function() {
+        $("#Curso").click(function() {
           $("#Asignatura").load("getter.php?caller=asignatura" + "&" +
                             "grado=" + $("#Grado").val() + "&" +
                             "curso=" + $("#Curso").val() + "&" +
@@ -28,7 +28,7 @@
                           );
         });
         // selección de asignatura, ajusta los profesores
-        $("#Asignatura").change(function() {
+        $("#Asignatura").click(function() {
           $("#Profesor").load("getter.php?caller=profesor" + "&" +
                             "grado=" + $("#Grado").val() + "&" +
                             "curso=" + $("#Curso").val() + "&" +
