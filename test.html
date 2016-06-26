@@ -14,8 +14,8 @@
           $("#Curso").load("getter.php?caller=curso" + "&" +
                             "grado=" + $("#Grado").val() + "&" +
                             "curso=" + $("#Curso").val() + "&" +
-                            "asignatura=" + $("#Asignatura").val() + "&" +
-                            "profesor=" + $("#Profesor").val()
+                            "asig=" + $("#Asignatura").val() + "&" +
+                            "prof=" + $("#Profesor").val()
                           );
         });
         // selección de curso, ajusta las asignaturas
@@ -23,8 +23,8 @@
           $("#Asignatura").load("getter.php?caller=asignatura" + "&" +
                             "grado=" + $("#Grado").val() + "&" +
                             "curso=" + $("#Curso").val() + "&" +
-                            "asignatura=" + $("#Asignatura").val() + "&" +
-                            "profesor=" + $("#Profesor").val()
+                            "asig=" + $("#Asignatura").val() + "&" +
+                            "prof=" + $("#Profesor").val()
                           );
         });
         // selección de asignatura, ajusta los profesores
@@ -32,8 +32,8 @@
           $("#Profesor").load("getter.php?caller=profesor" + "&" +
                             "grado=" + $("#Grado").val() + "&" +
                             "curso=" + $("#Curso").val() + "&" +
-                            "asignatura=" + $("#Asignatura").val() + "&" +
-                            "profesor=" + $("#Profesor").val()
+                            "asig=" + $("#Asignatura").val() + "&" +
+                            "prof=" + $("#Profesor").val()
                           );
         });
       });
@@ -53,7 +53,6 @@
       <!-- Muestra una lista de elementos a elegir-->
       <select name="Grado" id="Grado" > <!-- name es el nombre con el que accion.php recoge la opción elegida -->
         <!-- la opción onclick, hace se ejecute la función mod cada vez que elija una opción -->
-        <option>Pordefecto</option>
         <option>Informatica</option>
         <option>Telecomunicaciones</option>
         <option>Doblegrado</option>
@@ -63,19 +62,16 @@
       <br> Curso: <br>
       
       <select name="Curso" id="Curso">
-        <option>Pordefecto</option>
       </select>
       
       <br> Asignatura: <br>
       
       <select name="Asignatura" id="Asignatura">
-        <option>Pordefecto</option>
       </select>
       
       <br> Profesor: <br>
       
       <select name="Profesor" id="Profesor">
-        <option>Pordefecto</option>
       </select>
       
       <!-- Botón "Buscar", cuando se pulsa se ejecuta el script accion.php -->
