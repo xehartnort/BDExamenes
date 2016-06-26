@@ -2,9 +2,13 @@
 
 
 // IDEA: para evitar las inyecciones de código sql, utilizar un usuario cuyos privilegios estén restringidos a lectura de la tabla exámenes
+
+// | GRANT USAGE ON *.* TO 'bot'@'localhost' IDENTIFIED BY PASSWORD <secret> |
+// | GRANT SELECT ON `pruebas`.`examenes` TO 'bot'@'localhost'|
+
 $servername = "localhost";
-$username = "root";
-$password = "root";
+$username = "bot";
+$password = "H4cK3R";
 $database = "pruebas";
 
 // Conexión a la base de datos
