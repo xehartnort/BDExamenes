@@ -11,6 +11,10 @@ $username = "bot";
 $password = "H4cK3R";
 $database = "pruebas";
 
+//echo '<pre>';
+//print_r($_GET); //var_dump();
+//echo '</pre>';
+
 // Conexión a la base de datos
 $conn = new mysqli($servername, $username, $password, $database);
 

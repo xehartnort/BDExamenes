@@ -1,3 +1,7 @@
+<?php
+// Start the session
+session_start();
+?>
 <html>
 <!-- Sección cabecera de la página-->
 <head>
@@ -8,60 +12,36 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <!-- Código Javascript-jQuery -->
     <script>
-      function gradoUpdater(){
-        $("#Curso").load("getter.php?caller=curso" + "&" +
-                          "grado=" + $("#Grado").val() + "&" +
-                          "curso=" + $("#Curso").val() + "&" +
-                          "asig=" + $("#Asignatura").val() + "&" +
-                          "prof=" + $("#Profesor").val()
-                        );
-        $("#Asignatura").load("getter.php?caller=asignatura" + "&" +
-                          "grado=" + $("#Grado").val() + "&" +
-                          "curso=" + $("#Curso").val() + "&" +
-                          "asig=" + $("#Asignatura").val() + "&" +
-                          "prof=" + $("#Profesor").val()
-                        );
-        $("#Profesor").load("getter.php?caller=profesor" + "&" +
-                          "grado=" + $("#Grado").val() + "&" +
-                          "curso=" + $("#Curso").val() + "&" +
-                          "asig=" + $("#Asignatura").val() + "&" +
-                          "prof=" + $("#Profesor").val()
-                        );
-      }
-      function cursoUpdater(){
-        $("#Asignatura").load("getter.php?caller=asignatura" + "&" +
-                          "grado=" + $("#Grado").val() + "&" +
-                          "curso=" + $("#Curso").val() + "&" +
-                          "asig=" + $("#Asignatura").val() + "&" +
-                          "prof=" + $("#Profesor").val()
-                        );
-        $("#Profesor").load("getter.php?caller=profesor" + "&" +
-                          "grado=" + $("#Grado").val() + "&" +
-                          "curso=" + $("#Curso").val() + "&" +
-                          "asig=" + $("#Asignatura").val() + "&" +
-                          "prof=" + $("#Profesor").val()
-                        );
-      }
-      function asigUpdater(){
-        $("#Profesor").load("getter.php?caller=profesor" + "&" +
-                          "grado=" + $("#Grado").val() + "&" +
-                          "curso=" + $("#Curso").val() + "&" +
-                          "asig=" + $("#Asignatura").val() + "&" +
-                          "prof=" + $("#Profesor").val()
-                        );
-      }
+        function gradoUpdater(){          
+          var args = "grado=" + $("#Grado").val() + "&" +
+                    "curso=" + $("#Curso").val() + "&" +
+                    "asig=" + $("#Asignatura").val() + "&" +
+                    "prof=" + $("#Profesor").val();
+          $("#Curso").load("getter.php?caller=curso&"+args);
+          $("#Asignatura").load("getter.php?caller=asignatura&"+args);
+          $("#Profesor").load("getter.php?caller=profesor&"+args);
+        }
       $(document).ready(function(){
 // selección de grado, ajusta los cursos, las asignaturas y los profesores
-        $("#Grado").click(function() {
+        $("#Grado").change(function() {
           gradoUpdater();
         });
 // selección de curso, ajusta las asignaturas y los profesores
-        $("#Curso").click(function() {
-          cursoUpdater();
+        $("#Curso").change(function() {
+          var args = "grado=" + $("#Grado").val() + "&" +
+                    "curso=" + $("#Curso").val() + "&" +
+                    "asig=" + $("#Asignatura").val() + "&" +
+                    "prof=" + $("#Profesor").val();
+          $("#Asignatura").load("getter.php?caller=asignatura&"+args);
+          $("#Profesor").load("getter.php?caller=profesor&"+args);
         });
 // selección de asignatura, ajusta los profesores
-        $("#Asignatura").click(function() {
-          asigUpdater();
+        $("#Asignatura").change(function() {
+          var args = "grado=" + $("#Grado").val() + "&" +
+                    "curso=" + $("#Curso").val() + "&" +
+                    "asig=" + $("#Asignatura").val() + "&" +
+                    "prof=" + $("#Profesor").val();
+          $("#Profesor").load("getter.php?caller=profesor&"+args);
         });
       });
     </script>
@@ -75,8 +55,6 @@
     <!-- http://www.w3schools.com/html/html_form_elements.asp -->
     <form action="accion.php" method="post">
       
-      <!-- <br> es un \n de html-->
-      
       <!-- Muestra una lista de elementos a elegir-->
       <br> Grado: 
        <!-- name es el nombre con el que accion.php recoge la opción elegida -->
@@ -87,7 +65,7 @@
         <!-- se pueden añadir tantas etiquetas de opciones como se quiera -->
       </select>
 
-      <br> Curso: 
+      <br> Curso:        <!-- <br> es un \n de html-->
       <select name="Curso" id="Curso"></select>
       
       <br> Asignatura: 
