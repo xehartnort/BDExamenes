@@ -1,0 +1,105 @@
+<html>
+<!-- Sección cabecera de la página-->
+<head>
+  <!--La línea de abajo permite mostrar tildes sin problemas-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  
+  <!-- jQuery from google -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- Código Javascript-jQuery -->
+    <script>
+      function gradoUpdater(){
+        $("#Curso").load("getter.php?caller=curso" + "&" +
+                          "grado=" + $("#Grado").val() + "&" +
+                          "curso=" + $("#Curso").val() + "&" +
+                          "asig=" + $("#Asignatura").val() + "&" +
+                          "prof=" + $("#Profesor").val()
+                        );
+        $("#Asignatura").load("getter.php?caller=asignatura" + "&" +
+                          "grado=" + $("#Grado").val() + "&" +
+                          "curso=" + $("#Curso").val() + "&" +
+                          "asig=" + $("#Asignatura").val() + "&" +
+                          "prof=" + $("#Profesor").val()
+                        );
+        $("#Profesor").load("getter.php?caller=profesor" + "&" +
+                          "grado=" + $("#Grado").val() + "&" +
+                          "curso=" + $("#Curso").val() + "&" +
+                          "asig=" + $("#Asignatura").val() + "&" +
+                          "prof=" + $("#Profesor").val()
+                        );
+      }
+      function cursoUpdater(){
+        $("#Asignatura").load("getter.php?caller=asignatura" + "&" +
+                          "grado=" + $("#Grado").val() + "&" +
+                          "curso=" + $("#Curso").val() + "&" +
+                          "asig=" + $("#Asignatura").val() + "&" +
+                          "prof=" + $("#Profesor").val()
+                        );
+        $("#Profesor").load("getter.php?caller=profesor" + "&" +
+                          "grado=" + $("#Grado").val() + "&" +
+                          "curso=" + $("#Curso").val() + "&" +
+                          "asig=" + $("#Asignatura").val() + "&" +
+                          "prof=" + $("#Profesor").val()
+                        );
+      }
+      function asigUpdater(){
+        $("#Profesor").load("getter.php?caller=profesor" + "&" +
+                          "grado=" + $("#Grado").val() + "&" +
+                          "curso=" + $("#Curso").val() + "&" +
+                          "asig=" + $("#Asignatura").val() + "&" +
+                          "prof=" + $("#Profesor").val()
+                        );
+      }
+      $(document).ready(function(){
+// selección de grado, ajusta los cursos, las asignaturas y los profesores
+        $("#Grado").click(function() {
+          gradoUpdater();
+        });
+// selección de curso, ajusta las asignaturas y los profesores
+        $("#Curso").click(function() {
+          cursoUpdater();
+        });
+// selección de asignatura, ajusta los profesores
+        $("#Asignatura").click(function() {
+          asigUpdater();
+        });
+      });
+    </script>
+  
+  <!--Título de la página que se muestra en la pestaña del navegador-->
+  <title>Base de datos de exámenes</title>
+  
+  <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
+  <body onload="gradoUpdater()">  
+    
+    <!-- http://www.w3schools.com/html/html_form_elements.asp -->
+    <form action="accion.php" method="post">
+      
+      <!-- <br> es un \n de html-->
+      
+      <!-- Muestra una lista de elementos a elegir-->
+      <br> Grado: 
+       <!-- name es el nombre con el que accion.php recoge la opción elegida -->
+      <select name="Grado" id="Grado" >
+        <option>Informatica</option>
+        <option>Telecomunicaciones</option>
+        <option>Doblegrado</option>
+        <!-- se pueden añadir tantas etiquetas de opciones como se quiera -->
+      </select>
+
+      <br> Curso: 
+      <select name="Curso" id="Curso"></select>
+      
+      <br> Asignatura: 
+      <select name="Asignatura" id="Asignatura"></select>
+
+      <br> Profesor: 
+      <select name="Profesor" id="Profesor"></select>
+      
+      <!-- Botón "Buscar", cuando se pulsa se ejecuta el script accion.php -->
+      <p><input type="submit" value="Buscar" /></p>
+    </form>
+    
+  </body>
+</head>
+</html>
