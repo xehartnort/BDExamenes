@@ -8,7 +8,7 @@
 
 $servername = "localhost";
 $username = "bot";
-$password = "H4cK3R";
+$password = "H4cK3R"; // usar mysql hash de buena manera
 $database = "pruebas";
 
 //echo '<pre>';
@@ -44,7 +44,12 @@ if( substr($sql, -3) == "and" )
 $result = $conn->query($sql);
 
 while($row = $result->fetch_assoc()) {
-  echo "<option>".$row[$_GET['caller']]."</option>";
+  $option=$row[$_GET['caller']];
+  $value=str_replace(' ', '', $option);//PROBLEMA:
+                                       //tanto los nombres de los profesores 
+                                       //como los de las asignaturas no están
+                                       //separados por espacios en la BD
+  echo "<option value=".$value.">".$option."</option>";
 }
 
 // cerramos la conexión
