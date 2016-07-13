@@ -22,7 +22,12 @@ $conn = new mysqli($servername, $username, $password, $database);
 if (mysqli_connect_error()) {
     die("Database connection failed: " . mysqli_connect_error());
 }
-                          
+
+// necesario para consultas con tildes 
+// http://stackoverflow.com/questions/7073401/problem-with-php-and-mysql-utf-8-special-character 
+$conn->query("SET NAMES utf8");
+//mysqli_set_charset('utf8');                      
+
 $sql = "select * from examenes where";
 
 if($_GET['grado']!="null")
@@ -44,12 +49,7 @@ if( substr($sql, -3) == "and" )
 $result = $conn->query($sql);
 
 while($row = $result->fetch_assoc()) {
-  $option=$row[$_GET['caller']];
-  $value=str_replace(' ', '', $option);//PROBLEMA:
-                                       //tanto los nombres de los profesores 
-                                       //como los de las asignaturas no están
-                                       //separados por espacios en la BD
-  echo "<option value=".$value.">".$option."</option>";
+  echo "<option>".$row[$_GET['caller']]."</option>";
 }
 
 // cerramos la conexión
