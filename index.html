@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php
+// Start the session
+session_start();
+?>
 <html>
 <!-- Sección cabecera de la página-->
 <head>
@@ -7,8 +10,41 @@
   
   <!-- jQuery from google -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <!-- Código Javascript-jQuery -->
-  <script type="text/javascript" src="selectUpdater.js"></script>
+    <!-- Código Javascript-jQuery -->
+    <script>
+        function gradoUpdater(){          
+          var args = "grado=" + $("#Grado").val() + "&" +
+                    "curso=" + $("#Curso").val() + "&" +
+                    "asig=" + $("#Asignatura").val() + "&" +
+                    "prof=" + $("#Profesor").val();
+          $("#Curso").load("getter.php?caller=curso&"+args);
+          $("#Asignatura").load("getter.php?caller=asignatura&"+args);
+          $("#Profesor").load("getter.php?caller=profesor&"+args);
+        }
+      $(document).ready(function(){
+// selección de grado, ajusta los cursos, las asignaturas y los profesores
+        $("#Grado").change(function() {
+          gradoUpdater();
+        });
+// selección de curso, ajusta las asignaturas y los profesores
+        $("#Curso").change(function() {
+          var args = "grado=" + $("#Grado").val() + "&" +
+                    "curso=" + $("#Curso").val() + "&" +
+                    "asig=" + $("#Asignatura").val() + "&" +
+                    "prof=" + $("#Profesor").val();
+          $("#Asignatura").load("getter.php?caller=asignatura&"+args);
+          $("#Profesor").load("getter.php?caller=profesor&"+args);
+        });
+// selección de asignatura, ajusta los profesores
+        $("#Asignatura").change(function() {
+          var args = "grado=" + $("#Grado").val() + "&" +
+                    "curso=" + $("#Curso").val() + "&" +
+                    "asig=" + $("#Asignatura").val() + "&" +
+                    "prof=" + $("#Profesor").val();
+          $("#Profesor").load("getter.php?caller=profesor&"+args);
+        });
+      });
+    </script>
   
   <!--Título de la página que se muestra en la pestaña del navegador-->
   <title>Base de datos de exámenes</title>
@@ -23,9 +59,9 @@
       <br> Grado: 
        <!-- name es el nombre con el que accion.php recoge la opción elegida -->
       <select name="Grado" id="Grado" >
-        <option value="Informatica">Informática</option>
-        <option value="teleco">Telecomunicaciones</option>
-        <option value="doble">Doble grado matemáticas e informática</option>
+        <option>Informatica</option>
+        <option>Telecomunicaciones</option>
+        <option>Doblegrado</option>
         <!-- se pueden añadir tantas etiquetas de opciones como se quiera -->
       </select>
 
