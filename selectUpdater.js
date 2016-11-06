@@ -41,7 +41,8 @@ $(document).ready(function(){
            $('#lista').append('<li>'+'No se encontraron resultados'+'</li>');
          }else{
            $.each(data, function(key, value) {
-             $('#lista').append('<li><a href='+value+"/"+key+'>'+key+'</a></li>');
+             var path2file = encodeURI(value+"/"+key);
+             $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
            });
          }
        }

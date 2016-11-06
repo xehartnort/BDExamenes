@@ -1,0 +1,43 @@
+______________EXAMEN HARDWARE___________
+
+2: Señal de temporización. No todas las líneas tardan lo mismo en el recorrido, una puede llegar antes que otra y tendría que esperar, por lo que ralentiza la placa base, ese efecto también se conoce por "time skew".
+
+3: Serial Attached Scsi (SAS): Se usa para unidades de almacenamiento, como disco duro, unidades SSD.
+
+4: Menor consumo de potencia: SSD (porque los HDD requieren movimiento mecánico)
+	Menor tiempo de respuesta: SSD (debido a la tecnología FLASH de almacenamiento (como los usb's), nada de rollos mecánicos)
+
+5: Disipa el calor que genera la CPU
+
+6: LR-DIMM: Load Reduced 
+   U-DIMM: Unbuffered (no tiene buffer, ni UN REGISTRO, NO TIENE NADA, de hecho la U se añade para distinguirlas de los otros modelos)
+  
+7: Barrera térmica. Se consume demasiada energía
+
+8: Permite distribuir los accesos al disco duro.
+	La unidad de almacenamiento que tenga el cabezal, como los discos duros. (En las unidades SSD NO TIENE SENTIDO QUE EXISTA)
+
+9: los cables ópticos
+
+10: Por cada 10 bits que se transmiten 8 son de datos y 2 de redundancia
+
+11: Falso, las pistas están hechas de cobre
+
+12: Falso, todo lo contrario
+
+13: V, vimos un ejemplo: servidor de torre de IBM
+
+14: V (nivel L2 datos más instrucciones)
+
+15: V. La frecuencia de reloj aumenta y el número de bytes por segundo aumenta
+
+16: Falso, Full-duplex: que puedo enviar y transmitir datos simultáneamente
+
+17: Falso. El administrador no está ahí para poder ver películas en HD xD
+
+18: V
+
+19: F, se encargaría de los pequeños
+
+20: F, son las ROM
+
