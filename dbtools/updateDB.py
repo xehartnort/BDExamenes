@@ -66,8 +66,11 @@ tercero_dgiim = ["Sistemas Concurrentes y Distribuidos",
     "Fundamentos de Ingeniería del Software","Fundamentos de Redes",
     "Modelos de Computación", "Ingeniería de Servidores"]
 cuarto_dgiim = ["Informática Gráfica","Diseño y Desarrollo de Sistemas de Información"]
+quinto_dgiim = []
 
-for (dirpath, dirnames, files) in os.walk("."):
+num2word=["","primero", "segundo", "tercero", "cuarto", "quinto"]
+
+for (dirpath, dirnames, files) in os.walk(".."):
     if dirpath[-4:] in ["1112","1213","1314","1415","1516","ANTE","UNKN"]:
         with MySQLitedb.atomic():
             anio = dirpath[-4:]
@@ -86,7 +89,7 @@ for (dirpath, dirnames, files) in os.walk("."):
             curso = cdirpath[-2]
             if curso not in cursos:
                 cursos.append(curso)
-                Tag.insert(nom_tag=curso, tipo_tag="curso").execute()
+                Tag.insert(nom_tag=num2word[int(curso)], tipo_tag="curso").execute()
             cdirpath = cdirpath[:-3]
             grado = ""
             while cdirpath[-1] != "/":
@@ -96,35 +99,38 @@ for (dirpath, dirnames, files) in os.walk("."):
             if grado not in grados:
                 grados.append(grado)
                 Tag.insert(nom_tag=grado, tipo_tag="grado").execute()
-        for filename in files:
-            sha1 = sha1_file(dirpath+"/"+filename)
-            try:
-                Documento.insert(id_doc=sha1, nom_doc=filename,
-                                ruta_doc=dirpath[2:]).execute()
-                doc_tags = [{'id_doc':sha1, 'nom_tag':anio},
-                        {'id_doc':sha1, 'nom_tag':asig},
-                        {'id_doc':sha1, 'nom_tag':curso},
-                        {'id_doc':sha1, 'nom_tag':grado}]
-                if asig in primero_dgiim:
-                    doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
-                    if curso != '1':
-                        doc_tags.append({'id_doc':sha1, 'nom_tag':'1'})
-                if asig in segundo_dgiim:
-                    doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
-                    if curso != '2':
-                        doc_tags.append({'id_doc':sha1, 'nom_tag':'2'})
-                if asig in tercero_dgiim:
-                    doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
-                    if curso != '3':
-                        doc_tags.append({'id_doc':sha1, 'nom_tag':'3'})
-                if asig in cuarto_dgiim:
-                    doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
-                    if curso != '4':
-                        doc_tags.append({'id_doc':sha1, 'nom_tag':'4'})
-                with MySQLitedb.atomic():
+            for filename in files:
+                sha1 = sha1_file(dirpath+"/"+filename)
+                try:
+                    Documento.insert(id_doc=sha1, nom_doc=filename,
+                                    ruta_doc=dirpath[3:]).execute()
+                    doc_tags = [{'id_doc':sha1, 'nom_tag':anio},
+                            {'id_doc':sha1, 'nom_tag':asig},
+                            {'id_doc':sha1, 'nom_tag':num2word[int(curso)]},
+                            {'id_doc':sha1, 'nom_tag':grado}]
+                    if asig in primero_dgiim:
+                        doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
+                        if curso != '1':
+                            doc_tags.append({'id_doc':sha1, 'nom_tag':'primero'})
+                    if asig in segundo_dgiim:
+                        doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
+                        if curso != '2':
+                            doc_tags.append({'id_doc':sha1, 'nom_tag':'segundo'})
+                    if asig in tercero_dgiim:
+                        doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
+                        if curso != '3':
+                            doc_tags.append({'id_doc':sha1, 'nom_tag':'tercero'})
+                    if asig in cuarto_dgiim:
+                        doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
+                        if curso != '4':
+                            doc_tags.append({'id_doc':sha1, 'nom_tag':'cuarto'})
+                    if asig in quinto_dgiim:
+                        doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
+                        if curso != '5':
+                            doc_tags.append({'id_doc':sha1, 'nom_tag':'quinto'})
                     DocTag.insert_many(doc_tags).execute()
-            except peewee.IntegrityError as e:
-                print(e)
+                except peewee.IntegrityError as e:
+                    print(e)
                 #print("The attempted value is: "+sha1+" "+dirpath[2:]+"/"+filename)
                 #for i in Documento.select().where(Documento.id_doc==sha1):
                 #    print("The existing value is: "+i.ruta_doc+"/"+i.nom_doc)

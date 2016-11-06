@@ -6,25 +6,21 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <!-- jQuery from google -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <!-- jQuery-ui from google -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <!-- Código Javascript-jQuery -->
-  <script type="text/javascript" src="selectUpdater.js"></script>
+  <script type="text/javascript" src="autocomplete.js"></script>
   <!--Título de la página que se muestra en la pestaña del navegador-->
   <title>Base de datos de exámenes</title>
   <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
   <body>
-    <div id="selects">
-      <!-- Muestra una lista de elementos a elegir-->
-      <br> Grado:<!-- <br> es un \n de html-->
-      <select id="grado" ></select>
-      <br> Curso:
-      <select id="curso"></select>
-      <br> Asignatura:
-      <select id="asig"></select>
-      <br> Año:
-      <select id="anio"></select>
+    <div class="ui-widget">
+      <label>Búsqueda: </label>
+      <input id="query" size="50">
     </div>
     <div id="results">
-      <br> Resultados:
+      <br><label>Resultados: </label>
       <ul id="lista"></ul>
     </div>
   </body>
