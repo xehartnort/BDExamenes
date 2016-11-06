@@ -1,33 +1,50 @@
-function gradoUpdater(){    
-  var args = encodeURI("grado=" + $("#Grado").val() + "&" +
-            "curso=" + $("#Curso").val() + "&" +
-            "asig=" + $("#Asignatura").val() + "&" +
-            "prof=" + $("#Profesor").val());
-  $("#Curso").load("getter.php?caller=curso&"+args);
-  $("#Asignatura").load("getter.php?caller=asignatura&"+args);
-  $("#Profesor").load("getter.php?caller=profesor&"+args);
-}
-
+// ajax version
 $(document).ready(function(){
-//selección de grado, ajusta los cursos, las asignaturas y los profesores
-  $("#Grado").change(function() {
-    gradoUpdater();
+  $.ajax({
+    type: 'GET',
+    url: 'tagger.php',
+    data: '',
+    dataType: 'json',
+    success: function (data) {
+      $.each(data, function(index, element) {
+        switch (element) {
+          case 'grado':
+            $('#grado').append(new Option(index, index));
+            break;
+          case 'curso':
+            $('#curso').append(new Option(index, index));
+            break;
+          case 'asig':
+            $('#asig').append(new Option(index, index));
+            break;
+          case 'anio':
+            $('#anio').append(new Option(index, index));
+            break;
+        }
+      });
+    }
   });
-//selección de curso, ajusta las asignaturas y los profesores
-  $("#Curso").change(function() {
-    var args = encodeURI("grado=" + $("#Grado").val() + "&" +
-              "curso=" + $("#Curso").val() + "&" +
-              "asig=" + $("#Asignatura").val() + "&" +
-              "prof=" + $("#Profesor").val());
-    $("#Asignatura").load("getter.php?caller=asignatura&"+args);
-    $("#Profesor").load("getter.php?caller=profesor&"+args);
-  });
-//selección de asignatura, ajusta los profesores
-  $("#Asignatura").change(function() {
-    var args = encodeURI("grado=" + $("#Grado").val() + "&" +
-              "curso=" + $("#Curso").val() + "&" +
-              "asig=" + $("#Asignatura").val() + "&" +
-              "prof=" + $("#Profesor").val());
-    $("#Profesor").load("getter.php?caller=profesor&"+args);
+  $('#selects').change(function(){
+    var args = encodeURI("tag1="+$("#grado").val()+"&"+
+            "tag2="+$("#curso").val()+"&"+
+            "tag3="+$("#asig").val()+"&"+
+            "tag4="+$("#anio").val());
+    $.ajax({
+       type: 'GET',
+       url: 'getter.php',
+       data: args,
+       dataType: 'json',
+       success: function (data) {
+         $('#lista').empty();
+         //console.log(data);
+         if(data == null){
+           $('#lista').append('<li>'+'No se encontraron resultados'+'</li>');
+         }else{
+           $.each(data, function(key, value) {
+             $('#lista').append('<li><a href='+value+"/"+key+'>'+key+'</a></li>');
+           });
+         }
+       }
+    });
   });
 });
