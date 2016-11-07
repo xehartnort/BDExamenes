@@ -73,16 +73,16 @@ function sugerencias( id_input ){
   });
 }
 $(document).ready(function() {
-  //$('#grado').val("");
+  $('#grado').val("");
   sugerencias("grado");
   $('#grado').on('input', function() { mostrarResultados(); });
-  //$('#curso').val("");
+  $('#curso').val("");
   sugerencias("curso");
   $('#curso').on('input', function() { mostrarResultados(); });
-  //$('#asig').val("");
+  $('#asig').val("");
   sugerencias("asig");
   $('#asig').on('input', function() { mostrarResultados(); });
-  //$('#anio').val("");
+  $('#anio').val("");
   sugerencias("anio");
   $('#anio').on('input', function() { mostrarResultados(); });
 
