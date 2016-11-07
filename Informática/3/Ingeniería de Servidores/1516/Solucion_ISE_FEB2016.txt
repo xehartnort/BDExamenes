@@ -1,0 +1,142 @@
+1
+El problema es idéntico al 1.11 de la relación solo que se pregunta únicamente por el speedup.
+
+Datos:
+To se divide en (1-f)*To (parte no mejorada) y f*To (parte que se mejora)
+Tm se divide en 0.25*Tm (parte no mejorada) y 0.75*Tm (parte que se ha mejorado)
+De ahí tenemos:
+(1-f)*To = 0.25*Tm (ya que es el tiempo de ejecución usando otro tipo de operaciones que el procesador no mejora con respecto al anterior)
+0.75*Tm=f*To/4 ya que la parte de tratamiento de cadenas ahora se ejecuta 4 veces más rápido.
+De la primera ecuación, usando que el speedup S=To/Tm tenemos:
+(1-f)*S=0.25
+De la segunda:
+S=3/f
+Substituyendo f=3/S en la primera ecuación tenemos:
+(1-3/S)*S=0.25, de donde obtenemos que S=3.25
+
+Otra forma:
+Del planteamiento anterior se desprende que:
+To=0.25*Tm (la parte que no mejora) + 4*0.75*Tm (4 veces más lento que la parte que se ha mejorado) = 3.25*Tm --> S=To/Tm=3.25
+
+Otra forma:
+Podemos aplicar la fórmula de la ley de Amdahl pero intercambiando la máquina mejorada por la original, y viceversa. En ese caso, la mejora sería “1/4” y f=0.75.
+Tm/To=1/(1-0.75+0.75/(1/4))=0.3077.
+La solución sería S=To/Tm=1/0.3077=3.25
+
+
+2
+No es correcta. Puede darse el caso de que la máquina con mayor índice SPEC ejecute los programas del benchmark, uno tras otro, en más tiempo que la máquina de referencia. Esencialmente, la máquina con mejor SPEC será la que tenga una menor media geométrica de los tiempos de ejecución y eso no tiene por qué implicar que la media aritmética también deba ser menor.
+Por ejemplo,
+raiz_cuadrada(10*0.1) <raiz_cuadrada(2*1) y, sin embargo, (10+0.1)>(2+1)
+Aplicado este ejemplo a un caso práctico, si t1=10s, t2=0.1s, tref1=2s, tref2=1s, tendremos que el SPEC va a ser mayor (mejor) que el de la máquina de referencia y sin embargo la suma de los tiempos de ejecución de los programas del benchmark es mayor (peor).
+
+3
+Respuesta libre. Algunas sugerencias (valen tanto las soluciones para escalabilidad vertical como la horizontal ya que no se especifica el tipo):
+Tener el servidor en la nube, usar un cluster de computadores, grid computing, usar distribución de carga, usar virtualización, uso de Sistemas Operativos modulares de código abierto, uso de interfaces de E/S estándar, tener zócalos de CPU o de memoria libres, bahías para almacenamiento libres, usar código paralelizable, etc.
+
+4
+a) No poner, AL MENOS, los que aparecen a continuación implica que la pregunta esté mal.
+En ejecución (running) o en la cola de ejecución (runnable).
+Bloqueado esperando a que se complete una operación de E/S para continuar (uninterruptible sleep = I/O blocked).
+Durmiendo esperando a un evento del usuario o similar  (p.ej. una pulsación de tecla) (interruptible sleep).
+b) No poner EXACTAMENTE los que aparecen a continuación implica que la pregunta esté mal.
+Carga del sistema (system load): número de procesos en modo running, runnable o I/O blocked.
+
+5
+a) Al 95% de confianza, el intervalo de confianza para XP1-XP2 siempre refleja valores negativos por lo que XP2>XP1. Como lo que queremos son productividades altas, es mejor usar el valor P2 para el parámetro SEMOPM.
+
+A esa misma conclusión podríamos llegar viendo el valor-p = 0.033. Este valor me indica la probabilidad de que ambos valores influyan por igual. Al ser esa probabilidad menor que 0.05 (que es el grado de significatividad asociado al nivel de confianza 95%) concluimos que las diferencias son significativas por lo que nos quedamos con el de mayor productividad: en nuestro caso P2 ya que el valor medio de XP1-XP2 es negativo (-1.25tr/s).
+
+b) A partir de un nivel de confianza del 96.7% ya que en ese caso el grado de significatividad sería 1-96.7/100=0.033. Justo el mismo valor que el valor-p. Por lo que a partir de ese punto, ya no podríamos concluir que las diferencias entre las productividades obtenidas por ambos valores sean significativas.
+
+6
+Datos que me dan:
+T=5h=18000s
+Ucpu=0.65
+Scpu=25ms=0.025s
+Chdd=125000 tr
+Vhdd=10
+a) Me piden Ccpu y Vcpu.
+- Ccpu=Xcpu*T
+Uso la ley de la utilización: Ucpu=Xcpu*Scpu, de donde Xcpu=0.65/0.025s=26 tr/s
+Por tanto, Ccpu=26tr/s*18000s=486000 trabajos. Los trabajos para la cpu son procesos, por lo que la solución es: 468000 procesos.
+Otra forma: Scpu=Bcpu/Ccpu --> Ccpu=Bcpu/Scpu=(Ucpu*T)/Scpu=(0.65*18000)/0.025=468000 procesos.
+- Vcpu=Ccpu/C0 --> debo calcular C0
+Sé que Vhdd=Chdd/C0. Por lo que C0=Chdd/Vhdd=125000 tr/10=12500 trabajos.
+Así que Vcpu=468000 tr/ 12500 tr = 37.44
+Nota: las razones de visita son VALORES MEDIOS por lo que no hay ningún problema con que sea un valor no entero.
+
+b) El servidor se saturará cuando la tasa media de llegada alcance la productividad máxima del servidor, esto es, X0max=1/Db siendo Db la demanda de servicio del cuello de botella. En nuestro caso, nos dicen que es la CPU por lo que hay que calcular Dcpu.
+Dcpu=Vcpu*Scpu=37.44*0.025s=0.94s.
+Otra forma de calcular Dcpu: Dcpu=Bcpu/C0 = Ucpu/X0
+X0=C0/T = 12500 tr/18000s = 0.69tr/s
+Por lo tanto Dcpu= 0.65/0.69 tr/s = 0.94 s/tr
+
+lambda_0 máxima = X0max = 1/Dcpu = 1/0.94s/tr =1.07 tr/s donde aquí los trabajos son consultas al servidor.
+
+
+7
+a) X0max=1/Db = 1/Dred (ya que la red es el cuello de botella por tener la mayor demanda) = 11.1 tr/s
+Xcpu_max=X0max*Vcpu  (ley del flujo forzado) = 88.8 tr/s
+Xred_max=X0max*Vred = 33.3 tr/s
+
+Muchos han puesto que Xcpu_max=1/Dcpu (igual para la red). Eso es totalmente incorrecto y se considera un fallo conceptual grave.
+
+b)
+Ri=(Ni+1)*Si. Usando la ley de Little aplicada a una estación de servicio (Ni=Xi*Ri) tenemos:
+Ri=(Xi*Ri+1)*Si. Despejando Ri se obtiene:
+Ri=Si/(1-Xi*Si) = Si/(1-X0*Di) = Si/(1-lambda0*Di) (ya que no está saturado al ser lambda0=10 tr/s < 11.1 tr/s)
+No justificar todos los pasos, como es el caso del paso de Ri=(Ni+1)*Si a Ri=Si/(1-X0*Di) conlleva una penalización de 0.25 puntos en esta pregunta.
+Así que:
+Rcpu=Scpu/(1-lambda0*Dcpu) = 0.05s
+Rred=Sred/(1-lambda0*Dred) = 0.3s
+R0 = Vcpu*Rcpu+Vred*Rred (ley general del tiempo de respuesta) = 1.3s
+
+c)
+Usando la ley de Little aplicada a la cola de la cpu:
+Qcpu=lambda_cpu*Wcpu = Xcpu*Wcpu
+Xcpu=X0*Vcpu (ley del flujo forzado) = 80tr/s
+Wcpu= Rcpu-Scpu= 0.04 s
+Por lo tanto, Qcpu=3.2 trabajos (en este caso, procesos)
+
+Otra forma:
+Qcpu=Ncpu-Ucpu = 4-0.8 = 3.2 trabajos, ya que:
+Ncpu=Xcpu*Rcpu=4 tr
+Ucpu=Xcpu*Scpu=0.8 tr
+
+d)
+R0min = suma de demandas de servicio de cada dispositivo del modelo.
+Dcpu=Vcpu*Scpu=0.08s
+Dred=Vred*Sred=0.09s
+Por lo tanto, R0min=0.17s
+
+En ese caso, tendríamos lo siguiente:
+Dispositivo      Si     Vi
+CPU (1)          0.01   8
+RED (2)          0.03   1.5
+REDnueva (3)  0.03   1.5
+Es decir, el tiempo de servicio del nuevo dispositivo de red sería el mismo ya que se trata de un dispositivo de las mismas características que el anterior, por lo que tardará lo mismo en realizar cada trabajo (en este caso enviar/recibir paquetes a través de la red). La razón de visita ahora de ambas interconexiones de red será la mitad ya que al equi-repartirse las tareas, la mitad de los trabajos que antes iban a través de la primera interconexión de red irán ahora por la segunda.
+En estas circunstancias, las demandas de servicio serán:
+Dcpu=Vcpu*Scpu=0.08s
+Dred=Vred*Sred=0.045s
+Drednueva=Vrednueva*Srednueva=0.045s
+Por lo tanto, R0min=0.17s (sería el mismo que antes)
+
+Poner que los tiempos de servicio de las dos interconexiones de red son la mitad de la que tenía la interconexión original se considera un fallo conceptual grave.
+
+8
+Nos dan los siguientes datos:
+NT=300 trabajos = 300 usuarios
+X0= 15 trabajos/s
+R0=10s. El dato que me dan es R0 y no Z!!! Si alguien interpreta que nos están dando Z se considera un fallo conceptual grave y la parte “a)” de la pregunta estaría mal.
+
+a)
+Ley de Little aplicada a los usuarios en reflexión:
+Nz=X0*Z (necesito hallar primero Z)
+Ley de Little aplicada a la red cerrada completa:
+NT=X0*(Z+R0) --> Z = NT/X0-R0= 10s
+Por tanto, Nz=150 usuarios en reflexión (=trabajos en reflexión)
+Otra forma:
+Nz=NT-N0=NT-X0*R0=150 usuarios en reflexión
+b)
+Por supuesto que no está saturado. El punto teórico de saturación es, en principio, el número ideal de trabajos en la red ya que, al menos teóricamente, para ese número de usuarios se podría conseguir la productividad máxima y el tiempo de respuesta mínimo absolutos del servidor. Las redes cerradas NUNCA se saturan ya que el valor de NT es fijo (siempre y cuando haya tamaño suficiente para las colas). No se debe confundir saturación (ya no se cumple la hipótesis del equilibrio de flujo porque X0 ya no puede seguir a lambda0) con el hecho de que haya colas en algunos dispositivos (cosa que es lo más normal en un servidor).

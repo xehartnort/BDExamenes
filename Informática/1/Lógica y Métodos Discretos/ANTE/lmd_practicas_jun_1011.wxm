@@ -1,0 +1,126 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.5 ] */
+
+/* [wxMaxima: section start ]
+Examen de prácticas para LMD, junio 2010/2011
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+Pregunta nº 1
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+inicio: 1$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+for n: 2 unless (2^n > x(n)) do (inicio: n)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+inicio +1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+makelist([n,is(2^n>x(n))],n,2,100);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x(n):=sum(k^10,k,1,n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+       la respuesta a la pregunta 1 es 25
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Pregunta nº 2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+    Apartado a)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+binomial(14,5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+    Apartado b)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+binomial(24,5)-6*binomial(14,5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+    Apartado c) los números de a lo sumo seis dígitos cuya suma de dígitos es 9 son 
+exáctamente los números de seis dígitos múltiplos de 9. Ningún número de a lo sumo 
+seis dígitos cuya suma de dígitos sea 19 es múltiplo de 9, pues 9+1=10 y 1+0=1/=9
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Pregunta nº 3
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load("/home/fmgo/Documents/didactica/apuntes/lmd/practicas/capturas/logic-mac-2.11/logic.lisp")$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f:(c implies a) and (a implies ((not a) and b)) and ((not c) implies b) and not((not c implies b) and (not c implies a));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+characteristic_vector(f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+     la respuesta a la pregunta tercera es la fórmula no es implicada por las
+supuestas hipótesis dado que el vector característico de f tiene una entrada 
+a true; es decir, hay una valoración que hace verdadera a f
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+X:cartesian_product(C,C,C,C,C)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+C:{0,1,2,3,4,5,6,7,8,9};
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s(l):=is(l[1]+l[2]+l[3]+l[4]+l[5]=21);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Numeros:subset(X,s)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+num(l):=10000*l[1]+1000*l[2]+100*l[3]+10*l[4]+l[5];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+L:listify(Numeros)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cardinality(Numeros);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A:makelist(num(L[i]),i,1,length(L))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+set_display('ascii);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
