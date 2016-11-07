@@ -26,14 +26,22 @@ function extractLast( term ) {
   return split( term ).pop();
 }
 $(document).ready(function() {
+  var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
+  $( "#query" ).val("");
   $( "#query" ).autocomplete({
-    minLength: 2,
-    delay: 500,
+    delay: 200,
     autoFocus: true,
     source: function( request, response ) {
       $.getJSON( "tagger.php", {
         term: extractLast( request.term )
       }, response );
+    },
+    search: function() {
+      // custom minLength
+      var term = extractLast( this.value );
+      if ( term.length < 2 ) {
+        return false;
+      }
     },
     select: function( event, ui ) {
       var terms = split( this.value );
@@ -45,10 +53,21 @@ $(document).ready(function() {
       terms.push( "" );
       this.value = terms.join( ", " );
       return false;
-    }
+    },
+    open: function (e, ui) { // hace que la selección escrita sea en negrita
+        var acData = $(this).data('ui-autocomplete');
+        acData
+        .menu
+        .element
+        .find('li')
+        .each(function () {
+            var me = $(this);
+            var keywords = acData.term.split(' ').join('|');
+            me.html(me.text().replace(new RegExp("(" + keywords + ")", "gi"), '<b>$1</b>'));
+         });
+     }
   });
-
-  $('#query').on('input', function() {
-    setTimeout(function(){mostrarResultados();}, 1000);
+  $('#query').on("input", function() {
+    mostrarResultados();
   });
 });

@@ -1,6 +1,7 @@
 <?php
 $db = new PDO("sqlite:examenes.db");
-$query_text="";
+$query_text = "";
+$result = [];
 $get_size = count($_GET);
 if( $get_size > 1 ){
   for($i=0; $i<$get_size; ++$i) {
@@ -14,12 +15,7 @@ if( $get_size > 1 ){
 }
 $query = $db->prepare($query_text);
 foreach ($_GET as $key => $value) {
-//  if ($value != ""){
-    $val = $value.'%';
-//  }else{
-//    $val="";
-//  }
-  $query->bindParam(':'.$key, $val, PDO::PARAM_STR);
+  $query->bindValue(':'.$key, $value.'%', PDO::PARAM_STR);
 }
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_ASSOC);

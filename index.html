@@ -15,6 +15,19 @@
   <title>Base de datos de exámenes</title>
   <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
   <body>
+    <style>
+    .ui-autocomplete-term { font-weight: bold; color: blue; }
+    .ui-autocomplete {
+      max-height: 100px;
+      overflow-y: auto;
+      /* prevent horizontal scrollbar */
+      overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+     * we use height instead, but this forces the menu to always be this tall
+     */
+    * html .ui-autocomplete { height: 100px; }
+    </style>
     <div class="ui-widget">
       <label>Búsqueda: </label>
       <input id="query" size="50">
