@@ -1,6 +1,7 @@
 # BDExamenes
 ## Introducción
-Este es un proyecto de la [Delegación de Estudiantes](http://deiit.ugr.es/) de la [ETSIIT](http://etsiit.ugr.es/) desarrollado por la Comisión de Información. Con este proyecto se pretende que todos los estudiantes tengan acceso al preciado tesoro de los exámenes de años anteriores.
+Este es un proyecto de la [Delegación de Estudiantes](http://deiit.ugr.es/) de la [ETSIIT](http://etsiit.ugr.es/) desarrollado por la Comisión de Información. Con este proyecto se pretende que todos los estudiantes tengan acceso al preciado tesoro de los exámenes de años anteriores. [Aquí](http://deiit.ugr.es/BDExamenes/) puedes acceder a la interfaz web del proyecto.
+
 ## BD
 Vamos al lío. Primero comencemos explicando el modelo relacional que sostiene al nivel conceptual de la base de datos, sí, estoy hablando del diagrama entidad-relación:
 
@@ -14,7 +15,7 @@ La entidad *Tag* representa una etiqueta que clasifica un elemento de la entidad
   - tipo_tag : categoría en la que se sitúa la etiqueta, se consideran 5: año, curso, asignatura, grado y otro.
   - preferencia : indica el uso de una etiqueta, a mayor preferencia, mayor uso de la etiqueta y por tanto más importancia tendrá en la clasificación.
 
-La entidad *DocTag* representa en duplas la asociación de *Documento* a un *Tag* y viceversa. 
+La entidad *DocTag* representa en duplas la asociación de *Documento* a un *Tag* y viceversa.
 
 <a href="http://imgur.com/yNXJwKs"><img src="http://i.imgur.com/yNXJwKs.png" title="source: imgur.com" /></a>
 
