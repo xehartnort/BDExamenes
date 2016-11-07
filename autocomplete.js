@@ -33,20 +33,20 @@ function extractLast( term ) {
 function sugerencias( id_input ){
   var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
   $( "#"+id_input ).autocomplete({
-    delay: 200,
+    delay: 500,
     autoFocus: true,
     source: function( request, response ) {
       $.getJSON( "tagger.php",
         /*extractLast( */"term="+request.term+"&"+"tipo="+id_input
       , response );
     },
-    /*search: function() {
+    search: function() {
       // custom minLength
       var term = extractLast( this.value );
       if ( term.length < 2 ) {
         return false;
       }
-    },*/
+    },
     /*select: function( event, ui ) {
       var terms = split( this.value );
       // remove the current input
