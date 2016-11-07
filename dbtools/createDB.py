@@ -32,7 +32,7 @@ class Tag(Model):
 class DocTag(Model):
     id_doc = ForeignKeyField(Documento, related_name='documentos')
     nom_tag = ForeignKeyField(Tag, related_name='tags')
-    ver = BooleanField(default = True)
+    #ver = BooleanField(default = True) se implementará en algún futuro
     class Meta:
         primary_key = CompositeKey('id_doc', 'nom_tag')
         database = MySQLitedb # this model is in *.db database
