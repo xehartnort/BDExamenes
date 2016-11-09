@@ -1,4 +1,0 @@
-http://lsi.ugr.es/scd/
-
-aluscd
-pwdscd1314
