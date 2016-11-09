@@ -1,0 +1,23 @@
+1a) Nos dan S=To/Tm=1.5. Igualando los tiempos en los que no se usa almacenamiento: (1-fo)*To=Tm/2 --> fo=2/3 = 0.67 (67%) 
+1b) Mirando ahora la parte de ejecución que usa almacenamiento: f*To/k=Tm/2 --> k=2 veces 
+
+2.- Fiabilidad de un servidor es la capacidad que tiene para llevar a cabo su actividad SIN ERRORES (no es lo mismo que tolerancia a fallos).
+Disponibilidad se refiere a su capacidad de estar operativo (=funcionando), que puede ser de forma fiable o no. 
+Aunque el término "ancho de banda" se usa más para expresar velocidades de transmisión, esencialmente es lo mismo que productividad: cantidad de trabajo que se realiza por unidad de tiempo. 
+
+3a) Hay diferencias significativas (p-value<0.1). Debo usar swappiness="BAJO" ya que permite, de media, 8.3 más conexiones que con el parámetro de swappiness="ALTO". 
+3b) En ambos casos las diferencias no son significativas (p-value>0.05 y p-value>0.01) 
+
+4a) Verdadero (en clase vimos varios ejemplos demostrando que el índice SPEC no nos dice qué máquina ejecuta el conjunto de programas del benchmark en menos tiempo, cosa que sí nos dice la suma aritmética) 
+4b) Falso (no funcionan por eventos sino por muestreo) 
+
+5a) HDD ya que su demanda de servicio (0.45s) es mayor que la de la CPU (0.2s). X0max=2.22 tr/s. 
+5b) Ucpu=0.3 (30%) 
+5c) En ese caso el servidor estaría saturado. La utilización de la CPU jamás podría ser mayor que el 44% en este servidor. 
+5d) X0max ahora = 5 tr/s (el cuello de botella pasaría a ser la CPU) 
+
+6a) Dssd=0.96s (nos piden la demanda de servicio) 
+6b) Sssd=0.192s 
+
+7a) X0=0.43 tr/s (nos dan NT, R0 y Z). T no es necesario para calcular la solución. 
+7b) Nz=10.7 usuarios

@@ -1,0 +1,112 @@
+Ejercicio 1:
+a) Al compilador. En el primer caso se utilizan los mismos parámetros de compilación para todos los programas mientras que en el segundo se pueden particularizar para optimizar cada programa por separado.
+
+b) Calculamos la ganancia en velocidad con respecto a la máquina de referencia
+
+Programa        Speedup-Base    Speedup-Peak
+168.wupwise     3,82    5,33
+171.swim        5,52    5,54
+172.mgrid       2,97    3,08
+173.applu       3,19    3,50
+177.mesa        5,13    5,79
+                
+
+Calculamos la media geómetrica:
+SPECfp_base = raíz quinta de 3.82*5.52*2.97*3.19*5.13 = 4.0 
+SPECfp = raíz quinta de 5.33*5.54*3.08*3.5*5.79 = 4.5
+Nota: todavía hay quien suma las ganancias en lugar de multiplicarlas. Otros usan la raíz cuadrada en lugar de la raíz quinta.
+
+
+c) Utilizando el índice SPEC, “A-Peak” tendría un índice SPEC 4.5/4.0 = 1.125 veces mejor (cuanto más grande el SPEC, mejor)
+Utilizando el tiempo total de ejecución:
+A-base tarda en ejecutar todos los programas del benchmark 419+ 562+...+273  =2519s (503.8s de media)
+A-peak tarda en ejecutar todos los programas del benchmark 300+ 560+...+242  =2287s (457.4s de media)
+En ese caso, A-peak sería 2519/2287 = 1.104 veces más rápida.
+
+A falta de otra información, es mucho mejor utilizar el tiempo total de ejecución como medida de rendimiento ya que me indica de forma clara qué máquina ejecuta todos los programas del benchmark (uno detrás de otro) en menos tiempo (y esto es independiente, al igual que el SPEC, de la máquina de referencia). La media geométrica, de por sí, no proporciona una medida claramente interpretable sobre el rendimiento de una máquina. Beneficia las grandes mejoras y no penaliza los empeoramientos ¿es eso lo que queremos?
+
+Ejercicio 2:
+Respuesta libre. Sirva como guía:
+Fiabilidad de un servidor es la capacidad que tiene para llevar a cabo su actividad SIN ERRORES (no es lo mismo que tolerancia a fallos, que es un término más relacionado con la disponibilidad).
+Disponibilidad se refiere a su capacidad de estar operativo (=funcionando), que puede ser de forma fiable o no.
+Ejemplo: Base de datos corrupta. Puede estar el acceso a la misma disponible pero darme un dato erróneo (--> no fiable). Lo mismo con lecturas de memoria RAM o de discos duros incorrectas.
+
+
+Ejercicio 3:
+a) 
+To=85s
+De los cuales 63.75s es por el uso de la tarjeta de red y 21.25s del procesador.
+Tm=21.25s (esa parte no cambia) + 63.75s/3 = 42.5s
+Speedup = 85/42.5 = 2 --> 100% más rápido (y no 50% ni 200%. Se trata de un % de mejora en velocidad, no de tiempo).
+Otra forma: S=1/(1-0.75+0.75/3)=2 
+
+b) Tm=73s = 63.75s (ahora esa parte no cambia)  + 21.25/k. Despejando tenemos: k=21.25/(73-63.75) = 2.3. Debe ser 2.3 veces más rápido.
+Otra forma: S=To/Tm= 85/73= 1/(1-0.25+0.25/k). Despejamos k y obtenemos el mismo valor.
+
+
+Ejercicio 4:
+a) overhead (%) = (tiempo ejecución del monitor / tiempo de muestreo) * 100 = 0.1.
+Por tanto, el overhead expresado como tanto por uno será 0.001 (y no 0.1 como ponen muchos)
+tiempo ejecución del monitor = 45000 instr/ (95*10E6 instr/s) = 0.474ms.
+El tiempo de muestreo deberá ser, como mínimo, 0.474ms /0.001 = 474ms. 
+
+b) El monitor se activa cada 5 minutos, es decir, 60/5= 12 veces cada hora o 12*24 = 288 veces cada día.
+Si cada vez que se activa guarda 512 bytes, en total cada día se almacenarán, como máximo: 
+288*512 = 147456 bytes (=144 KiB)
+
+Ejercicio 5:
+a) Respuesta libre. Sirva como guía:
+Un profiler es una herramienta que nos ayuda a analizar las prestaciones de un programa. Nos puede dar información sobre aquellas partes del programa donde se consume la mayor parte del tiempo de ejecución (hot spots), el número de veces que se ejecuta cada línea del programa, qué funciones llaman a otras funciones (y cuántas veces), qué funciones son llamadas (y cuántas veces) por otras. También pueden dar información más específica a nivel de microarquitectura como puede ser el número de fallos de caché o de fallos de página que produce una determinada instrucción del programa. Algunos profilers: gprof, Oprofile, Valgrind, V-Tune, CodeAnalyst...
+
+b) Respuesta libre (que cada uno ponga el ejemplo concreto como quiera). Sirva como guía lo siguiente:
+Un test t me sirve para comprobar si las diferencias entre las medias obtenidas de una variable respuesta (por ejemplo tiempos de respuesta o productividades) por diferentes experimentos para dos posibles niveles de un factor (por ejemplo tipo de memoria, tamaño del disco, S.O., etc.) son o no estadísticamente significativas. Para ello, se realiza la hipótesis de que ambos niveles del factor no influyen y se obtiene un valor (el p-valor) que nos indica la probabilidad de que esto sea así. Finalmente, se compara dicho valor con el grado o nivel de significatividad (alfa), que actúa como umbral en la toma de decisiones del test. Si el p-valor es menor que alfa, concluiremos que la hipótesis inicial es improbable y que, por tanto, ambos niveles sí que influyen significativamente en la variable respuesta para un nivel de confianza (1-alfa)*100. Si es mayor (o igual) concluiremos que no podemos descartar la hipótesis inicial. 
+
+
+Ejercicio 6: 
+Udisco=0.7 (cuello de botella)
+Xdisco=45 tr/s
+Vdisco=1.5
+Objetivo X0=40 tr/s
+
+Vamos a calcular la productividad máxima del servidor. 
+X0max=1/Db = 1/Ddisco (ya que el disco es el cuello de botella)
+Ddisco=Udisco/X0 = Udisco /(Xdisco/Vdisco) = 0.7/(45/1.5)= 0.023 s
+X0max= 42.86 tr/s
+En principio, somos capaces de alcanzar el objetivo de las 40 peticiones al sitio web por segundo, por lo que el administrador puede tener razón.
+
+Otra forma consiste en calcular la utilización del disco si la tasa de llegada al servidor fuese 40 pet/s y ver que no es mayor que 1 (saldría 40*1.5*0.7/45=0.93).
+
+Ejercicio 7: 
+lambda0=4 tr/s
+a) Calculamos las demandas de servicio de cada dispositivo:
+
+Dispositivo     Demanda de servicio (s)
+CPU (1) 0.08
+disco (2)       0.16
+red (3)         0.09
+
+El cuello de botella es el disco (el de mayor demanda de servicio). La demanda de servicio no depende de la tasa de llegadas, por lo que ésta no influye en la determinación del cuello de botella.
+
+b) R0min no es más que la suma de demandas de servicio  = 0.08+0.16 + 0.09 = 0.33s
+
+c) X0max=1/Db=1/Ddisco = 1/0.16= 6.25 tr/s.
+Para conseguir X0max = 12.5 tr/s, la demanda de servicio del cuello de botella debería ser 0.08s. Como la demanda de servicio de la red es superior a ese valor, ningún valor que podamos poner en el tiempo de servicio del disco conseguirá que alcancemos esa productividad en el servidor.
+
+d) Ui=X0*Di = lambda0*Di
+Ucpu=0.32
+Udisco=0.64
+Ured=0.36
+
+
+Ejercicio 8: 
+T=3600s (no se necesita)
+NT=80 (trabajos = usuarios = consultas)
+Udisco=0.75 (no se necesita)
+R0=0.9s
+Nz=71 
+a) Sé que N0=NT-Nz= 9 trabajos
+Uso la Ley de Little aplicada al servidor: N0=X0*R0. Despejo X0 = N0/R0=10 tr/s
+b) Uso la Ley del Tiempo de Repuesta Interactivo (sin más que aplicar la Ley de Little a la red cerrada):
+NT=X0*(R0+Z). Despejo Z
+Z=NT/X0-R0 = 7.1s
+Otra forma: Ley de Little aplicada a los usuarios en reflexión: Nz=X0*Z. Despejo Z=Nz/X0=71/10=7.1s

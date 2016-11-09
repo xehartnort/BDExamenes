@@ -1,0 +1,37 @@
+Examen de prácticas
+
+Implementación con el patrón de diseño Visitante e interfaz de 3 botones interruptor programada con Swing/Java
+
+Suponer que tenemos una aplicación que gestiona enrutadores para distintos entornos de configuración de redes. De tal manera que los enrutadores serán capaces de enviar y recibir datos (char) de otros nodos y las aplicaciones podrán configurar los enrutadores para diferentes sistemas operativos.
+
+Lo que pretendemos conseguir es un diseño de la aplicación lo suficientemente flexible para poder soportar cambios de sistema operativo en el futuro sin que sea necesario el código de los 3 tipos de enrutadores (DLinkRouter, TPLinkRouter y LinkSysRouter), que vamos  a suponer integrados en nuestro sistema.
+
+Por tanto, tenemos 3 tipos de enrutadores y, en principio, necesitaríamos escribir código de un driver de cada uno de ellos. La solución obvia para resolver el problema sería programar métodos como: configurarParaWindows(),  configurarParaMac(),  configurarParaLinux(), deinidos dentro de una interfaz común: Enrutador.java y programarlos como distintos productos software, ya que cada uno de estos tendrá su propia configuración y procedimiento para hacerlo. Si lo hacemos así, cada vez que incorporemos un nuevo entorno de red (y su enrutador correspondiente), tendremos que cambiar el código de configuración de todas las aplicaciones que incluyan una de las configuraciones anteriores en su jerarquía de clases.
+
+La solución que proponemos es programar un driver multiplataforma basado en el patrón de diseño Visitante, ya que nos permite introducir nuevas operaciones (configuradores) en la jerarquía de objetos (enrutadores) del sistema sin modificar a estos objetos.
+
+Los enrutadores han de implementar la interfaz:
+
+public interface Enrutador {
+
+public void enviarDatos(char[] datos);
+
+public void aceptarDatos(char[] datos);
+
+public void aceptar(VisitanteEnrutadores v);
+
+}
+
+Y los configuradores (visitadores)  implementan la interfaz:
+
+public interface VisitanteEnrutadores {
+
+public void visitar(DLinkRouter r);
+
+public void visitar(TPLinkRouter r);
+
+public void visitar(LinkSysRouter r);
+
+}
+
+Siempre que en el futuro necesitemos añadir un nuevo entorno de red, programaremos un nuevo visitador en la jerarquía de clases correspondiente, que tendrá que implementar  una versión del método visitar() para cada uno de los enrutadores disponibles y, de esta forma, habremos resuelto el problema de la no mutabilidad del código de los enrutadores específicos.

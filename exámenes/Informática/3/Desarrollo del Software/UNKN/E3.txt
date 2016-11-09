@@ -1,0 +1,67 @@
+Examen de prácticas
+
+Implementación de un ejemplo que genera clases y métodos utilizando el patrón de diseño Refexión, las facilidades reflectivas de Java, y una interfaz de 4 botones programada con Swing/Java.
+
+ 
+
+Existe una clase Bicho, que incluye los siguientes campos:
+
+public String tipo;
+
+public void setTipo(String t){…}
+
+public String getTipo(){…}
+
+public String descripcionGusano(int patas, int longitud, int ancho){…}
+
+ public String descripcionCapullo(int radio){…}
+
+ public String descripcionMariposa(int longitud, int ancho){…}
+
+public String moverseGusano(int velocidad){…}
+
+ public String moverseCapullo(){…}
+
+ public String moverseMariposa(int velocidad){…}
+
+Simplemente, un bicho puede estar en tres fases distintas: Gusano, capullo y mariposa.
+
+En la interfaz Swing han de existir 3 botones en la fila de arriba para seleccionar la fase de nuestro bicho, con estos, una vez se ha cambiado de tipo de bicho, vemos que el texto de descripción que aparece abajo en “console”cambia, y nos dará la descripción correcta correspondiente a la fase seleccionada si se ha utilizado bien los mecanismos reflexión de Java.
+
+En la segunda fila ha de aparecer un botón para terminar la aplicación correctamente (System.exit(0)).
+
+En la tercera fila, aparecerá un botón grande para efectuar un movimiento (cuando sea posible). Este botón lo que hace es simplemente cambiar su propio texto en función del tipo de bicho que se haya seleccionado previamente.
+
+En la clase Interfaz, además de programar toda la parte de manejo de botones Swing, se utilizarán las facilidades de Java para utilizar los mecanismos reflectivos (buscar y utilizar una clase que ya tenemos, instanciarla dinámicamente y obtener e invocar los métodos necesarios); estos servicios nos lo proporciona  el paquete:  java.lang.reflect.* y los métodos: forName(), newInstance(), getDeclaredMethod() e invoke(), respectivamente.
+
+Class cls = Class.forName("com.example.ds_reflection.Bicho");
+
+Object obj = cls.newInstance();
+
+…
+
+method = cls.getDeclaredMethod("setTipo", tipo);                                     
+
+method.invoke(obj, "CAPULLO");
+
+ 
+
+En la clase Principal es donde inicializamos el tipo de los argumentos de los métodos reflectivos de nuestra aplicación:
+
+//Parámetros de Mariposa:
+
+Class[] mariposa = new Class[2];             
+
+mariposa[0] = Integer.TYPE;
+
+mariposa[1] = Integer.TYPE;
+
+…
+
+Class[] tipo = new Class[1];
+
+tipo[0] = String.class;
+
+ 
+
+La implementación de los métodos reflectivos de nuestra aplicación se encuentran programados en la clase Bicho, evidentemente.

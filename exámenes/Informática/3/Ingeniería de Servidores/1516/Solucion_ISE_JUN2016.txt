@@ -1,0 +1,183 @@
+﻿Ejercicio 1:
+Busco el precio que haga que la relación prestación/coste de ambas alternativas se iguale. Todo lo que sea por debajo de ese precio irá a favor de comprar la unidad OCZ.
+Las prestaciones las mido como speedup con respecto a la configuración inicial.
+
+Usando ley de Amdahl:
+f=0.45
+
+S(Sandisk) = 1/(1-f+f/k)= 1/(1-0.65+0.65/3) = 1.43
+S(OCZ) = 1/(1-0.65+0.65/4) = 1.51
+
+Para que merezca la pena, la proporción entre los costes ha de ser, como mucho, la misma que la proporción entre las ganancias en velocidad que nos ofrecen:
+Coste(Sandisk) / Coste(OCZ)_max = 1.43/1.51
+--> Coste(OCZ)_max= Coste(Sandisk) * 1.43/1.51 = 264€, es decir, aunque ofrezca un rendimiento 4/3 = 1.33 (33% mejor), el precio como mucho puede ser un (1- 264/250)*100 = 5.6% más caro para que nos resulte rentable comprarlo para nuestro servidor.
+
+
+
+
+
+
+
+
+Ejercicio 2:
+
+a)
+Del grafo de llamadas, podemos deducir que:
+
+-       deriva es llamado 4 veces en todo el programa.
+-       redondea es llamado 25 veces.
+-   
+    integra es llamado solo una vez.
+-       normaliza es llamado 2 veces.
+
+-       main llama una vez a integra, 2 a normaliza y 1 a deriva.
+-      
+ integra llama 3 veces a deriva y 3 a redondea.
+-       normaliza llama 5 veces a redondea (de media). 
+(Un fallo muy frecuente ha sido decir que llama a redondea 10 veces. Hay que tener en cuenta que normaliza se llama dos veces en total y no una).
+-    
+   deriva llama 3 veces a redondea (de media). (Y no 12 veces ya que deriva se llama 4 veces en total)
+-     
+  redondea no llama a ninguna otra función.
+
+Tabla solución:
+
+
+cumulative seconds      self seconds    calls   self s/call                 total s/call                 name
+
+              5                5           4       5/4=1.25                    1.25+3*0.18=1.79         deriva
+            
+9.5               4.5           25      0.18                         0.18                 redondea
+
+           12.09             2.59           1       8.5-3*1.79-3*0.18=2.59          8.5                integra
+
+            13.09              1            2       0.5                           0.5+5*0.18=1.4     normaliza
+
+
+El programa se ejecuta en 13.09s.
+
+El fallo más común ha sido calcular los self_s/call de integra usando los self_s/call de deriva y redondea en lugar de los total_s/call.
+
+
+
+b)
+gprof usa temporizadores de profiling en Linux que interrumpen cada cierto tiempo la ejecución del programa para ver qué parte del código se está ejecutando.
+Estos temporizadores solo avanzan la cuenta cuando el procesador está ejecutando código del programa. Esa línea nos dice que cada 0.01s de tiempo de CPU real 
+del programa se está interrumpiendo dicha ejecución para muestrear qué parte del código se está ejecutando.
+
+
+
+c) gprof siempre ordena las funciones por el tiempo de 
+ejecución TOTAL de su código propio. La ejecución del código propio de “deriva” supone un 38% del tiempo total de ejecución del programa, la de “redondea” un 34%, 
+la de “integra” un 20% y la de “normaliza” un 8%.
+
+Por lo tanto, es el código propio de “deriva” el que debe optimizarse como primera opción.
+
+Aunque, individualmente,
+ “integra” tiene un código propio que tarda más tiempo en ejecutarse que las otras funciones pero al ser llamado solamente una vez en el programa
+ hace que no sea preferente su optimización (antes convendría optimizar “deriva” y, después de ésta, “redondea” que aunque tarda muy poco en ejecutarse, 
+se llama 25 veces a lo largo de todo el programa).
+
+
+
+
+
+
+
+
+Ejercicio 3:
+a)
+Si llamo d=tiempos_propuesta_A – tiempos_propuesta_B tengo que:
+Su valor medio es de -3.3s
+,
+Su desviación típica muestral es de 3.07s (algunos deben revisar cómo se calcula esta desviación típica muestral).
+texp= -2.4
+
+Si las propuestas fuesen equivalentes, texp debería encontrarse dentro del intervalo [-2.13, 2.13]. Esto no es así, por lo que desechamos esa hipótesis y concluimos que, para un 90% de nivel de confianza, las diferencias en rendimiento entre ambas propuestas sí son significativas.
+
+b)
+En ese caso, SPEC_A=1.
+SPEC_B= ((150/156)*(7.5/6)*(125/128)*(43/46)*(89/95))^1/5 = (0.96*1.25*0.98*0.93*0.94)^1/5 = 1.006
+Nota: Los tiempos de la máquina de referencia se ponen arriba ya que son ganancias en velocidad.
+
+c)
+Criterio: media aritmética.
+media(propuesta_A) = 82,9s
+media(propuesta_B) = 86.2s
+Mejor rendimiento tendría la unidad de tipo A (menor tiempo de ejecución medio).
+
+Relación prestaciones coste. En este caso las prestaciones son INVERSAMENTE proporcionales al tiempo medio de ejecución:
+
+(Prestaciones/Coste)_propuesta_A = (1/82.9)/500 = 2.4E-5 (s*€)^-1
+(Prestaciones/Coste)_propuesta_B = (1/86.2)/650 = 1.8E-5 (s*€)^-1
+La unidad de tipo A sería la de mejor relación prestaciones/coste. Da igual el número de unidades que queramos comprar ya que el coste total se multiplicaría por dicho valor en ambas propuestas, por lo que no alteraría la decisión final.
+
+Criterio: SPEC.
+SPEC_A=1.
+SPEC_B=1.006
+Al ser ganancias en velocidad con respecto a la máquina de referencia, un valor > 1 indica “mejores prestaciones”. Por lo tanto, mejor rendimiento tendría ahora la unidad de tipo B.
+
+Relación prestaciones coste. En este caso las prestaciones son DIRECTAMENTE proporcionales al índice SPEC:
+
+(Prestaciones/Coste)_propuesta_A = 1/500 = 0.0020 €^-1
+(Prestaciones/Coste)_propuesta_B = 1.006/650 = 0.0015 €^-1
+La unidad de tipo A sería la de mejor relación prestaciones/coste.
+
+
+Ejercicio 4:
+Suponiendo que en t=0 no haya ningún trabajo previamente, tendremos:
+
+En t=[0,2[s no hay ningún trabajo
+En t= [2,3[s J1 estaría siendo atendido (su primer “segundo”) y J2 en la cola
+En t= [3,4[s J1 estaría siendo atendido (su segundo “segundo”) y J2 y J3 en la cola
+En t= [4,6[s J2 estaría siendo atendido y J3 en la cola
+En t= [6,8[s J3 estaría siendo atendido
+A partir de t=8s no habría ningún trabajo en la estación de servicio
+
+a)
+Wi(J1) = 0s, Wi(J2) = 2s, Wi(J3) =3s. Valor medio = Wi = 5/3 = 1.67s
+Ri = Wi+Si = Wi + 2s. Por lo tanto:
+Ri(J1) = 2s, Ri(J2) = 4s, Ri(J3) =5s. Valor medio = Ri= 11/3 = 3.67s
+
+b)
+Xi = Ci/T = 3/10 = 0.3tr/s
+Ui = Bi/T = 6/10 = 0.6 (60%) (ya que el dispositivo está ocupado desde el segundo 2 hasta el 8). También se puede usar la ley de la utilización: Ui= Xi*Si = 0.3 * 2 = 0.6.
+Qi = (1*1 + 2*1 + 1*2)/10 = 5/10 = 0.5 trabajos.
+También se puede calcular sabiendo que Qi = Xi*Wi = 0.3 * 1.67 = 0.5 trabajos.
+
+
+Ejercicio 5:
+
+El servidor principal recibe una media de 300/10 = 30 visitas por minuto = 0.5 trabajos/s = lambda_0 (en nuestro modelo de colas traducimos todo a “trabajos”) =X0 (por no estar saturado).
+Los datos que nos dan son:
+Dcpu = 0.8 s (no darse cuenta de que el dato que se suministra es Dcpu y no Scpu se considera un error conceptual muy grave en este ejercicio).
+Rcpu = 1.5s
+Vcpu= 4
+
+a)
+Ucpu=Xcpu*Scpu = X0*Dcpu = lambda0*Dcpu= 0.4 (40%)
+
+b)
+Wcpu = Rcpu- Scpu
+Scpu = Dcpu/Vcpu= 0.2 s
+--> Wcpu = 1.5-0.2 = 1.3s (los trabajos no llegan nada equidistribuidos)
+
+c)
+X0max= 1/Dcpu = 1,25 tr/s
+Para conseguir que el sitio web pueda recibir 600 visitas por minuto, el servidor debería ser capaz de procesar el 10% --> 60 v/m --> 1 tr/s. Con el antiguo sería suficiente por lo que no hace falta reemplazarlo. Con el tiempo de servicio del actual (incluso con menos) podríamos conseguirlo. Bastaría un Dcpu=1s --> bastaría un Scpu= ¼ = 0.25s.
+ 
+
+Ejercicio 6:
+
+Qi=Xi*Wi (ley de Little aplicada a la cola de una estación de servicio) = Xi*Ni*Si (usando la hipótesis del ejercicio) = Ui*Ni (usando ley de la utilización) = Ui*(Qi+Ui) (usando la definición de Ni).
+
+De ahí despejamos Qi:
+Qi= Ui^2/(1-Ui).
+
+Si 0<Ui<Uj<1:
+a) Ui^2<Uj^2
+b) (1-Ui)>(1-Uj)
+Por lo tanto: Ui*2/(1-Ui) < Uj^2/(1-Uj) (ya que el numerador en el caso de la estación j-ésima será mayor y el denominador menor que en el caso de la estación i-ésima).
+Es decir, la estación de servicio con mayor utilización (es decir, el cuello de botella) también será la que tenga un mayor número de trabajos en la cola.
+
+Otra forma de razonar esto último consiste en ver que, en el intervalo [0,1[ (que es el rango en el que se van a mover las utilizaciones), f(x)=x^2/(1-x) es una función estrictamente creciente. 

@@ -1,0 +1,107 @@
+Ejercicio 1:
+Busco el precio que haga que la relación prestación/coste de ambas alternativas se iguale. Todo lo que sea por debajo de ese precio irá a favor de comprar la unidad OCZ.
+Las prestaciones las mido como speedup con respecto a la configuración inicial.
+
+Usando ley de Amdahl:
+f=0.6
+
+S(Sandisk) = 1/(1-0.6+0.6/2) = 1.43
+S(OCZ) = 1/(1-0.6+0.6/4) = 1.82
+
+--> Para que merezca la pena, la proporción entre los costes ha de ser, como mucho, la misma que la proporción entre las ganancias en velocidad que nos ofrecen:
+Coste(Sandisk) / Coste(OCZ)_max = 1.43/1.82
+--> Coste(OCZ)_max= Coste(Sandisk) * 1.82/1.43 = 445€, es decir, aunque ofrezca un rendimiento 4/2 = 2 (100% mejor), el precio como mucho puede ser un (1- 445/350)*100 = 27% más caro para que nos resulte rentable comprarlo para nuestro servidor.
+
+Ejercicio 2:
+a)
+Si llamo d=tiempos_propuesta_A – tiempos_propuesta_B tengo que:
+Su valor medio es de -3.3s, 
+Su desviación típica muestral es de 3.07s (algunos deben revisar cómo se calcula esta desviación típica muestral).
+texp= -2.4
+
+Si las propuestas fuesen equivalentes, texp debería encontrarse dentro del intervalo [-2.13, 2.13]. Esto no es así, por lo que desechamos esa hipótesis y concluimos que, para un 90% de nivel de confianza, las diferencias en rendimiento entre ambas propuestas sí son significativas.
+
+b) 
+En ese caso, SPEC_A=1.
+SPEC_B= ((150/156)*(7.5/6)*(125/128)*(43/46)*(89/95))^1/5 = (0.96*1.25*0.98*0.93*0.94)^1/5 = 1.006
+Nota: Los tiempos de la máquina de referencia se ponen arriba ya que son ganancias en velocidad (no hacerlo así hace que la solución sea incorrecta).
+
+c) 
+Criterio: media aritmética.
+media(propuesta_A) = 82,9s
+media(propuesta_B) = 86.2s
+Mejor rendimiento tendría la unidad de tipo A (menor tiempo de ejecución medio).
+
+Relación prestaciones coste. En este caso las prestaciones son INVERSAMENTE proporcionales al tiempo medio de ejecución:
+
+(Prestaciones/Coste)_propuesta_A = (1/82.9)/500 = 2.41E-5 (s*€)^-1
+(Prestaciones/Coste)_propuesta_B = (1/86.2)/450 = 2.58E-5 (s*€)^-1
+La unidad de tipo B sería la de mejor relación prestaciones/coste. Da igual el número de unidades que queramos comprar ya que el coste total se multiplicaría por dicho valor en ambas propuestas, por lo que no alteraría la decisión final.
+
+Criterio: SPEC.
+SPEC_A=1.
+SPEC_B=1.006
+Al ser ganancias en velocidad con respecto a la máquina de referencia, un valor > 1 indica “mejores prestaciones”. Por lo tanto, mejor rendimiento tendría ahora la unidad de tipo B.
+
+Relación prestaciones coste. En este caso las prestaciones son DIRECTAMENTE proporcionales al índice SPEC:
+
+(Prestaciones/Coste)_propuesta_A = 1/500 = 0.0020 €^-1
+(Prestaciones/Coste)_propuesta_B = 1.006/450 = 0.0022 €^-1
+La unidad de tipo B sería la de mejor relación prestaciones/coste (era evidente ya que era la de mejores prestaciones SPEC y la de menor precio).
+
+Ejercicio 3:
+Pregunta de teoría.
+
+
+Ejercicio 4:
+a) Demandas de servicio:
+D1=2s
+D2=0.42s
+D3=0.16s
+--> El dispositivo 1 (la CPU) es el cuello de botella (el dispositivo con mayor demanda de servicio y, por tanto, con mayor utilización ya que Ui=X0*Di).
+
+b) X0max=1/Db=0.5 tr/s (como lambda0<X0max, el servidor no está saturado).
+X0min = 0 (si lambda0 fuera 0, la productividad del servidor sería 0 como es lógico).
+
+R0min = D1 + D2 + D3 = 2.58s
+R0max = infinito tiempo (cuando el servidor se sature).
+
+c) Ley del flujo forzado (no indicar la ley correctamente resta 0.25 puntos)
+X1 = X0*V1 = 3 tr/s ya que X0 = lambda0 = 0.3 tr/s al no estar el servidor saturado.
+
+d) U2=X0*D2=0.13 (13%) ya que X0 = lambda0 = 0.3 tr/s al no estar el servidor saturado.
+Si lambda0 fuese el doble, el servidor estaría saturado por lo que U2 no podría ser el doble. El valor máximo que puede alcanzar U2 sería:
+U2 = X0max*D2 = 0.21 (21%).
+
+e) 
+Llamamos V2’ y V3’ a las nuevas razones de visita de los discos A y B respectivamente (los tiempos de servicio son los mismos ya que los discos son los mismos). Tenemos:
+V2’+V3’ = V2+V3 = 14 (cada trabajo que llega al servidor sigue necesitando 14 accesos a disco)
+D2’=D3’ --> V2’*S2 = V3’*S3 --> 0.07*V2’=0.02*V3’
+Resolviendo el sistema de ecuaciones obtenemos:
+V3’=10.9
+V2’=3.1
+
+Sumar las demandas que había antes del cambio y asignar la mitad a cada disco sería una respuesta incorrecta ya que esto haría que la suma de las nuevas razones de visita no sean iguales a la suma de las razones de visita antes del cambio (los procesos siguen requiriendo una media de 14 visitas a las unidades de almacenamiento).
+
+Por tanto, se trata de calcular R0 en un problema con los siguientes valores:
+Dispositivo     Si      Vi'
+CPU (1) 0.2     10
+Disco A (2)     0.07    3.1
+Disco B (3)     0.02    10.9
+
+Con la hipótesis que Ri=(Ni+1)*Si se puede deducir (ver apuntes) que:
+R0=D1/(1-lambda0*D1) + D2/(1-lambda0*D2) + D3/(1-lambda0*D3) = 5.47s (sin la mejora el valor de R0 habría sido 5.65s por lo que apenas si se nota en este caso ya que no se ha mejorado el dispositivo cuello de botella).
+
+Ejercicio 5:
+
+a) 
+Nos dan:
+NT= 20 usuarios = 20 vídeos = 20 trabajos
+R0 = 300s (si no se es capaz de deducir que el dato que nos dan es R0, se considera un fallo conceptual grave por lo que el ejercicio está mal).
+T = 3h = 10800s
+C0 = 650 trabajos (si no se es capaz de deducir que el dato que nos dan es C0, se considera un fallo conceptual grave por lo que el ejercicio está mal).
+
+Ley de Little aplicada a un sistema cerrado interactivo: NT=X0*(R0+Z). 
+Como X0=C0/T = 0.06tr/s, se deduce fácilmente que Z= 32.3s 
+
+b) Ley de Little aplicada a los usuarios en reflexión (no indicar la ley correctamente resta 0.25 puntos): Nz = X0*Z = 1.94 usuarios.

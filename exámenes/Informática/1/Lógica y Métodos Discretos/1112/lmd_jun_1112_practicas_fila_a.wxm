@@ -1,0 +1,188 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.04.0 ] */
+
+/* [wxMaxima: title   start ]
+Examen de Prácticas LMD (Junio 2012)
+Grupos C3 y E3
+   [wxMaxima: title   end   ] */
+
+/* [wxMaxima: section start ]
+Ejercicio
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: comment start ]
+Sea x el número formado por las 3 últimas cifras de tu DNI e y=3000 + x. 
+¿Cuántos números hay con 4 cifras tales que las cifras sumen 20?
+¿Cuántos de ellos son mayores que y?
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+suma_cifras(n):=block([s:0],for i:1 while n>9 do (s:s+mod(n,10),n:quotient(n,10)),s+n);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+g(n):=is(suma_cifras(n)=20);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+24211557;  x = 557;  y = 3000 + 557 = 3557
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+h(n):=is(n>3557);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+set_display('ascii);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+A:sublist(makelist(i,i,1000,9999),g)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+length(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B:sublist(A,h)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+length(B);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: section start ]
+Ejercicio
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+load(graphs);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+hacemos la función booleana que decide si dos vértices están conectados
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(x,y) := is(abs(x-y) = 4 or abs(x-y) = 5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+construimos el grafo
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+grafo:make_graph(makelist(i,i,0,100),f);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+hacemos la lista de las componentes conexa y contamos el nº de elementos 
+de la misma. Esto dará el número de componentes conexas del grafo, que es 
+1 como se verá.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+A:connected_components(grafo);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+length(A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+el número cromático de grafo es 3
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+chromatic_number(grafo);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Tiene grafo un camino de Euler porque es conexo y todos sus vértices salvo 
+exáctamente dos tienen grado par. Los vértices de grado impar son el 4 y el
+96. El camino de Euler puede partir de cualquiera de ellos y llegar al otro. 
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+degree_sequence(grafo);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+print_graph(grafo);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+longitud del ciclo más corto: 4
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+girth(grafo);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+grafo no es bipartito.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+is_bipartite(grafo);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+camino más corto del 16 al 32
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+shortest_path(16,32,grafo);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+El camino más corto es [16,20,24,28,32]. Hay un fallo en el paquete "graphs"
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: section start ]
+Ejercicio
+   [wxMaxima: section end   ] */
+
+/* [wxMaxima: input   start ] */
+load("/Users/fmgo/Documents/Dropbox/didactica/lmd_practicas_1112/practicas_1112_maxima/sesion_07/logic4alumnos/logic.lisp")$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load("/home/usuario/Documentos/LMD/Curso 2011-2012/Practicas/logic.lisp")$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha: (a implies (e implies c)) implies a;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+beta: a implies (b and (not d));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+delta: not((e implies c) and b and (not d));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gamma: (((not c) implies (not e)) implies a) implies (b implies d);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+psi: alpha implies (beta implies (delta implies gamma));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+no es consecuencia lógica
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+	characteristic_vector(psi,a,b,c,d,e);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+el único "false" que aparece corresponde a [a,b,c,d,e]=[1,1,0,0,1]
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
