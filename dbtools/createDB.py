@@ -38,5 +38,5 @@ class DocTag(Model):
         database = MySQLitedb # this model is in *.db database
 
 MySQLitedb.create_tables([Documento, Tag, DocTag])
-MySQLitedb.execute_sql("CREATE VIEW examen AS SELECT A.nom_doc, A.ruta_doc, B.nom_tag_id FROM documento AS A INNER JOIN doctag AS B ON A.id_doc=B.id_doc_id")
+MySQLitedb.execute_sql("CREATE VIEW examen AS SELECT A.nom_doc, A.ruta_doc, B.nom_tag_id, C.tipo_tag FROM doctag AS B INNER JOIN documento AS A ON A.id_doc=B.id_doc_id INNER JOIN tag AS C ON C.nom_tag=B.nom_tag_id")
 #MySQLitedb.close()

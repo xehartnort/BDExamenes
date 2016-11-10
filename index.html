@@ -13,41 +13,41 @@
   <script type="text/javascript" src="autocomplete.js"></script>
   <!--Título de la página que se muestra en la pestaña del navegador-->
   <title>Base de datos de exámenes</title>
+  <style>
+    .ui-autocomplete-term { font-weight: bold; color: blue; }
+    .ui-autocomplete { max-height: 100px; overflow-y: auto;
+      /* prevent horizontal scrollbar */
+      overflow-x: hidden;}
+    ul.pagination { display: inline-block; padding: 0; margin: 0;}
+    ul.pagination li {display: inline;}
+    ul.pagination li a { color: black; float: left;padding: 4px 8px;
+        text-decoration: none; }
+    ul.pagination li a.active { background-color: #10AF50; color: white; }
+    ul.pagination li a:hover:not(.active) { background-color: #aaa; }
+  </style>
   <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
   <body>
-    <style>
-    .ui-autocomplete-term { font-weight: bold; color: blue; }
-    .ui-autocomplete {
-      max-height: 100px;
-      overflow-y: auto;
-      /* prevent horizontal scrollbar */
-      overflow-x: hidden;
-    }
-    /* IE 6 doesn't support max-height
-     * we use height instead, but this forces the menu to always be this tall
-     */
-    * html .ui-autocomplete { height: 100px; }
-    </style>
     <div class="ui-widget">
       <label>Grado:      </label>
-      <input id="grado" placeholder="Escribe tu grado, por ejemplo: informática" size="50">
+      <input id="grado" placeholder="Escribe tu grado, por ejemplo: informática" size="40">
     </div>
     <div class="ui-widget">
       <label>Curso:      </label>
-      <input id="curso" placeholder="Escribe un curso, por ejemplo: segundo" size="50">
+      <input id="curso" placeholder="Escribe un curso, por ejemplo: segundo" size="40">
     </div>
     <div class="ui-widget">
       <label>Asignatura: </label>
-      <input id="asig" placeholder="Escribe una asignatura, por ejemplo: algorítmica" size="50">
+      <input id="asig" placeholder="Escribe una asignatura, por ejemplo: algorítmica" size="40">
     </div>
     <div class="ui-widget">
       <label>Año:        </label>
-      <input id="anio" placeholder="Escribe un año, por ejemplo: 1314" size="50">
+      <input id="anio" placeholder="Escribe un año, por ejemplo: 1314" size="40">
     </div>
     <div id="results">
-      <br><label>Exámenes: </label>
+<!--      <br><label>Exámenes: </label> -->
       <ul id="lista"></ul>
     </div>
+    <ul id="pages" class="pagination"></ul>
   </body>
 </head>
 </html>

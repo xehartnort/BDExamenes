@@ -1,16 +1,31 @@
-function mostrarResultados(){
+function mostrarResultados(numpag){
   var args = "tag0="+encodeURI($("#grado").val())+
-    "&tag1="+encodeURI($("#asig").val())+
-    "&tag2="+encodeURI($("#anio").val())+
-    "&tag3="+encodeURI($("#curso").val());
+            "&tag1="+encodeURI($("#asig").val())+
+            "&tag2="+encodeURI($("#anio").val())+
+            "&tag3="+encodeURI($("#curso").val())+
+            "&page="+numpag;
   $.getJSON( 'getter.php', args, function (data) { // success handler
     $('#lista').empty();
     if(data.length==0 || data==null){
       $('#lista').append('<li>'+'No se encontraron resultados'+'</li>');
     }else{
       $.each(data, function(key, value) {
-        var path2file = encodeURI(value+"/"+key);
-        $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
+        if(key!="num_r"){
+          var path2file = encodeURI(value+"/"+key);
+          $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
+        }else{ // add the number of posible pages
+          $('#pages').empty();
+          var num_pages = Math.floor(value/20);
+          for (i=1; i<=num_pages; i++) {
+            if(i == numpag){
+              $('#pages').append(
+                "<li onclick='mostrarResultados("+i+")'><a class='active'>"+i+'</a></li>');
+            }else{
+              $('#pages').append(
+                "<li onclick='mostrarResultados("+i+")'><a>"+i+'</a></li>');
+            }
+          }
+        }
       });
     }
   });
@@ -41,14 +56,14 @@ function sugerencias( id_input ){
 $(document).ready(function() {
   $('#grado').val("");
   sugerencias("grado");
-  $('#grado').on('input', function(){mostrarResultados();});
+  $('#grado').on('input', function(){mostrarResultados(1);});
   $('#curso').val("");
   sugerencias("curso");
-  $('#curso').on('input', function(){mostrarResultados();});
+  $('#curso').on('input', function(){mostrarResultados(1);});
   $('#asig').val("");
   sugerencias("asig");
-  $('#asig').on('input', function(){mostrarResultados();});
+  $('#asig').on('input', function(){mostrarResultados(1);});
   $('#anio').val("");
   sugerencias("anio");
-  $('#anio').on('input', function(){mostrarResultados();});
+  $('#anio').on('input', function(){mostrarResultados(1);});
 });
