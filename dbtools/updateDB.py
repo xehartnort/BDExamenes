@@ -146,4 +146,4 @@ for (dirpath, dirnames, files) in os.walk(".."):
                         with open('rm_duplicated_files', 'a') as the_file:
                             path = dirpath[3:]+"/"+filename
                             path = path.replace(" ","\ ")
-                            the_file.write("rm ../"+path+"\n")
+                            the_file.write("rm -f ../"+path+"\n")
