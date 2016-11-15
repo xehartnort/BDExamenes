@@ -30,14 +30,30 @@ function mostrarResultados(numpag){
     }
   });
 }
-function sugerencias( id_input ){
-  var termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
+function autocompletar( id_input ){
+  var args = "&caller="+id_input;
+  switch (id_input) {
+    case "grado":
+      args += "&tag0="+encodeURI($("#curso").val())+"&tag1="+encodeURI($("#asig").val())+
+              "&tag2="+encodeURI($("#anio").val());
+      break;
+    case "asig":
+      args += "&tag0="+encodeURI($("#curso").val())+"&tag1="+encodeURI($("#grado").val())+
+              "&tag2="+encodeURI($("#anio").val());
+      break;
+    case "anio":
+      args += "&tag0="+encodeURI($("#curso").val())+"&tag1="+encodeURI($("#asig").val())+
+              "&tag2="+encodeURI($("#grado").val());
+      break;
+    case "curso":
+      args += "&tag0="+encodeURI($("#grado").val())+"&tag1="+encodeURI($("#asig").val())+
+              "&tag2="+encodeURI($("#anio").val());
+      break;
+  }
   $( "#"+id_input ).autocomplete({
-    delay: 500,
-    minLength: 2,
+    delay: 200,
     source: function( request, response ) {
-      var args = "term="+request.term+"&"+"tipo="+id_input;
-      $.getJSON( "tagger.php", args, response );
+      $.getJSON( "tagger.php", "term="+request.term+args, response );
     },
     open: function (e, ui) { // hace que la selección escrita sea en negrita
         var acData = $(this).data('ui-autocomplete');
@@ -55,15 +71,18 @@ function sugerencias( id_input ){
 }
 $(document).ready(function() {
   $('#grado').val("");
-  sugerencias("grado");
+  $('#grado').on('input', function(){autocompletar("grado")});
   $('#grado').on('input', function(){mostrarResultados(1);});
+
   $('#curso').val("");
-  sugerencias("curso");
   $('#curso').on('input', function(){mostrarResultados(1);});
+  $('#curso').on('input', function(){autocompletar("curso");});
+
   $('#asig').val("");
-  sugerencias("asig");
   $('#asig').on('input', function(){mostrarResultados(1);});
+  $('#asig').on('input', function(){autocompletar("asig");});
+
   $('#anio').val("");
-  sugerencias("anio");
   $('#anio').on('input', function(){mostrarResultados(1);});
+  $('#anio').on('input', function(){autocompletar("anio");});
 });

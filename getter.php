@@ -24,7 +24,7 @@ if( $_GET["tag0"] !="" || $_GET["tag1"] !="" || $_GET["tag2"] !="" || $_GET["tag
   $offset = ($_GET["page"]-1)*$row_count;
   $query->execute();
   $results = $query->fetchAll(PDO::FETCH_ASSOC);
-  $result["num_r"] = count($results);
+  $result["num_r"] = count($results); // número de resultados de la consulta
   for($i=$offset; $i<$offset+$row_count; ++$i){
     $row=$results[$i];
     $result[$row["nom_doc"]] = $row["ruta_doc"];
