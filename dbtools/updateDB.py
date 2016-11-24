@@ -137,13 +137,11 @@ for (dirpath, dirnames, files) in os.walk(".."):
                         doc_tags.append({'id_doc':sha1, 'nom_tag':'5'})
                         doc_tags.append({'id_doc':sha1, 'nom_tag':'quinto'})
                 with MySQLitedb.atomic():
-                    Documento.insert(id_doc=sha1, nom_doc=filename,
-                        ruta_doc=dirpath[3:]).execute() # skip ../ from dirpath
+                    Documento.insert(id_doc=sha1, nom_doc=filename, ruta_doc=dirpath[3:]).execute() # skip ../ from dirpath
                     DocTag.insert_many(doc_tags).execute()
             except peewee.IntegrityError as e:
-                for i in Documento.select().where(Documento.id_doc==sha1):
-                    if(dirpath[3:]+"/"+filename != i.ruta_doc+"/"+i.nom_doc):
-                        with open('rm_duplicated_files', 'a') as the_file:
-                            path = dirpath[3:]+"/"+filename
-                            path = path.replace(" ","\ ")
-                            the_file.write("rm -f ../"+path+"\n")
+                i=Documento.select().where(Documento.id_doc==sha1)[0]
+                if(dirpath[3:]+"/"+filename != i.ruta_doc+"/"+i.nom_doc):
+                    with open('duplicates', 'a') as the_file:
+                        path = dirpath+"/"+filename
+                        the_file.write(path+"\n")
