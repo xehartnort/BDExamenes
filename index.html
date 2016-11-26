@@ -11,43 +11,31 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <!-- Código Javascript-jQuery -->
   <script type="text/javascript" src="autocomplete.js"></script>
+  <link rel="stylesheet" href="css/style.min.css">
   <!--Título de la página que se muestra en la pestaña del navegador-->
   <title>Base de datos de exámenes</title>
-  <style>
-    .ui-autocomplete-term { font-weight: bold; color: blue; }
-    .ui-autocomplete { max-height: 100px; overflow-y: auto;
-      /* prevent horizontal scrollbar */
-      overflow-x: hidden;}
-    ul.pagination { display: inline-block; padding: 0; margin: 0;}
-    ul.pagination li {display: inline;}
-    ul.pagination li a { color: black; float: left;padding: 4px 8px;
-        text-decoration: none; }
-    ul.pagination li a.active { background-color: #4CAF50; color: white; }
-    ul.pagination li a:hover:not(.active) { background-color: #ddd; }
-  </style>
+</head>
   <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
   <body>
-    <div class="ui-widget">
-      <label>Grado:      </label>
-      <input id="grado" placeholder="Escribe tu grado, por ejemplo: informática" size="40">
+    <div class="shape">
+      <div class="ui-widget">
+        <!--<label>Grado:      </label>-->
+        <input id="grado" class="search-input" placeholder="Escribe tu grado, por ejemplo: informática" size="40">
+      </div>
+      <div class="ui-widget">
+        <!--<label>Curso:      </label>-->
+        <input id="curso" class="search-input" placeholder="Escribe un curso, por ejemplo: segundo" size="40">
+      </div>
+      <div class="ui-widget">
+        <!--<label>Asignatura: </label>-->
+        <input id="asig" class="search-input" placeholder="Escribe una asignatura, por ejemplo: algorítmica" size="40">
+      </div>
+      <div class="ui-widget">
+        <!--<label>Año:        </label>-->
+        <input id="anio" class="search-input" placeholder="Escribe un año, por ejemplo: 1314" size="40">
+      </div>
     </div>
-    <div class="ui-widget">
-      <label>Curso:      </label>
-      <input id="curso" placeholder="Escribe un curso, por ejemplo: segundo" size="40">
-    </div>
-    <div class="ui-widget">
-      <label>Asignatura: </label>
-      <input id="asig" placeholder="Escribe una asignatura, por ejemplo: algorítmica" size="40">
-    </div>
-    <div class="ui-widget">
-      <label>Año:        </label>
-      <input id="anio" placeholder="Escribe un año, por ejemplo: 1314" size="40">
-    </div>
-    <div id="results">
-<!--      <br><label>Exámenes: </label> -->
-      <ul id="lista"></ul>
-    </div>
+    <ul id="lista" class="results"></ul>
     <ul id="pages" class="pagination"></ul>
   </body>
-</head>
 </html>
