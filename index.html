@@ -11,12 +11,16 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <!-- Código Javascript-jQuery -->
   <script type="text/javascript" src="autocomplete.js"></script>
+  <!-- Estilos CSS propios -->
   <link rel="stylesheet" href="css/style.min.css">
   <!--Título de la página que se muestra en la pestaña del navegador-->
   <title>Base de datos de exámenes</title>
 </head>
   <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
   <body>
+    <div class="shape">
+      <div class="header-text">Base de datos de exámenes</div>
+    </div>
     <div class="shape">
       <div class="ui-widget">
         <!--<label>Grado:      </label>-->
@@ -35,7 +39,11 @@
         <input id="anio" class="search-input" placeholder="Escribe un curso académico, por ejemplo: 1314" size="40">
       </div>
     </div>
-    <ul id="lista" class="results"></ul>
-    <ul id="pages" class="pagination"></ul>
+    <div class="shape">
+      <ul id="lista" class="results"></ul>
+    </div>
+    <div class="shape">
+      <ul id="pages" class="pagination"></ul>
+    </div>
   </body>
 </html>

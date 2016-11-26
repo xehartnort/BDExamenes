@@ -23,9 +23,10 @@
     transition: width @duration ease-in-out;
 }
 
-.setFont(@size, @wheight:normal){
+.setFont(@size, @weight:normal){
+	color:@themeFontColor;
 	font-size: @size;
-	font-weight: @wheight;
+	font-weight: @weight;
 	font-family: @themeFont;
 }
 
@@ -42,18 +43,19 @@
 } 
 
 .shape{
-    display:inline-block;
-    width:100%;
-	height:auto;
-    background:@themeBackgroundColor;
+    display: inline-block;
+    width: 96%;
+	height: auto;
+    background: @themeBackgroundColor;
     padding: 15px 15px;
+    margin: 5px 5px;
     .border(0px,false,@defaultRadius,@themeBackgroundColor); 
 }
 
 ul.results{
 	list-style-type: none;
     background: @themeBackgroundColor;
-    padding: 20px;
+    padding: 1px;
     .border(0px);
 }
 
@@ -69,25 +71,14 @@ ul.results li a{
     display: block;
 	text-decoration: none;
 	color: @themeFontColor;
-	.setFont(16px,bold)
+	.setFont(16px,bold);
 }
 
 ul.results li:hover {
 	background-color: @themeBackgroundColor;
 }
 
-.ui-autocomplete-term { 
-	font-weight: bold; 
-	color: @themeColor; 
-}
-
-.ui-autocomplete { 
-	max-height: 100px; 
-	overflow-y: auto;
-    overflow-x: hidden;
-}
-
-ul.pagination { 
+ul.pagination {
 	display: inline-block; 
 	padding: 0; 
 	margin: 0;
@@ -98,11 +89,12 @@ ul.pagination li {
 }
 
 ul.pagination li a { 
+	background-color: white; 
 	color: black; 
 	float: left;
 	padding: 4px 8px;
     text-decoration: none; 
-    .setFont(16px)
+    .setFont(16px);
 }
 
 ul.pagination li a.active { 
@@ -111,4 +103,25 @@ ul.pagination li a.active {
 }
 ul.pagination li a:hover:not(.active) { 
 	background-color: @themeBackgroundColor;
+}
+
+.ui-autocomplete-term { 
+	.setFont(16px,bold);
+}
+
+.ui-autocomplete { 
+	max-height: 100px; 
+	overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.header-text {
+	text-align: left;
+	.setFont(40px, bold);
+}
+
+#logo{
+	width:auto;
+	height:40px;
+	float: right;
 }
