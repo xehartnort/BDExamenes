@@ -6,6 +6,7 @@ function mostrarResultados(numpag){
             "&page="+numpag;
   $.getJSON( 'getter.php', args, function (data) { // success handler
     $('#lista').empty();
+    $('#pages').empty();
     if(data.length==0 || data==null){
       $('#lista').append('<li>'+'No se encontraron resultados'+'</li>');
     }else{
@@ -14,7 +15,6 @@ function mostrarResultados(numpag){
           var path2file = encodeURI(value+"/"+key);
           $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
         }else{ // add the number of posible pages
-          $('#pages').empty();
           var num_pages = Math.floor(value/20);
           for (i=1; i<=num_pages; i++) {
             if(i == numpag){
@@ -51,9 +51,13 @@ function autocompletar( id_input ){
       break;
   }
   $( "#"+id_input ).autocomplete({
-    delay: 200,
+    delay: 500,
+    minLength: 2,
     source: function( request, response ) {
       $.getJSON( "tagger.php", "term="+request.term+args, response );
+    },
+    select: function(){
+      setTimeout(function(){mostrarResultados(1);},50); // sin timeout no toma el último valor
     },
     open: function (e, ui) { // hace que la selección escrita sea en negrita
         var acData = $(this).data('ui-autocomplete');
@@ -69,20 +73,34 @@ function autocompletar( id_input ){
      }
   });
 }
+
 $(document).ready(function() {
   $('#grado').val("");
-  $('#grado').on('input', function(){autocompletar("grado")});
-  $('#grado').on('input', function(){mostrarResultados(1);});
+  //$('#grado').on( "autocompletechange", function( event, ui ){});
+  $('#grado').on('input', function(){
+    autocompletar("grado");
+    mostrarResultados(1);
+  });
 
-  $('#curso').val("");
-  $('#curso').on('input', function(){mostrarResultados(1);});
-  $('#curso').on('input', function(){autocompletar("curso");});
 
   $('#asig').val("");
-  $('#asig').on('input', function(){mostrarResultados(1);});
-  $('#asig').on('input', function(){autocompletar("asig");});
+  $('#asig').on( "autocompletechange", function( event, ui ){});
+  $('#asig').on('input', function(){
+    autocompletar("asig");
+    mostrarResultados(1);
+  });
 
   $('#anio').val("");
-  $('#anio').on('input', function(){mostrarResultados(1);});
-  $('#anio').on('input', function(){autocompletar("anio");});
+  $('#anio').on( "autocompletechange", function( event, ui ){});
+  $('#anio').on('input', function(){
+    autocompletar("anio");
+    mostrarResultados(1);
+  });
+
+  $('#curso').val("");
+  //$('#curso').on( "autocompletechange", function( event, ui ){});
+  $('#curso').on('input', function(){
+    autocompletar("curso");
+    mostrarResultados(1);
+  });
 });
