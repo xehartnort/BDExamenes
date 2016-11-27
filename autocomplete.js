@@ -7,27 +7,25 @@ function mostrarResultados(numpag){
   $.getJSON( 'getter.php', args, function (data) { // success handler
     $('#lista').empty();
     $('#pages').empty();
-    if(data.length==0 || data==null){
-      $('#lista').append('<li>'+'No se encontraron resultados'+'</li>');
-    }else{
-      $.each(data, function(key, value) {
-        if(key!="num_r"){
+    $.each(data, function(key, value) {
+      if(key!="num_r"){
+        if(value != null){
           var path2file = encodeURI(value+"/"+key);
           $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
-        }else{ // add the number of posible pages
-          var num_pages = Math.floor(value/20);
-          for (i=1; i<=num_pages; i++) {
-            if(i == numpag){
-              $('#pages').append(
-                "<li onclick='mostrarResultados("+i+")'><a class='active'>"+i+'</a></li>');
-            }else{
-              $('#pages').append(
-                "<li onclick='mostrarResultados("+i+")'><a>"+i+'</a></li>');
-            }
+        }
+      }else{ // add the number of posible pages
+        var num_pages = Math.floor(value/20);
+        for (i=1; i<=num_pages; i++) {
+          if(i == numpag){
+            $('#pages').append(
+              "<li onclick='mostrarResultados("+i+")'><a class='active'>"+i+'</a></li>');
+          }else{
+            $('#pages').append(
+              "<li onclick='mostrarResultados("+i+")'><a>"+i+'</a></li>');
           }
         }
-      });
-    }
+      }
+    });
   });
 }
 function autocompletar( id_input ){

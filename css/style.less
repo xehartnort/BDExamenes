@@ -1,26 +1,13 @@
 @defaultRadius: 8px;
 @themeColor: #6d99d6;
-@themeBackgroundColor: #ddf;
-@themeFontColor: #333333;
+@themeBackgroundColor: #99ccff;
+@other:#ddf;
+@themeFontColor: #404040;
 @themeFont: "Trebuchet MS", Helvetica, sans-serif;
 
-.border(@size,@focus:false,@radius:@defaultRadius,@color:@themeColor) 
-	when (@focus = true){
-	    border: none;
-	    border-bottom: @size solid @color; 
-	    border-radius: @radius;
-	}
-
-.border(@size,@focus:false,@radius:@defaultRadius,@color:@themeColor) 
-	when (@focus = false){
-	    border: @size solid @color;
-	    border-radius: @radius;
-	}
-
-.transitionEffect(@defaultSize:40%,@duration:0.4s){
-	width: @defaultSize;
-	-webkit-transition: width @duration ease-in-out;
-    transition: width @duration ease-in-out;
+.border(@size,@radius:@defaultRadius,@color:@themeColor){
+    border: @size solid @color;
+    border-radius: @radius;
 }
 
 .setFont(@size, @weight:normal){
@@ -31,15 +18,14 @@
 }
 
 .search-input:focus {
-    .border(2px,true);
-    width: 41%;
+    .border(2px,@defaultRadius,@themeBackgroundColor);
 }
 
 .search-input{
     padding: 6px 6px;
     margin: 2px;
+  	width: 98%;
     .border(2px);
-    .transitionEffect();
 } 
 
 .shape{
@@ -49,7 +35,7 @@
     background: @themeBackgroundColor;
     padding: 15px 15px;
     margin: 5px 5px;
-    .border(0px,false,@defaultRadius,@themeBackgroundColor); 
+    .border(1px,@defaultRadius,@themeBackgroundColor); 
 }
 
 ul.results{
@@ -63,7 +49,7 @@ ul.results li{
 	list-style-type: none;
     background: white;
     margin: 5px;
-    .border(0px,false,@defaultRadius/2);
+    .border(0px,@defaultRadius/2);
 }
 
 ul.results li a{
@@ -94,7 +80,7 @@ ul.pagination li a {
 	float: left;
 	padding: 4px 8px;
     text-decoration: none; 
-    .setFont(16px);
+    .setFont(16px,bold);
 }
 
 ul.pagination li a.active { 
@@ -118,10 +104,4 @@ ul.pagination li a:hover:not(.active) {
 .header-text {
 	text-align: left;
 	.setFont(40px, bold);
-}
-
-#logo{
-	width:auto;
-	height:40px;
-	float: right;
 }
