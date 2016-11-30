@@ -7,25 +7,34 @@ function mostrarResultados(numpag){
   $.getJSON( 'getter.php', args, function (data) { // success handler
     $('#lista').empty();
     $('#pages').empty();
-    $.each(data, function(key, value) {
-      if(key!="num_r"){
-        if(value != null){
-          var path2file = encodeURI(value+"/"+key);
-          $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
-        }
-      }else{ // add the number of posible pages
-        var num_pages = Math.floor(value/20);
-        for (i=1; i<=num_pages; i++) {
-          if(i == numpag){
-            $('#pages').append(
-              "<li onclick='mostrarResultados("+i+")'><a class='active'>"+i+'</a></li>');
+    if( data["num_r"] > 0){
+      $(".shape:has(ul)").show();
+      $.each(data, function(key, value) {
+        if(key!="num_r"){
+          if(value != null){
+            var path2file = encodeURI(value+"/"+key);
+            $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
+          }
+        }else{ // add the number of posible pages
+          var num_pages = Math.ceil(value/20);
+          if(num_pages > 1){ // don't show pagination if only 1 page
+            for (i=1; i<=num_pages; i++) {
+              if(i == numpag){
+                $('#pages').append(
+                  "<li onclick='mostrarResultados("+i+")'><a class='active'>"+i+'</a></li>');
+              }else{
+                $('#pages').append(
+                  "<li onclick='mostrarResultados("+i+")'><a>"+i+'</a></li>');
+              }
+            }
           }else{
-            $('#pages').append(
-              "<li onclick='mostrarResultados("+i+")'><a>"+i+'</a></li>');
+            $(".shape:has(ul.pagination)").hide();
           }
         }
-      }
-    });
+      });
+    }else{
+      $(".shape:has(ul)").hide();
+    }
   });
 }
 function autocompletar( id_input ){
@@ -49,8 +58,6 @@ function autocompletar( id_input ){
       break;
   }
   $( "#"+id_input ).autocomplete({
-    delay: 500,
-    minLength: 2,
     source: function( request, response ) {
       $.getJSON( "tagger.php", "term="+request.term+args, response );
     },
@@ -73,8 +80,10 @@ function autocompletar( id_input ){
 }
 
 $(document).ready(function() {
+  $(".shape:has(ul)").hide();
+
   $('#grado').val("");
-  //$('#grado').on( "autocompletechange", function( event, ui ){});
+  $('#grado').on( "autocompleteselect", function( event, ui ){});
   $('#grado').on('input', function(){
     autocompletar("grado");
     mostrarResultados(1);
@@ -82,21 +91,21 @@ $(document).ready(function() {
 
 
   $('#asig').val("");
-  $('#asig').on( "autocompletechange", function( event, ui ){});
+  $('#grado').on( "autocompleteselect", function( event, ui ){});
   $('#asig').on('input', function(){
     autocompletar("asig");
     mostrarResultados(1);
   });
 
   $('#anio').val("");
-  $('#anio').on( "autocompletechange", function( event, ui ){});
+  $('#grado').on( "autocompleteselect", function( event, ui ){});
   $('#anio').on('input', function(){
     autocompletar("anio");
     mostrarResultados(1);
   });
 
   $('#curso').val("");
-  //$('#curso').on( "autocompletechange", function( event, ui ){});
+  $('#grado').on( "autocompleteselect", function( event, ui ){});
   $('#curso').on('input', function(){
     autocompletar("curso");
     mostrarResultados(1);
