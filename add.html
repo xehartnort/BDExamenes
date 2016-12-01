@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- EXTERIOR-->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- LOCAL -->
+    <link type="text/css" rel="stylesheet" href="/BDExamenes/css/style.min.css" />
+    <script type="text/javascript" src="/BDExamenes/js/drop.js"></script>
+    <title>Base de datos de exámenes</title>
+  </head>
+  <body>
+    <div class="shape">
+      <div class="header-text">Base de datos de exámenes: <div class="subheader-text"><a href="/BDExamenes/index.html">buscador</a>, añadir exámenes</div>
+      </div>
+    </div>
+    <div class="shape">
+      <form id="drop" method="post" class="dropzone" enctype="multipart/form-data"></form>
+    </div>
+    <div class="shape">
+      <button type="submit" id="submit-all" class="button">Confirmar subida de exámenes</button>
+      <button type="submit" id="delete-all" class="button">Eliminar los exámenes</button>
+    </div>
+  </body>
+</html>

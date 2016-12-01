@@ -4,7 +4,7 @@
  // $_GET["tag2"]="";
  // $_GET["term"]="fund";
  // $_GET["caller"]="asig";
-$db = new PDO("sqlite:examenes.db");
+$db = new PDO("sqlite:../examenes.db");
 $query_text = "select nom_tag from etiqueta where nom_tag like :term and tipo_tag=:caller and id_doc_id in (";
 for($i=0; $i<3; $i++){
    $query_text .= "select id_doc_id from doctag where nom_tag_id like :tag".$i;

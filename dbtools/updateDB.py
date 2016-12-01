@@ -33,18 +33,18 @@ class Tag(Model):
                     primary_key = True)
     tipo_tag = CharField(null = False,
                     constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'otro')")])
-    preferencia = IntegerField(default=0) # incrementa con cada visita
+    #preferencia = IntegerField(default=0) # incrementa con cada visita
     class Meta:
         database = MySQLitedb # this model is in *.db database
 
 class DocTag(Model):
     id_doc = ForeignKeyField(Documento, related_name='documentos')
     nom_tag = ForeignKeyField(Tag, related_name='tags')
-    #ver = BooleanField(default = True)
+    comprobado = BooleanField(default = True) 
     class Meta:
         primary_key = CompositeKey('id_doc', 'nom_tag')
         database = MySQLitedb # this model is in *.db database
-
+        
 def fill_existing_tags(tipo_tag):
     tags=[]
     for i in Tag.select().where(Tag.tipo_tag==tipo_tag):

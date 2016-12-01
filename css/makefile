@@ -1,9 +1,12 @@
-CC=lessc
-OPT=--clean-css="--s1 --advanced"
-FILENAME=style
+CCS=lessc
+OPTCSS=--clean-css="--s1 --advanced"
+DIRCSS=css/
+FILESCSS=style
 
-all : $(FILENAME).less
-	$(CC) $< $(OPT) $(FILENAME).min.css
+all: css
+
+css : $(FILESCSS).less
+	$(CCS) $< $(OPTCSS) $(FILESCSS).min.css
 
 # PHONY rule
-.PHONY: all
+.PHONY: all css

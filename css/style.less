@@ -4,18 +4,33 @@
 @other:#ddf;
 @themeFontColor: #404040;
 @themeFont: "Trebuchet MS", Helvetica, sans-serif;
+@smallFont: 16px;
+@midFont: 24px; 
+@bigFont: 32px;
+/* ~~~~~~~~~~~~~~~~~~~~~~~~ COMMON FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .border(@size,@radius:@defaultRadius,@color:@themeColor){
     border: @size solid @color;
     border-radius: @radius;
 }
 
-.setFont(@size, @weight:normal){
+.setFont(@size:@smallFont, @weight:bold){
 	color:@themeFontColor;
 	font-size: @size;
 	font-weight: @weight;
 	font-family: @themeFont;
 }
+
+.shape{
+    display: inline-block;
+    width: 96%;
+	height: auto;
+    background: @themeBackgroundColor;
+    padding: 15px 15px;
+    margin: 5px 5px;
+    .border(1px,@defaultRadius,@themeBackgroundColor); 
+}
+/* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE INDEX.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .search-input:focus {
     .border(2px,@defaultRadius,@themeBackgroundColor);
@@ -28,16 +43,6 @@
     .border(2px);
 } 
 
-.shape{
-    display: inline-block;
-    width: 96%;
-	height: auto;
-    background: @themeBackgroundColor;
-    padding: 15px 15px;
-    margin: 5px 5px;
-    .border(1px,@defaultRadius,@themeBackgroundColor); 
-}
-
 ul.results{
 	list-style-type: none;
     background: @themeBackgroundColor;
@@ -48,7 +53,7 @@ ul.results{
 ul.results li{
 	list-style-type: none;
     background: white;
-    margin: 5px;
+    margin: 4px;
     .border(0px,@defaultRadius/2);
 }
 
@@ -57,7 +62,7 @@ ul.results li a{
     display: block;
 	text-decoration: none;
 	color: @themeFontColor;
-	.setFont(16px,bold);
+	.setFont();
 }
 
 ul.results li:hover {
@@ -80,7 +85,7 @@ ul.pagination li a {
 	float: left;
 	padding: 4px 8px;
     text-decoration: none; 
-    .setFont(16px,bold);
+    .setFont();
 }
 
 ul.pagination li a.active { 
@@ -92,7 +97,7 @@ ul.pagination li a:hover:not(.active) {
 }
 
 .ui-autocomplete-term { 
-	.setFont(16px,bold);
+	.setFont(@smallFont,bold);
 }
 
 .ui-autocomplete { 
@@ -102,6 +107,25 @@ ul.pagination li a:hover:not(.active) {
 }
 
 .header-text {
-	text-align: left;
-	.setFont(40px, bold);
+	display:inline;
+	.setFont(@bigFont, bold);
+}
+
+.subheader-text{
+	display:inline;
+	.setFont(@midFont, bold);
+}
+/* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE ADD.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+.dropzone{
+	.setFont(@midFont,bold);
+	.border(1px,@defaultRadius,@themeBackgroundColor); 
+}
+
+.button{
+	width: 100%;
+	margin: 4px;
+	padding: 8px 8px;
+	.setFont();
+	.border(1px,@defaultRadius,@themeBackgroundColor); 
 }
