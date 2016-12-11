@@ -2,9 +2,12 @@
  // $_GET["tag0"]="";
  // $_GET["tag1"]="";
  // $_GET["tag2"]="";
- // $_GET["term"]="fund";
+ // $_GET["term"]="algoritmica";
  // $_GET["caller"]="asig";
 $db = new PDO("sqlite:../examenes.db");
+$tildes=array('a','e','i','o','u');
+$sin_tildes=array('_','_','_','_','_');
+$_GET["term"]=str_replace($tildes, $sin_tildes, $_GET["term"]);
 $query_text = "select nom_tag from etiqueta where nom_tag like :term and tipo_tag=:caller and id_doc_id in (";
 for($i=0; $i<3; $i++){
    $query_text .= "select id_doc_id from doctag where nom_tag_id like :tag".$i;

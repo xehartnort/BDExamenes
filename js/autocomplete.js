@@ -92,21 +92,21 @@ $(document).ready(function() {
 
 
   $('#asig').val("");
-  $('#grado').on( "autocompleteselect", function( event, ui ){});
+  $('#asig').on( "autocompleteselect", function( event, ui ){});
   $('#asig').on('input', function(){
     autocompletar("asig");
     mostrarResultados(1);
   });
 
   $('#anio').val("");
-  $('#grado').on( "autocompleteselect", function( event, ui ){});
+  $('#anio').on( "autocompleteselect", function( event, ui ){});
   $('#anio').on('input', function(){
     autocompletar("anio");
     mostrarResultados(1);
   });
 
   $('#curso').val("");
-  $('#grado').on( "autocompleteselect", function( event, ui ){});
+  $('#curso').on( "autocompleteselect", function( event, ui ){});
   $('#curso').on('input', function(){
     autocompletar("curso");
     mostrarResultados(1);

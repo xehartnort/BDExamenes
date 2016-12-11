@@ -13,7 +13,7 @@ La entidad *Documento* representa a todos los exámenes guardados:
 La entidad *Tag* representa una etiqueta que clasifica un elemento de la entidad *Documento*:
   - nom_tag : es el nombre o identificativo único de cada etiqueta.
   - tipo_tag : categoría en la que se sitúa la etiqueta, se consideran 5: año, curso, asignatura, grado y otro.
-  ~~- preferencia : indica el uso de una etiqueta, a mayor preferencia, mayor uso de la etiqueta y por tanto más importancia tendrá en la clasificación.~~
+  ~~- preferencia : indica el uso de una etiqueta, a mayor preferencia, mayor uso de la etiqueta y por tanto más importancia  tendrá en la clasificación.~~
 
 La entidad *DocTag* representa en duplas la asociación de un *Documento* a un *Tag* y viceversa.
 

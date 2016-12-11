@@ -1,10 +1,16 @@
 <?php
- // $_GET["tag0"]="inf";
- // $_GET["tag1"]="";
- // $_GET["tag2"]="";
- // $_GET["tag3"]="";
- // $_GET["page"]=1;
+  // $_GET["tag0"]="informática";
+  // $_GET["tag1"]="";
+  // $_GET["tag2"]="";
+  // $_GET["tag3"]="";
+  // $_GET["page"]=1;
 if( $_GET["tag0"] !="" || $_GET["tag1"] !="" || $_GET["tag2"] !="" || $_GET["tag3"] !=""){
+  $tildes=array('a','e','i','o','u');
+  $sin_tildes=array('_','_','_','_','_');
+  $_GET["tag0"]=str_ireplace($tildes, $sin_tildes, $_GET["tag0"]);
+  $_GET["tag1"]=str_ireplace($tildes, $sin_tildes, $_GET["tag1"]);
+  $_GET["tag2"]=str_ireplace($tildes, $sin_tildes, $_GET["tag2"]);
+  $_GET["tag3"]=str_ireplace($tildes, $sin_tildes, $_GET["tag3"]);
   $db = new PDO("sqlite:../examenes.db");
   $query_text = "";
   for($i=0; $i<4; ++$i) { # http://stackoverflow.com/questions/2621382/alternative-to-intersect-in-mysql

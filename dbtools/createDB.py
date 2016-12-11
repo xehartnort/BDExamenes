@@ -1,5 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/python -O
 # -*- coding: utf-8 -*-
+
 #Thing 	Corresponds to...
 #Model class    ->  Database table
 #Field instance ->  Column on a table
