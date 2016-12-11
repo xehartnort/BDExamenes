@@ -89,8 +89,9 @@ num2word=["","primero", "segundo", "tercero", "cuarto", "quinto"]
 
 for (dirpath, dirnames, files) in os.walk(".."):
     if "exámenes/" in dirpath and files: # folder exámenes and files not empty
-        tags2insert = []
+        tags_insert = []
         doc_tags = []
+        docs =[]
         tags = string_to_array(dirpath, "/") # ../exámenes/Matemáticas e Informática/1/Cálculo II/1314
         anio = tags[-1]
         asig = tags[-2]
@@ -98,18 +99,19 @@ for (dirpath, dirnames, files) in os.walk(".."):
         grado = tags[-4]
         if anio not in anios: #check if not inserted
             anios += [anio]
-            tags2insert += [{'nom_tag':anio, 'tipo_tag':'anio'}]
+            tags_insert += [{'nom_tag':anio, 'tipo_tag':'anio'}]
         if asig not in asigs:
             asigs += [asig]
-            tags2insert += [{'nom_tag':asig, 'tipo_tag':'asig'}]
+            tags_insert += [{'nom_tag':asig, 'tipo_tag':'asig'}]
         if curso not in cursos:
             cursos += [curso]
-            tags2insert += [{'nom_tag':num2word[int(curso)], 'tipo_tag':'curso'}]
+            tags_insert += [{'nom_tag':num2word[int(curso)], 'tipo_tag':'curso'}]
         if grado not in grados:
             grados += [grado]
-            tags2insert += [{'nom_tag':grado, 'tipo_tag':'grado'}]
+            tags_insert += [{'nom_tag':grado, 'tipo_tag':'grado'}]
         for filename in files:
             sha1 = sha1_file(dirpath+"/"+filename)
+            docs += [{'id_doc':sha1, 'nom_doc':filename, 'ruta_doc':dirpath[3:]}]
             doc_tags += [{'id_doc':sha1, 'nom_tag':anio}, {'id_doc':sha1, 'nom_tag':asig},
                     {'id_doc':sha1, 'nom_tag':num2word[int(curso)]}, {'id_doc':sha1, 'nom_tag':grado}]
             if asig in primero_dgiim:
@@ -134,9 +136,9 @@ for (dirpath, dirnames, files) in os.walk(".."):
             #         doc_tags.append({'id_doc':sha1, 'nom_tag':'quinto'})
         try:
             with MySQLitedb.atomic():
-                if tags2insert:
-                    Tag.insert_many(tags2insert).execute()
-                Documento.insert(id_doc=sha1, nom_doc=filename, ruta_doc=dirpath[3:]).execute() # skip ../ from dirpath
+                if tags_insert:
+                    Tag.insert_many(tags_insert).execute()
+                Documento.insert_many(docs).execute()
                 DocTag.insert_many(doc_tags).execute()
         except peewee.IntegrityError as e:
             i=Documento.select().where(Documento.id_doc==sha1)[0]
