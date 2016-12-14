@@ -1,6 +1,6 @@
 <?php
 $db = new PDO("sqlite:../examenes.db");
-$updir="../exámenes/sinClasificar";
+$updir="../sinClasificar";
 $ds=DIRECTORY_SEPARATOR;
 foreach($_FILES['file']['name'] as $index=>$filename){
 	$sha1=sha1_file($_FILES["file"]["tmp_name"][$index]);
@@ -10,7 +10,7 @@ foreach($_FILES['file']['name'] as $index=>$filename){
     $query->execute();
    	// Check if file is already uploaded and if it is already in the db
    	if(!file_exists($updir.$ds.$filename) and $query->fetchColumn()==0){
-        move_uploaded_file($_FILES["file"]["tmp_name"][$index],$updir.$ds.$filename);       
-    }           
-} 
-?> 
+        move_uploaded_file($_FILES["file"]["tmp_name"][$index],$updir.$ds.$filename);
+    }
+}
+?>

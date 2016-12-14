@@ -1,9 +1,9 @@
 <?php
- // $_GET["tag0"]="";
- // $_GET["tag1"]="";
- // $_GET["tag2"]="";
- // $_GET["term"]="algoritmica";
- // $_GET["caller"]="asig";
+//  $_GET["tag0"]="";
+//  $_GET["tag1"]="";
+//  $_GET["tag2"]="";
+//  $_GET["term"]="algoritmica";
+//  $_GET["caller"]="asig";
 $db = new PDO("sqlite:../examenes.db");
 $tildes=array('a','e','i','o','u');
 $sin_tildes=array('_','_','_','_','_');
@@ -25,7 +25,7 @@ $query->bindValue(':term', $_GET["term"].'%', PDO::PARAM_STR);
 $query->bindValue(':caller', $_GET["caller"], PDO::PARAM_STR);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_ASSOC);
-$result = [];
+//$result = [];
 foreach ($results as $row) {
 	$result[] = $row["nom_tag"];
 }
