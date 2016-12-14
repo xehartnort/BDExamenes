@@ -8,17 +8,6 @@ import hashlib
 
 MySQLitedb = SqliteDatabase('../examenes.db')
 
-'''
-    path = path to file
-    block_size = block size of your filesystem
-'''
-def sha1_file(path, block_size=4096):
-    sha = hashlib.sha1()
-    with open(path, 'rb') as f:
-        for chunk in iter(lambda: f.read(block_size*4), b''):
-            sha.update(chunk)
-    return sha.hexdigest()
-
 class Documento(Model):
     id_doc = FixedCharField(null = False,
                     primary_key = True,
@@ -45,29 +34,22 @@ class DocTag(Model):
         primary_key = CompositeKey('id_doc', 'nom_tag')
         database = MySQLitedb # this model is in *.db database
 
+'''
+    path = path to file
+    block_size = block size of your filesystem
+'''
+def sha1_file(path, block_size=4096):
+    sha = hashlib.sha1()
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(block_size*4), b''):
+            sha.update(chunk)
+    return sha.hexdigest()
 
 def fill_existing_tags(tipo_tag):
     tags=[]
     for i in Tag.select().where(Tag.tipo_tag==tipo_tag):
         tags+= [i.nom_tag]
     return tags
-
-"""
-    Convierte cadena de caracteres 'cad' en un array utilizando como separador 'sep'
-"""
-def string_to_array(cad, sep=" "):
-    array=[]
-    ele=""
-    if cad[-1]!=sep: 
-        cad+=sep
-    for i in cad:
-        if i != sep:
-            ele +=i
-        else:
-            array += [ele]
-            ele=""
-    return array
-
 
 primero_dgiim = ["Fundamentos de Software", "Lógica y Métodos Discretos",
         "Tecnología y Organización de Computadores", "Metodología de la Programación",
@@ -92,7 +74,7 @@ for (dirpath, dirnames, files) in os.walk(".."):
         tags_insert = []
         doc_tags = []
         docs =[]
-        tags = string_to_array(dirpath, "/") # ../exámenes/Matemáticas e Informática/1/Cálculo II/1314
+        tags = dirpath.split('/') # ../exámenes/Matemáticas e Informática/1/Cálculo II/1314
         anio = tags[-1]
         asig = tags[-2]
         curso = tags[-3]
