@@ -1,6 +1,6 @@
 # BDExamenes
 ## Introducción
-Este es un proyecto de la [Delegación de Estudiantes](http://deiit.ugr.es/) de la [ETSIIT](http://etsiit.ugr.es/) desarrollado por la Comisión de Información. Con este proyecto se pretende que todos los estudiantes tengan acceso al preciado tesoro de los exámenes de años anteriores. [Aquí](http://deiit.ugr.es/BDExamenes/) puedes acceder a la interfaz web del proyecto.
+Este es un proyecto de la [Delegación de Estudiantes](http://deiit.ugr.es/) de la [ETSIIT](http://etsiit.ugr.es/) desarrollado por la Comisión de Información. Con este proyecto se pretende que todos los estudiantes tengan acceso al preciado tesoro de los exámenes de años anteriores. [Aquí](http://bdexamenes.duckdns.org/BDExamenes/) puedes acceder a la interfaz web del proyecto.
 
 ## BD
 Vamos al lío. Primero comencemos explicando el modelo relacional que sostiene al nivel conceptual de la base de datos, sí, estoy hablando del diagrama entidad-relación:
