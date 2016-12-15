@@ -5,40 +5,24 @@ function mostrarResultados(numpag){
             "&tag3="+encodeURI($("#curso").val())+
             "&page="+numpag;
   $.getJSON( '/BDExamenes/php/getter.php', args, function (data) { // success handler
-    delay: 500,
-    $('#lista').empty();
-    $('#pages').empty();
+    if(numpag==1){
+      $('#lista').empty();
+    }
     if( data["num_r"] > 0){
-      $(".shape:has(ul)").show();
       $.each(data, function(key, value) {
         if(key!="num_r"){
           if(value != null){
             var path2file = encodeURI(value+"/"+key);
             $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
           }
-        }else{ // add the number of posible pages
-          var num_pages = Math.ceil(value/20);
-          if(num_pages > 1){ // don't show pagination if only 1 page
-            for (i=1; i<=num_pages; i++) {
-              if(i == numpag){
-                $('#pages').append(
-                  "<li onclick='mostrarResultados("+i+")'><a class='active'>"+i+'</a></li>');
-              }else{
-                $('#pages').append(
-                  "<li onclick='mostrarResultados("+i+")'><a>"+i+'</a></li>');
-              }
-            }
-          }else{
-            $(".shape:has(ul.pagination)").hide();
-          }
         }
       });
-    }else{ //sin
+    }else{
       $("#lista").append("<li><a>No se encontraron resultados</a></li>");
-      $(".shape:has(ul.pagination)").hide();
     }
   });
 }
+
 function autocompletar( id_input ){
   var args = "&caller="+id_input;
   switch (id_input) {
@@ -83,7 +67,6 @@ function autocompletar( id_input ){
 
 $(document).ready(function() {
   $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
-  $(".shape:has(ul.pagination)").hide();
 
   $('#grado').val("");
   $('#grado').on( "autocompleteselect", function( event, ui ){});
@@ -91,7 +74,6 @@ $(document).ready(function() {
     autocompletar("grado");
     mostrarResultados(1);
   });
-
 
   $('#asig').val("");
   $('#asig').on( "autocompleteselect", function( event, ui ){});
@@ -112,5 +94,12 @@ $(document).ready(function() {
   $('#curso').on('input', function(){
     autocompletar("curso");
     mostrarResultados(1);
+  });
+
+  var pag = 1;
+  $(window).scroll(function(){
+    if( $(document).height() - $(window).height() == $(window).scrollTop() ){
+      mostrarResultados(++pag)
+    }
   });
 });

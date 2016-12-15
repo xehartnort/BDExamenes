@@ -1,9 +1,4 @@
 @defaultRadius: 0px;
-// default theme color
-// @themeColor: #6d99d6;
-// @themeBackgroundColor: #99ccff;
-// @themeFontColor: #404040;
-// light blue - deep orange theme
 @themeColor: #E64A19;
 @themeBackgroundColor: #FF5722;
 @themeBigFontColor: #FFFFFF;
@@ -21,6 +16,9 @@
     border-radius: @radius;
 }
 
+.shadow(){
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);	
+}
 .setFont(@size:@smallFont,@color:@themeSmallFontColor, @weight:normal){
 	font-size: @size;
 	color:@color;
@@ -36,7 +34,7 @@
     padding: 15px 15px;
     margin: 5px 5px;
     .border(0px); 
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+    .shadow();
 }
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE INDEX.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
@@ -45,14 +43,8 @@
     margin: 3px;
   	width: 98%;
     //.border(2px, @defaultRadius, @themeTextBack);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+    .shadow();
 }
-
-
-// .search-input:hover{
-// 	color: @themeTextBack;
-// 	background-color: @themeAccentColor;
-// }
 
 ul.results{
 	list-style-type: none;
@@ -66,7 +58,7 @@ ul.results li{
     background: @themeTextBack;
     margin: 5px;
     .border(0px,@defaultRadius/2);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+    .shadow();
 
 }
 
@@ -84,36 +76,6 @@ ul.results li:hover {
 ul.results li:hover a {
 	color: @themeTextBack;
 }
-
-/*------------------TO BE REMOVED SOON --------------------------*/
-ul.pagination {
-	display: inline-block; 
-	padding: 0; 
-	margin: 0;
-}
-
-ul.pagination li {
-	display: inline;
-}
-
-ul.pagination li a { 
-	background-color: @themeTextBack; 
-	color: black; 
-	float: left;
-	padding: 4px 8px;
-    text-decoration: none; 
-    .setFont();
-}
-
-ul.pagination li a.active { 
-	background-color: @themeColor; 
-	color: @themeAccentColor; 
-}
-ul.pagination li a:hover:not(.active) { 
-	background-color: @themeBackgroundColor;
-}
-
-/*------------------TO BE REMOVED SOON --------------------------*/
 
 .ui-autocomplete-term { 
 	.setFont(@smallFont,bold);
@@ -140,6 +102,7 @@ ul.pagination li a:hover:not(.active) {
 .dropzone{
 	.setFont(@midFont, @themeSmallFontColor);
 	.border(1px,@defaultRadius,@themeBackgroundColor); 
+    .shadow();
 }
 
 .button{
@@ -149,6 +112,7 @@ ul.pagination li a:hover:not(.active) {
 	background-color: @themeTextBack;
 	.setFont();
 	.border(0px,@defaultRadius,@themeTextBack); 
+    .shadow();
 }
 
 .button:hover{
