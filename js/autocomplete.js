@@ -13,7 +13,7 @@ function mostrarResultados(numpag){
         if(key!="num_r"){
           if(value != null){
             var path2file = encodeURI(value+"/"+key);
-            $('#lista').append('<li><a href='+path2file+'>'+key+'</a></li>');
+            $('#lista').append('<li><a href='+path2file+' target="_blank">'+key+'</a></li>');
           }
         }
       });
