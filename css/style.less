@@ -42,10 +42,12 @@
 
 .search-input{
     padding: 5px 5px;
-    margin: 2px;
+    margin: 3px;
   	width: 98%;
-    .border(2px, @defaultRadius, @themeBackgroundColor);
+    //.border(2px, @defaultRadius, @themeTextBack);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
+
 
 // .search-input:hover{
 // 	color: @themeTextBack;
@@ -62,8 +64,10 @@ ul.results{
 ul.results li{
 	list-style-type: none;
     background: @themeTextBack;
-    margin: 4px;
+    margin: 5px;
     .border(0px,@defaultRadius/2);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+
 }
 
 ul.results li a{
