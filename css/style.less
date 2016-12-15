@@ -23,11 +23,11 @@
 
 .shape{
     display: inline-block;
-    width: 96%;
+    width: 97%;
 	height: auto;
     background: @themeBackgroundColor;
     padding: 15px 15px;
-    margin: 5px 5px;
+    margin: 3px 3px;
     .border(1px,@defaultRadius,@themeBackgroundColor); 
 }
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE INDEX.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -37,7 +37,7 @@
 }
 
 .search-input{
-    padding: 6px 6px;
+    padding: 5px 5px;
     margin: 2px;
   	width: 98%;
     .border(2px);
@@ -46,7 +46,7 @@
 ul.results{
 	list-style-type: none;
     background: @themeBackgroundColor;
-    padding: 1px;
+    padding: 0px;
     .border(0px);
 }
 
@@ -66,9 +66,10 @@ ul.results li a{
 }
 
 ul.results li:hover {
-	background-color: @themeBackgroundColor;
+	background-color: @themeColor;
 }
 
+/*------------------TO BE REMOVED SOON --------------------------*/
 ul.pagination {
 	display: inline-block; 
 	padding: 0; 
@@ -95,6 +96,8 @@ ul.pagination li a.active {
 ul.pagination li a:hover:not(.active) { 
 	background-color: @themeBackgroundColor;
 }
+
+/*------------------TO BE REMOVED SOON --------------------------*/
 
 .ui-autocomplete-term { 
 	.setFont(@smallFont,bold);

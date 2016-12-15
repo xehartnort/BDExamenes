@@ -33,8 +33,9 @@ function mostrarResultados(numpag){
           }
         }
       });
-    }else{
-      $(".shape:has(ul)").hide();
+    }else{ //sin
+      $("#lista").append("<li><a>No se encontraron resultados</a></li>");
+      $(".shape:has(ul.pagination)").hide();
     }
   });
 }
@@ -81,7 +82,8 @@ function autocompletar( id_input ){
 }
 
 $(document).ready(function() {
-  $(".shape:has(ul)").hide();
+  $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
+  $(".shape:has(ul.pagination)").hide();
 
   $('#grado').val("");
   $('#grado').on( "autocompleteselect", function( event, ui ){});
