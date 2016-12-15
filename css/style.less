@@ -1,8 +1,16 @@
-@defaultRadius: 8px;
-@themeColor: #6d99d6;
-@themeBackgroundColor: #99ccff;
-@other:#ddf;
-@themeFontColor: #404040;
+@defaultRadius: 0px;
+// default theme color
+// @themeColor: #6d99d6;
+// @themeBackgroundColor: #99ccff;
+// @themeFontColor: #404040;
+// light blue - deep orange theme
+@themeColor: #E64A19;
+@themeBackgroundColor: #FF5722;
+@themeBigFontColor: #FFFFFF;
+//@themeMidFontColor: #757575;
+@themeSmallFontColor: #212121;
+@themeAccentColor: #03A9F4;
+@themeTextBack: white;
 @themeFont: "Trebuchet MS", Helvetica, sans-serif;
 @smallFont: 16px;
 @midFont: 24px; 
@@ -14,9 +22,9 @@
     border-radius: @radius;
 }
 
-.setFont(@size:@smallFont, @weight:bold){
-	color:@themeFontColor;
+.setFont(@size:@smallFont,@color:@themeSmallFontColor, @weight:normal){
 	font-size: @size;
+	color:@color;
 	font-weight: @weight;
 	font-family: @themeFont;
 }
@@ -28,20 +36,26 @@
     background: @themeBackgroundColor;
     padding: 15px 15px;
     margin: 5px 5px;
-    .border(1px,@defaultRadius,@themeBackgroundColor); 
+    .border(0px); 
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE INDEX.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-.search-input:focus {
-    .border(2px,@defaultRadius,@themeBackgroundColor);
-}
+/*.search-input:focus {
+    .border(2px,@defaultRadius,@themeAccentColor);
+}*/
 
 .search-input{
     padding: 5px 5px;
     margin: 2px;
   	width: 98%;
-    .border(2px);
-} 
+    .border(2px, @defaultRadius, @themeBackgroundColor);
+}
+
+.search-input:hover{
+	color: @themeTextBack;
+	background-color: @themeAccentColor;
+}
 
 ul.results{
 	list-style-type: none;
@@ -52,7 +66,7 @@ ul.results{
 
 ul.results li{
 	list-style-type: none;
-    background: white;
+    background: @themeTextBack;
     margin: 4px;
     .border(0px,@defaultRadius/2);
 }
@@ -61,12 +75,15 @@ ul.results li a{
     padding: 5px 30px 5px 10px;
     display: block;
 	text-decoration: none;
-	color: @themeFontColor;
 	.setFont();
 }
 
 ul.results li:hover {
-	background-color: @themeColor;
+	background-color: @themeAccentColor;
+}
+
+ul.results li:hover a {
+	color: @themeTextBack;
 }
 
 /*------------------TO BE REMOVED SOON --------------------------*/
@@ -81,7 +98,7 @@ ul.pagination li {
 }
 
 ul.pagination li a { 
-	background-color: white; 
+	background-color: @themeTextBack; 
 	color: black; 
 	float: left;
 	padding: 4px 8px;
@@ -91,7 +108,7 @@ ul.pagination li a {
 
 ul.pagination li a.active { 
 	background-color: @themeColor; 
-	color: white; 
+	color: @themeAccentColor; 
 }
 ul.pagination li a:hover:not(.active) { 
 	background-color: @themeBackgroundColor;
@@ -111,17 +128,18 @@ ul.pagination li a:hover:not(.active) {
 
 .header-text {
 	display:inline;
-	.setFont(@bigFont, bold);
+	.setFont(@bigFont, @themeBigFontColor);
 }
 
 .subheader-text{
 	display:inline;
-	.setFont(@midFont, bold);
+	.setFont(@midFont, @themeBigFontColor);
 }
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE ADD.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .dropzone{
-	.setFont(@midFont,bold);
+	.setFont(@midFont, @themeSmallFontColor);
 	.border(1px,@defaultRadius,@themeBackgroundColor); 
 }
 
@@ -129,6 +147,12 @@ ul.pagination li a:hover:not(.active) {
 	width: 100%;
 	margin: 4px;
 	padding: 8px 8px;
+	background-color: @themeTextBack;
 	.setFont();
-	.border(1px,@defaultRadius,@themeBackgroundColor); 
+	.border(0px,@defaultRadius,@themeTextBack); 
+}
+
+.button:hover{
+	color: @themeTextBack;
+	background-color: @themeAccentColor;
 }
