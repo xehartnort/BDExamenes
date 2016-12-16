@@ -8,8 +8,8 @@
   <link type="text/css" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <!-- LOCAL -->
-  <script type="text/javascript" src="/BDExamenes/js/autocomplete.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="/BDExamenes/css/style.min.css" />
+  <script type="text/javascript" src="./js/autocomplete.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="./css/style.min.css" />
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -24,7 +24,7 @@
   <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
   <body>
     <div class="shape">
-      <div class="header-text">Base de datos de exámenes: <div class="subheader-text">buscador, <a href="/BDExamenes/add.html">añadir exámenes</a></div>
+      <div class="header-text">Base de datos de exámenes: <div class="subheader-text">buscador, <a href="./add.html">añadir exámenes</a></div>
       </div>
     </div>
     <div class="shape">
@@ -45,6 +45,7 @@
         <input id="anio" class="search-input" placeholder="Escribe un curso académico, por ejemplo: 1314" size="40">
       </div>
     </div>
+    <button type="submit" id="up"><img src="./img/up.png"></button>
     <div class="shape">
       <ul id="lista" class="results"></ul>
     </div>

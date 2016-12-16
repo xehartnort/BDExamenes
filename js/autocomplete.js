@@ -66,6 +66,7 @@ function autocompletar( id_input ){
 }
 
 $(document).ready(function() {
+  $("button#up").hide();
   $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
 
   $('#grado').val("");
@@ -96,10 +97,15 @@ $(document).ready(function() {
     mostrarResultados(1);
   });
 
+  $("button#up").on('click',function(){ 
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  });
+
   var pag = 1;
   $(window).scroll(function(){
+    $("button#up").show();
     if( $(document).height() - $(window).height() == $(window).scrollTop() ){
-      mostrarResultados(++pag)
+      mostrarResultados(++pag);
     }
   });
 });
