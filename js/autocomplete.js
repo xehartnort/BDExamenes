@@ -4,7 +4,7 @@ function mostrarResultados(numpag){
             "&tag2="+encodeURI($("#anio").val())+
             "&tag3="+encodeURI($("#curso").val())+
             "&page="+numpag;
-  $.getJSON( '/BDExamenes/php/getter.php', args, function (data) { // success handler
+  $.getJSON( './php/getter.php', args, function (data) { // success handler
     if(numpag==1){
       $('#lista').empty();
     }
@@ -45,7 +45,7 @@ function autocompletar( id_input ){
   }
   $( "#"+id_input ).autocomplete({
     source: function( request, response ) {
-      $.getJSON( "/BDExamenes/php/tagger.php", "term="+request.term+args, response );
+      $.getJSON( "./php/tagger.php", "term="+request.term+args, response );
     },
     select: function(){
       setTimeout(function(){mostrarResultados(1);},50); // sin timeout no toma el último valor
