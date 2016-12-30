@@ -103,8 +103,8 @@ $(document).ready(function() {
 
   var pag = 1;
   $(window).scroll(function(){
-    $("button#up").show();
-    if( $(document).height() - $(window).height() == $(window).scrollTop() ){
+    if($(window).scrollTop() >= $(document).height() - $(window).height() - 10){
+      $("button#up").show();
       mostrarResultados(++pag);
     }
   });

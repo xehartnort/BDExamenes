@@ -10,7 +10,7 @@ import os
 import json
 import re
 
-MySQLitedb = SqliteDatabase('examenes.db')
+MySQLitedb = SqliteDatabase('../examenes.db')
 
 class Tag(Model):
     nom_tag = CharField(null = False,
@@ -88,7 +88,8 @@ for (dirpath, dirnames, files) in os.walk("../exámenes"):
                         data['asig'] = asig
             if thereIsAsig:
                 exitoParcial+=1
-                if found=re.findall(fecha,txt): #2/1/2016
+                found=re.findall(fecha,txt)
+                if found: #2/1/2016
                     data['anio']=""
                     while found[0][-1] != "/": #2/1/
                         data['anio'] += found[0][-1]
