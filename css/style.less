@@ -40,10 +40,10 @@
 
 .search-input{
     padding: 5px 5px;
-    margin: 3px;
+    margin: 0px;
   	width: 98%;
-    //.border(2px, @defaultRadius, @themeTextBack);
-    .shadow();
+    .border(1px, @defaultRadius, @themeAccentColor);
+    // .shadow();
 }
 
 ul.results{
@@ -57,6 +57,7 @@ ul.results li{
 	list-style-type: none;
     background: @themeTextBack;
     margin: 5px;
+    .setFont();
     .border(0px,@defaultRadius/2);
     .shadow();
 
@@ -66,7 +67,7 @@ ul.results li a{
     padding: 5px 30px 5px 10px;
     display: block;
 	text-decoration: none;
-	.setFont();
+	color:@themeSmallFontColor;
 }
 
 ul.results li:hover {
@@ -96,10 +97,9 @@ ul.results li:hover a {
 
 button#up{
 	position: fixed;
+    width: auto;
     bottom: 10px;
     right: 10px;
-    width: 7.5%;
-	height: 12.5%;
     background: @themeAccentColor;
 }
 

@@ -5,13 +5,14 @@ from peewee import *
 import peewee
 import os
 import hashlib
+import re
 
 MySQLitedb = SqliteDatabase('../examenes.db')
 
 class Documento(Model):
     id_doc = FixedCharField(null = False,
                     primary_key = True,
-                    max_length = 40) # sha1
+                    max_length = 32) # md5
     nom_doc = CharField(null = False)
     ruta_doc = TextField(null = False)
     class Meta:
@@ -38,18 +39,28 @@ class DocTag(Model):
     path = path to file
     block_size = block size of your filesystem
 '''
-def sha1_file(path, block_size=4096):
-    sha = hashlib.sha1()
+def hash_file(path, block_size=4096):
+    hash_string = hashlib.md5()
     with open(path, 'rb') as f:
         for chunk in iter(lambda: f.read(block_size*4), b''):
-            sha.update(chunk)
-    return sha.hexdigest()
+            hash_string.update(chunk)
+    return hash_string.hexdigest()
 
 def fill_existing_tags(tipo_tag):
     tags=[]
     for i in Tag.select().where(Tag.tipo_tag==tipo_tag):
         tags+= [i.nom_tag]
     return tags
+
+def getSigla(tag):
+    dupla=[]
+    regex = re.compile("[A-Z]|Á")
+    capitals=""
+    matches = regex.findall(tag)
+    if len(matches)>1:
+        for j in matches:
+            capitals+=j.replace("Á","A")
+    return capitals
 
 primero_dgiim = ["Fundamentos de Software", "Lógica y Métodos Discretos",
         "Tecnología y Organización de Computadores", "Metodología de la Programación",
@@ -67,6 +78,8 @@ anios=fill_existing_tags("anio")
 cursos=fill_existing_tags("curso")
 asigs=fill_existing_tags("asig")
 grados=fill_existing_tags("grado")
+siglas=[]
+
 num2word=["","primero", "segundo", "tercero", "cuarto", "quinto"]
 
 for (dirpath, dirnames, files) in os.walk(".."):
@@ -84,6 +97,10 @@ for (dirpath, dirnames, files) in os.walk(".."):
             tags_insert += [{'nom_tag':anio, 'tipo_tag':'anio'}]
         if asig not in asigs:
             asigs += [asig]
+            # sigla = getSigla(asig)
+            # if sigla not in siglas:
+            #     siglas += [sigla]
+            #     tags_insert += [{'nom_tag':sigla, 'tipo_tag':'asig'}]
             tags_insert += [{'nom_tag':asig, 'tipo_tag':'asig'}]
         if curso not in cursos:
             cursos += [curso]
@@ -92,30 +109,32 @@ for (dirpath, dirnames, files) in os.walk(".."):
             grados += [grado]
             tags_insert += [{'nom_tag':grado, 'tipo_tag':'grado'}]
         for filename in files:
-            sha1 = sha1_file(dirpath+"/"+filename)
-            docs += [{'id_doc':sha1, 'nom_doc':filename, 'ruta_doc':dirpath[3:]}]
-            doc_tags += [{'id_doc':sha1, 'nom_tag':anio}, {'id_doc':sha1, 'nom_tag':asig},
-                    {'id_doc':sha1, 'nom_tag':num2word[int(curso)]}, {'id_doc':sha1, 'nom_tag':grado}]
+            hashed = hash_file(dirpath+"/"+filename)
+            docs += [{'id_doc':hashed, 'nom_doc':filename, 'ruta_doc':dirpath[3:]}]
+            doc_tags += [{'id_doc':hashed, 'nom_tag':anio}, 
+                        {'id_doc':hashed, 'nom_tag':asig},
+                        {'id_doc':hashed, 'nom_tag':num2word[int(curso)]}, 
+                        {'id_doc':hashed, 'nom_tag':grado}]
             if asig in primero_dgiim:
-                doc_tags += [{'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'}]
+                doc_tags += [{'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'}]
                 if curso != '1':
-                    doc_tags += [{'id_doc':sha1, 'nom_tag':'primero'}]
+                    doc_tags += [{'id_doc':hashed, 'nom_tag':'primero'}]
             if asig in segundo_dgiim:
-                doc_tags += [{'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'}]
+                doc_tags += [{'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'}]
                 if curso != '2':
-                    doc_tags += [{'id_doc':sha1, 'nom_tag':'segundo'}]
+                    doc_tags += [{'id_doc':hashed, 'nom_tag':'segundo'}]
             if asig in tercero_dgiim:
-                doc_tags += [{'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'}]
+                doc_tags += [{'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'}]
                 if curso != '3':
-                    doc_tags += [{'id_doc':sha1, 'nom_tag':'tercero'}]
+                    doc_tags += [{'id_doc':hashed, 'nom_tag':'tercero'}]
             if asig in cuarto_dgiim:
-                doc_tags += [{'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'}]
+                doc_tags += [{'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'}]
                 if curso != '4':
-                    doc_tags += [{'id_doc':sha1, 'nom_tag':'cuarto'}]
+                    doc_tags += [{'id_doc':hashed, 'nom_tag':'cuarto'}]
             # if asig in quinto_dgiim:
-            #     doc_tags.append({'id_doc':sha1, 'nom_tag':'Matemáticas e Informática'})
+            #     doc_tags.append({'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'})
             #     if curso != '5':
-            #         doc_tags.append({'id_doc':sha1, 'nom_tag':'quinto'})
+            #         doc_tags.append({'id_doc':hashed, 'nom_tag':'quinto'})
         try:
             with MySQLitedb.atomic():
                 if tags_insert:
@@ -123,7 +142,7 @@ for (dirpath, dirnames, files) in os.walk(".."):
                 Documento.insert_many(docs).execute()
                 DocTag.insert_many(doc_tags).execute()
         except peewee.IntegrityError as e:
-            i=Documento.select().where(Documento.id_doc==sha1)[0]
+            i=Documento.select().where(Documento.id_doc==hashed)[0]
             if(dirpath[3:]+"/"+filename != i.ruta_doc+"/"+i.nom_doc):
                 with open('duplicates', 'a') as the_file:
                     path = dirpath+"/"+filename

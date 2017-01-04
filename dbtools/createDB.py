@@ -15,7 +15,7 @@ MySQLitedb = SqliteDatabase('../examenes.db')
 class Documento(Model):
     id_doc = FixedCharField(null = False,
                     primary_key = True,
-                    max_length = 40) # sha1
+                    max_length = 32) # sha1
     nom_doc = CharField(null = False)
     ruta_doc = TextField(null = False)
     class Meta:
