@@ -1,3 +1,5 @@
+var pag = 1;
+
 function mostrarResultados(numpag) {
   var args = "tag0="+encodeURI($("#grado").val())+
             "&tag1="+encodeURI($("#asig").val())+
@@ -51,10 +53,12 @@ function autocompletar( id_input, lcache ) {
       );
     },
     change: function() {
-      setTimeout(function(){mostrarResultados(1);},50); // sin timeout no toma el último valor
+      pag=1;
+      setTimeout(function(){mostrarResultados(pag);},50); // sin timeout no toma el último valor
     },
     select: function() {
-      setTimeout(function(){mostrarResultados(1);},50); // sin timeout no toma el último valor
+      pag=1;
+      setTimeout(function(){mostrarResultados(pag);},50); // sin timeout no toma el último valor
     }
   });
 }
@@ -76,9 +80,8 @@ $(document).ready(function() {
     $("html, body").animate({ scrollTop: 0 }, "fast");
   });
 
-  var pag = 1;
   $(window).scroll(function(){
-    if($(window).scrollTop() >= $(document).height() - $(window).height() - 50){
+    if($(window).scrollTop() >= $(document).height() - $(window).height() - 10){
       $("button#up").show();
       mostrarResultados(++pag);
     }
