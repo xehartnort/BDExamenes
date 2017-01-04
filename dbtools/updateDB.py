@@ -87,7 +87,7 @@ for (dirpath, dirnames, files) in os.walk(".."):
         tags_insert = []
         doc_tags = []
         docs =[]
-        tags = dirpath.split('/') # ../exámenes/Matemáticas e Informática/1/Cálculo II/1314
+        tags = dirpath.split('/') # ../exámenes/Informática y Matemáticas/1/Cálculo II/1314
         anio = tags[-1]
         asig = tags[-2]
         curso = tags[-3]
@@ -116,23 +116,23 @@ for (dirpath, dirnames, files) in os.walk(".."):
                         {'id_doc':hashed, 'nom_tag':num2word[int(curso)]}, 
                         {'id_doc':hashed, 'nom_tag':grado}]
             if asig in primero_dgiim:
-                doc_tags += [{'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'}]
+                doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
                 if curso != '1':
                     doc_tags += [{'id_doc':hashed, 'nom_tag':'primero'}]
             if asig in segundo_dgiim:
-                doc_tags += [{'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'}]
+                doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
                 if curso != '2':
                     doc_tags += [{'id_doc':hashed, 'nom_tag':'segundo'}]
             if asig in tercero_dgiim:
-                doc_tags += [{'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'}]
+                doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
                 if curso != '3':
                     doc_tags += [{'id_doc':hashed, 'nom_tag':'tercero'}]
             if asig in cuarto_dgiim:
-                doc_tags += [{'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'}]
+                doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
                 if curso != '4':
                     doc_tags += [{'id_doc':hashed, 'nom_tag':'cuarto'}]
             # if asig in quinto_dgiim:
-            #     doc_tags.append({'id_doc':hashed, 'nom_tag':'Matemáticas e Informática'})
+            #     doc_tags.append({'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'})
             #     if curso != '5':
             #         doc_tags.append({'id_doc':hashed, 'nom_tag':'quinto'})
         try:

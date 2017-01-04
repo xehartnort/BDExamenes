@@ -71,6 +71,7 @@ $(document).ready(function() {
   var cache_asig;
   var cache_anio;
   var cache_curso;
+  
   autocompletar("grado", cache_grado);
   autocompletar("asig", cache_asig);
   autocompletar("anio", cache_anio);
@@ -81,7 +82,7 @@ $(document).ready(function() {
   });
 
   $(window).scroll(function(){
-    if($(window).scrollTop() >= $(document).height() - $(window).height() - 10){
+    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 20  ) && pag < 50){
       $("button#up").show();
       mostrarResultados(++pag);
     }

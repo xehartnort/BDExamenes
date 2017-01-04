@@ -1,9 +1,9 @@
 <?php
-//   $_GET["tag0"]="informática";
-//   $_GET["tag1"]="";
-//   $_GET["tag2"]="";
-//   $_GET["tag3"]="";
-//   $_GET["page"]=1;
+   // $_GET["tag0"]="informática";
+   // $_GET["tag1"]="";
+   // $_GET["tag2"]="";
+   // $_GET["tag3"]="";
+   // $_GET["page"]=1;
 if( $_GET["tag0"] !="" || $_GET["tag1"] !="" || $_GET["tag2"] !="" || $_GET["tag3"] !=""){
   $tildes=array('a','e','i','o','u');
   $sin_tildes=array('_','_','_','_','_');
