@@ -21,4 +21,4 @@ En primer lugar, decir que no hay motivos para enfadarse, un/una docente respons
 
 Dicho esto, espero haberte convencido para contribuir y mantener este buscador de exámenes :).
 
-### [Buscador de exámenes](www.deiit.ugr.es/BDExamenes/search.html)
+### [Buscador de exámenes](http://deiit.ugr.es/BDExamenes/search.html)
