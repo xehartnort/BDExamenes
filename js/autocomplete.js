@@ -1,4 +1,5 @@
 var pag = 1;
+var page_limit;
 
 function mostrarResultados(numpag) {
   var args = "tag0="+encodeURI($("#grado").val())+
@@ -11,6 +12,7 @@ function mostrarResultados(numpag) {
       if(numpag==1){
         $("#lista").empty();
       }
+      page_limit = Math.floor(data["num_r"]/20) + 1;
       if( data["num_r"] > 0 ){
         $.each(data, function(key, value) {
           if(key!="num_r"){
@@ -82,7 +84,7 @@ $(document).ready(function() {
   });
 
   $(window).scroll(function(){
-    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 20  ) && pag < 50){
+    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 20  ) && pag < page_limit){
       $("button#up").show();
       mostrarResultados(++pag);
     }

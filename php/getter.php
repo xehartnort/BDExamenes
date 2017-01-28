@@ -25,7 +25,12 @@ if( $_GET["tag0"] !="" || $_GET["tag1"] !="" || $_GET["tag2"] !="" || $_GET["tag
   $tags = array("tag0", "tag1", "tag2", "tag3");
   $query = $db->prepare($query_text);
   for($i=0; $i<4; ++$i) {
-    $query->bindValue(':tag'.$i, $_GET[$tags[$i]].'%', PDO::PARAM_STR);
+    if($_GET[$tags[$i]] == ""){
+      $query->bindValue(':tag'.$i, '%', PDO::PARAM_STR);
+    }else{
+      $query->bindValue(':tag'.$i, $_GET[$tags[$i]], PDO::PARAM_STR);      
+    }
+
     $query->bindValue(':ttag'.$i, $tipo_tags[$i], PDO::PARAM_STR);
   }
   $row_count = 20;
