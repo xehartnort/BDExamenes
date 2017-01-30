@@ -21,11 +21,11 @@ $update_db_script
 if [[ -f $duplicates ]]; then
 	echo "Duplicated files found"
 	IFS=$'\n' # input file separator
-	# for i in $(cat duplicates) 
-	# do 	
-	# 	rm $i && echo "deleted: $i"
-	# done
-	# rm $duplicates
+	for i in $(cat duplicates) 
+	do 	
+		rm $i && echo "deleted: $i"
+	done
+	rm $duplicates
 fi
 
 if [[ $moved == "yes" ]]; then
