@@ -1,17 +1,17 @@
-@defaultRadius: 0px;
-@themeColor: #E64A19;
-@themeBackgroundColor: #FF5722;
-@themeBigFontColor: #FFFFFF;
-@themeSmallFontColor: #212121;
-@themeAccentColor: #03A9F4;
-@themeTextBack: white;
-@themeFont: "Trebuchet MS", Helvetica, sans-serif;
-@smallFont: 16px;
-@midFont: 24px; 
-@bigFont: 32px;
+@defaultRadius: 0em;
+@Color: #E64A19;
+@BackgroundColor: #FF5722;
+@BigFontColor: #FFFFFF;
+@SmallFontColor: #212121;
+@AccentColor: #03A9F4;
+@TextBack: white;
+@Font: "Trebuchet MS", Helvetica, sans-serif;
+@smallFont: 1em;
+@midFont: 1.5em; 
+@bigFont: 2em;
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ COMMON FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-.border(@size,@radius:@defaultRadius,@color:@themeColor){
+.border(@size,@radius:@defaultRadius,@color:@Color){
     border: @size solid @color;
     border-radius: @radius;
 }
@@ -19,11 +19,12 @@
 .shadow(){
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);	
 }
-.setFont(@size:@smallFont,@color:@themeSmallFontColor, @weight:normal){
+
+.setFont(@size:@smallFont,@color:@SmallFontColor, @weight:normal){
 	font-size: @size;
 	color:@color;
 	font-weight: @weight;
-	font-family: @themeFont;
+	font-family: @Font;
 }
 
 body, html {
@@ -37,9 +38,10 @@ body, html {
     display: inline-block;
     width: 97%;
 	height: auto;
-    background: @themeBackgroundColor;
+    background: @BackgroundColor;
     padding: 15px;
     margin: 5px 5px 0px 5px;
+    // padding: 15px;
     .border(0px); 
     .shadow();
 }
@@ -47,23 +49,24 @@ body, html {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE SEARCH.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .search-input{
-    padding: 5px 5px;
+    display: block;
+    padding: 10px 5px 10px 5px;
     margin: 0px;
   	width: 98%;
-    .border(1px, @defaultRadius, @themeAccentColor);
-    // .shadow();
+    .setFont();
+    .border(1px, @defaultRadius, @AccentColor);
 }
 
 ul.results{
 	list-style-type: none;
-    background: @themeBackgroundColor;
+    background: @BackgroundColor;
     padding: 0px;
     .border(0px);
 }
 
 ul.results li{
 	list-style-type: none;
-    background: @themeTextBack;
+    background: @TextBack;
     margin: 5px;
     .setFont();
     .border(0px,@defaultRadius/2);
@@ -75,15 +78,15 @@ ul.results li a{
     padding: 5px 30px 5px 10px;
     display: block;
 	text-decoration: none;
-	color:@themeSmallFontColor;
+	color:@SmallFontColor;
 }
 
 ul.results li:hover {
-	background-color: @themeAccentColor;
+	background-color: @AccentColor;
 }
 
 ul.results li:hover a {
-	color: @themeTextBack;
+	color: @TextBack;
 }
 
 .ui-autocomplete { 
@@ -95,12 +98,12 @@ ul.results li:hover a {
 
 .header-text {
 	display:inline;
-	.setFont(@bigFont, @themeBigFontColor);
+	.setFont(@bigFont, @BigFontColor);
 }
 
 .subheader-text{
 	display:inline;
-	.setFont(@midFont, @themeBigFontColor);
+	.setFont(@midFont, @BigFontColor);
 }
 
 button#up{
@@ -108,14 +111,14 @@ button#up{
     width: auto;
     bottom: 10px;
     right: 10px;
-    background: @themeAccentColor;
+    background: @AccentColor;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE ADD.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .dropzone{
-	.setFont(@midFont, @themeSmallFontColor);
-	.border(1px,@defaultRadius,@themeBackgroundColor); 
+	.setFont(@midFont, @SmallFontColor);
+	.border(1px,@defaultRadius,@BackgroundColor); 
     .shadow();
 }
 
@@ -123,13 +126,13 @@ button{
 	width: 100%;
 	margin: 4px;
 	padding: 8px 8px;
-	background-color: @themeTextBack;
+	background-color: @TextBack;
 	.setFont();
-	.border(0px,@defaultRadius,@themeTextBack); 
+	.border(0px,@defaultRadius,@TextBack); 
     .shadow();
 }
 
 button:hover{
-	color: @themeTextBack;
-	background-color: @themeAccentColor;
+	color: @TextBack;
+	background-color: @AccentColor;
 }

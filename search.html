@@ -1,56 +1,36 @@
 
 <!DOCTYPE html>
 <html>
-<!-- Sección cabecera de la página-->
-<head>
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <!-- EXTERIOR -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <!-- LOCAL -->
-  <script type="text/javascript" src="./js/autocomplete.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="./css/style.min.css" />
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    ga('create','UA-88965053-1', 'auto');
-    ga('send','pageview');
-  </script>  
-  <!--Título de la página que se muestra en la pestaña del navegador-->
-  <title>Base de datos de exámenes</title>
-</head>
-  <!-- Sección cuerpo de la página, este es el contenido que se muestra en el navegador-->
+  <head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./js/autocomplete.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="./css/style.min.css" />
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create','UA-88965053-1', 'auto');
+      ga('send','pageview');
+    </script>  
+    <title>Base de datos de exámenes</title>
+  </head>
   <body>
     <div class="shape">
-      <div class="header-text">Base de datos de exámenes: <div class="subheader-text">buscador, <a href="./add.html">añadir exámenes</a></div>
+      <div class="header-text">Base de datos de exámenes: </div><div class="subheader-text">buscador, <a href="./add.html">añadir exámenes</a></div>
       </div>
     </div>
     <div class="shape">
-      <div class="ui-widget">
-        <!--<label>Grado:      </label>-->
         <input id="grado" class="search-input" placeholder="Escribe un grado, por ejemplo: informática">
-      </div>
-      <div class="ui-widget">
-        <!--<label>Curso:      </label>-->
         <input id="curso" class="search-input" placeholder="Escribe un curso, por ejemplo: segundo">
-      </div>
-      <div class="ui-widget">
-        <!--<label>Asignatura: </label>-->
         <input id="asig" class="search-input" placeholder="Escribe una asignatura, por ejemplo: algorítmica">
-      </div>
-      <div class="ui-widget">
-        <!--<label>Año:        </label>-->
         <input id="anio" class="search-input" placeholder="Escribe un curso académico, por ejemplo: 1314">
-      </div>
     </div>
     <button type="submit" id="up"><img src="./img/up.png"></button>
-    <div class="shape">
-      <ul id="lista" class="results"></ul>
-    </div>
+    <div class="shape"><ul id="lista" class="results"></ul></div>
   </body>
 </html>
