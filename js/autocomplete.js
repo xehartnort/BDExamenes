@@ -84,7 +84,7 @@ $(document).ready(function() {
   });
 
   $(window).scroll(function(){
-    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 20  ) && pag < page_limit){
+    if( ($(window).scrollTop()+$(window).height() > $(document).height() - 50 ) && pag < page_limit){
       $("button#up").show();
       mostrarResultados(++pag);
     }
