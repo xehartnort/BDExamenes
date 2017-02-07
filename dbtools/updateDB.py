@@ -1,4 +1,4 @@
-#!/usr/bin/python -O
+#!/usr/bin/python3 -OO
 # -*- coding: utf-8 -*-
 
 from peewee import *
@@ -12,7 +12,7 @@ MySQLitedb = SqliteDatabase('../examenes.db')
 class Documento(Model):
     id_doc = FixedCharField(null = False,
                     primary_key = True,
-                    max_length = 40) # sha1
+                    max_length = 32) # md5
     nom_doc = CharField(null = False)
     ruta_doc = TextField(null = False)
     class Meta:
@@ -40,7 +40,7 @@ class DocTag(Model):
     block_size = block size of your filesystem
 '''
 def hash_file(path, block_size=4096):
-    hash_string = hashlib.sha1()
+    hash_string = hashlib.md5()
     with open(path, 'rb') as f:
         for chunk in iter(lambda: f.read(block_size*4), b''):
             hash_string.update(chunk)
@@ -57,7 +57,7 @@ def getSigla(tag):
     regex = re.compile("[A-Z]|Á")
     capitals=""
     matches = regex.findall(tag)
-    if len(matches)>1:
+    if len(matches)>2:
         for j in matches:
             capitals+=j.replace("Á","A")
     return capitals

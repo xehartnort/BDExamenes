@@ -4,6 +4,7 @@
 db_path="../examenes.db"
 create_db_script="./createDB.py"
 update_db_script="./updateDB.py"
+ocr_db_script="./ocrScan.py"
 duplicates="./duplicates"
 
 if [[ ! $PWD =~ "dbtools" ]]; then
@@ -27,6 +28,8 @@ if [[ -f $duplicates ]]; then
 	done
 	rm $duplicates
 fi
+
+# $ocr_db_script
 
 if [[ $moved == "yes" ]]; then
 	cd ..

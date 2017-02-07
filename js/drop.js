@@ -36,9 +36,9 @@ Dropzone.options.drop = {
       });
 	   	// Refresh page when all images are uploaded
  	    myDropzone.on("complete", function (file) {
-	        if (myDropzone.getUploadingFiles().length === 0 && 
-	        		myDropzone.getQueuedFiles().length === 0) {
-	        	window.location.reload();
+	      if (myDropzone.getUploadingFiles().length === 0 && 
+	      	  myDropzone.getQueuedFiles().length === 0) {
+	        // window.location.reload();
 	    	}
 		  });
 	  }

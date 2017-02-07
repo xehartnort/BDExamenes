@@ -1,4 +1,4 @@
-#!/usr/bin/python -O
+#!/usr/bin/python3 -OO
 # -*- coding: utf-8 -*-
 
 #Thing 	Corresponds to...
@@ -15,7 +15,7 @@ MySQLitedb = SqliteDatabase('../examenes.db')
 class Documento(Model):
     id_doc = FixedCharField(null = False,
                     primary_key = True,
-                    max_length = 40) # sha1
+                    max_length = 32) # md5
     nom_doc = CharField(null = False)
     ruta_doc = TextField(null = False)
     class Meta:
@@ -40,5 +40,3 @@ class DocTag(Model):
 
 MySQLitedb.create_tables([Documento, Tag, DocTag])
 MySQLitedb.execute_sql("CREATE VIEW examen AS SELECT A.nom_doc, A.ruta_doc, B.nom_tag_id, B.comprobado, C.tipo_tag FROM doctag AS B INNER JOIN documento AS A ON A.id_doc=B.id_doc_id INNER JOIN tag AS C ON C.nom_tag=B.nom_tag_id")
-#MySQLitedb.execute_sql("CREATE VIEW etiqueta as select  nom_tag, tipo_tag, id_doc_id from tag inner join doctag on tag.nom_tag = doctag.nom_tag_id");
-#MySQLitedb.close()

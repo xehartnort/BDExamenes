@@ -1,5 +1,5 @@
 <?php
-// $_GET["caller"]="asig"
+// $_GET["caller"]="asig";
 $db = new PDO("sqlite:../examenes.db");
 $query_text = "SELECT nom_tag_id FROM examen WHERE tipo_tag=:caller GROUP BY nom_tag_id";
 $query = $db->prepare($query_text);
