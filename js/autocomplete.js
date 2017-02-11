@@ -1,12 +1,21 @@
 var pag = 1;
 var page_limit;
 
+function split( val ) {
+  return val.split( /,\s*/ );
+}
+
+function extractLast( term ) {
+  return split( term ).pop();
+}
+
 function mostrarResultados(numpag) {
-  var args = "tag0="+encodeURI($("#grado").val())+
-            "&tag1="+encodeURI($("#asig").val())+
-            "&tag2="+encodeURI($("#anio").val())+
-            "&tag3="+encodeURI($("#curso").val())+
-            "&page="+numpag;
+  var args="", array_tags = split( $(".search-input").val() );
+  for (var i = 0; i < array_tags.length; i++) {
+    args += "tag"+i+"="+encodeURI(array_tags[i])+"&";
+  };
+  args += "page="+numpag;
+  console.log(args);
   $.getJSON( './php/getter.php', args, function (data, status) { // success handler
     if(status == "success"){
       if(numpag==1){
@@ -30,23 +39,25 @@ function mostrarResultados(numpag) {
   });
 }
 
-function autocompletar( id_input, lcache ) {
-  $( "#"+id_input ).autocomplete({
+$(document).ready(function() {
+  $("button#up").hide();
+  $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
+
+  $( '#input' ).autocomplete({
     autoFocus: true,
     minLength: 1,
     create: function( event, ui ) {
-      $( '#'+id_input ).val("");
-      $.getJSON( "./php/tagger.php", "caller="+id_input, 
+      $( '#input' ).val("");
+      $.getJSON( "./php/tagger.php", 
         function(data, status){
           if(status=="success"){
-            lcache = data;
+            cache = data;
           }
         }
       );
     },
     source: function( request, response ) {
-      cache = lcache;
-      var escapedString = $.ui.autocomplete.escapeRegex( request.term );
+      var escapedString = $.ui.autocomplete.escapeRegex(extractLast( request.term ));
       var matcher = new RegExp( "^" + escapedString.replace(/[aeiouáéíóú]/gi, '[aeiouáéíóú]'), "i" );
       response( $.grep( cache, 
         function( item ){
@@ -58,26 +69,20 @@ function autocompletar( id_input, lcache ) {
       pag=1;
       setTimeout(function(){mostrarResultados(pag);},50); // sin timeout no toma el último valor
     },
-    select: function() {
+    select: function( event, ui) {
+      var terms = split( this.value );
+      // remove the current input
+      terms.pop();
+      // add the selected item
+      terms.push(ui.item.value);
+      // add placeholder to get the comma-and-space at the end
+      terms.push( "" );
+      $( '#input' ).val(terms.join( ", " ));
       pag=1;
       setTimeout(function(){mostrarResultados(pag);},50); // sin timeout no toma el último valor
+      return false;
     }
   });
-}
-
-$(document).ready(function() {
-  $("button#up").hide();
-  $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
-
-  var cache_grado;
-  var cache_asig;
-  var cache_anio;
-  var cache_curso;
-  
-  autocompletar("grado", cache_grado);
-  autocompletar("asig", cache_asig);
-  autocompletar("anio", cache_anio);
-  autocompletar("curso", cache_curso);
 
   $("button#up").on('click',function(){ 
     $("html, body").animate({ scrollTop: 0 }, "fast");

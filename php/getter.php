@@ -1,47 +1,41 @@
 <?php
-   // $_GET["tag0"]="informática";
-   // $_GET["tag1"]="";
+   //$_GET["tag0"]="Informática";
+   // $_GET["tag1"]="tercero";
    // $_GET["tag2"]="";
    // $_GET["tag3"]="";
-   // $_GET["page"]=1;
-if( $_GET["tag0"] !="" || $_GET["tag1"] !="" || $_GET["tag2"] !="" || $_GET["tag3"] !=""){
-  $tildes=array('a','e','i','o','u');
-  $sin_tildes=array('_','_','_','_','_');
-  $_GET["tag0"]=str_ireplace($tildes, $sin_tildes, $_GET["tag0"]);
-  $_GET["tag1"]=str_ireplace($tildes, $sin_tildes, $_GET["tag1"]);
-  $_GET["tag2"]=str_ireplace($tildes, $sin_tildes, $_GET["tag2"]);
-  $_GET["tag3"]=str_ireplace($tildes, $sin_tildes, $_GET["tag3"]);
+   //$_GET["page"]=1;
   $db = new PDO("sqlite:../examenes.db");
+  $tildes=array('á','é','í','ó','ú');
+  $sin_tildes=array('_','_','_','_','_');
+  $page = $_GET["page"]>=1 ? $_GET["page"] : 1;
+  unset($_GET["page"]);
+  foreach ($_GET as $key => $value) {
+    $_GET[$key] = str_ireplace($tildes, $sin_tildes, $_GET[$key]);
+  }
   $query_text = "";
-  for($i=0; $i<4; ++$i) { # http://stackoverflow.com/questions/2621382/alternative-to-intersect-in-mysql
-    $query_text.="SELECT nom_doc, ruta_doc FROM examen WHERE tipo_tag=:ttag".$i;
-    $query_text.=" AND nom_tag_id LIKE :tag".$i;
-    if($i+1 < 4){ // if not last iteration
+  foreach ($_GET as $key => $value) { # http://stackoverflow.com/questions/2621382/alternative-to-intersect-in-mysql
+    $query_text.="SELECT nom_doc, ruta_doc FROM examen WHERE nom_tag_id LIKE :".$key;
+    if($value != end($_GET)){ // if not last iteration
       $query_text .= " INTERSECT ";
     }
   }
-  $query_text.=" ORDER BY nom_doc ";
-  $tipo_tags = array("grado", "asig", "anio", "curso");
-  $tags = array("tag0", "tag1", "tag2", "tag3");
   $query = $db->prepare($query_text);
-  for($i=0; $i<4; ++$i) {
-    if($_GET[$tags[$i]] == ""){
-      $query->bindValue(':tag'.$i, '%', PDO::PARAM_STR);
-    }else{
-      $query->bindValue(':tag'.$i, $_GET[$tags[$i]], PDO::PARAM_STR);      
+  foreach ($_GET as $key => $value) {
+    if($value == ""){
+      $value = '%';
     }
-
-    $query->bindValue(':ttag'.$i, $tipo_tags[$i], PDO::PARAM_STR);
+    $query->bindValue(":".$key, $value, PDO::PARAM_STR);    
   }
   $row_count = 20;
-  $offset = ($_GET["page"]-1)*$row_count;
+  $offset = ($page-1)*$row_count;
   $query->execute();
   $results = $query->fetchAll(PDO::FETCH_ASSOC);
   $result["num_r"] = count($results); // número de resultados de la consulta
   for($i=$offset; $i<$offset+$row_count; ++$i){
-    $row=$results[$i];
-    $result[$row["nom_doc"]] = $row["ruta_doc"];
+    if( isset($results[$i])){
+      $row=$results[$i];
+      $result[$row["nom_doc"]] = $row["ruta_doc"];
+    }
   }
   echo json_encode($result);
-}
 ?>
