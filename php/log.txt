@@ -10,35 +10,3 @@ name:Cálculo 2016-17.jpg
 tags:
 asig Cálculo
 anio 1617
-Informática1primero
-BEGIN-file
-name:Cálculo 2016-17.jpg
-tags:
-asig Cálculo
-anio 1617
-doc:
-dcd53b110d566f47686ace0cc2b07e0f Cálculo 2016-17.jpg ../sinClasificar
-BEGIN-file
-name:Cálculo 2016-17.jpg
-tags:
-asig Cálculo
-anio 1617
-
-BEGIN-file
-name:Cálculo 2016-17.jpg
-tags:
-asig Cálculo
-anio 1617
-
-BEGIN-file
-name:MC_feb_17.pdf
-tags:
-asig Modelos de Computación
-anio 1617
-
-BEGIN-file
-name:Cálculo 2016-17.jpg
-tags:
-asig Cálculo
-anio 1617
-00000

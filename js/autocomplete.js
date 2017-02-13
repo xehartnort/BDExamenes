@@ -15,7 +15,6 @@ function mostrarResultados(numpag) {
     args += "tag"+i+"="+encodeURI(array_tags[i])+"&";
   };
   args += "page="+numpag;
-  console.log(args);
   $.getJSON( './php/getter.php', args, function (data, status) { // success handler
     if(status == "success"){
       if(numpag==1){
@@ -45,7 +44,6 @@ $(document).ready(function() {
 
   $( '#input' ).autocomplete({
     autoFocus: true,
-    minLength: 1,
     create: function( event, ui ) {
       $( '#input' ).val("");
       $.getJSON( "./php/tagger.php", 
@@ -58,18 +56,28 @@ $(document).ready(function() {
     },
     source: function( request, response ) {
       var escapedString = $.ui.autocomplete.escapeRegex(extractLast( request.term ));
-      var matcher = new RegExp( "^" + escapedString.replace(/[aeiouáéíóú]/gi, '[aeiouáéíóú]'), "i" );
+      escapedString = escapedString.replace(/[aá]/gi, '[aá]').replace(/[eé]/gi, '[eé]');
+      escapedString = escapedString.replace(/[ií]/gi, '[ií]').replace(/[oó]/gi, '[oó]');
+      var matcher = new RegExp( "^" + escapedString, "i" );
       response( $.grep( cache, 
         function( item ){
           return matcher.test( item );
         })
       );
     },
+    search: function() {
+      // custom minLength
+      var term = extractLast( this.value );
+      if ( term.length < 2 ) {
+        return false;
+      }
+    },
     change: function() {
       pag=1;
-      setTimeout(function(){mostrarResultados(pag);},50); // sin timeout no toma el último valor
+      mostrarResultados(pag); // sin timeout no toma el último valor
     },
     select: function( event, ui) {
+      pag=1;
       var terms = split( this.value );
       // remove the current input
       terms.pop();
@@ -78,8 +86,7 @@ $(document).ready(function() {
       // add placeholder to get the comma-and-space at the end
       terms.push( "" );
       $( '#input' ).val(terms.join( ", " ));
-      pag=1;
-      setTimeout(function(){mostrarResultados(pag);},50); // sin timeout no toma el último valor
+      mostrarResultados(pag); // sin timeout no toma el último valor
       return false;
     }
   });

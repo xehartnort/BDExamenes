@@ -4,8 +4,8 @@ ini_set('display_errors', 1);
 
 function getTags($tipo_tag, $db){
 	$tags = array();
-	$query_text = "SELECT nom_tag FROM Tag WHERE tipo_tag=? GROUP BY nom_tag";
-	$query = $db->prepare($query_text);
+	$sql = "SELECT nom_tag FROM Tag WHERE tipo_tag=? GROUP BY nom_tag";
+	$query = $db->prepare($sql);
 	$query->execute([$tipo_tag]);
 	$results = $query->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($results as $row) {
@@ -54,14 +54,13 @@ $image->setResolution( 204*2, 196*2 );
 $db->beginTransaction(); 
 foreach($_FILES['file']['name'] as $index=>$filename){
 	$md5 = md5_file( $_FILES['file']['tmp_name'][$index] );
-   	$query_text='SELECT COUNT(*) FROM Documento WHERE id_doc=?';
-   	$query = $db->prepare($query_text);
+   	$sql='SELECT COUNT(*) FROM Documento WHERE id_doc=?';
+   	$query = $db->prepare($sql);
     $query->execute([$md5]);
     $file = $updir.$ds.$filename;
    	// Check if file is not +uploaded and if it is not in the db
    	$txt="";
-   	if($query->fetchColumn()==0){
-   	// if(!file_exists($file) and $query->fetchColumn()==0){
+   	if(!file_exists($file) and $query->fetchColumn()==0){
    		fwrite($fp, PHP_EOL."BEGIN-file".PHP_EOL."name:".$filename.PHP_EOL);
         move_uploaded_file($_FILES['file']['tmp_name'][$index], $file);
 	    if( mime_content_type($file) == 'application/pdf' ) {
@@ -133,10 +132,10 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 	    	}
 	    }
 	    if( isset($data['asig']) && isset($data['anio']) ){
-		    $query_text = "SELECT B.nom_tag_id FROM examen AS A, examen AS B ";
-		    $query_text.= "WHERE A.nom_tag_id=? AND A.nom_doc=B.nom_doc AND A.ruta_doc=B.ruta_doc ";
-		    $query_text.= " AND B.tipo_tag=? GROUP BY B.nom_tag_id";
-		    $query = $db->prepare($query_text);
+		    $sql = "SELECT B.nom_tag_id FROM examen AS A, examen AS B ";
+		    $sql.= "WHERE A.nom_tag_id=? AND A.nom_doc=B.nom_doc AND A.ruta_doc=B.ruta_doc ";
+		    $sql.= " AND B.tipo_tag=? GROUP BY B.nom_tag_id";
+		    $query = $db->prepare($sql);
 		    $query->execute([$data['asig'][0], 'grado']);
 		    $results = $query->fetchAll(PDO::FETCH_ASSOC);
 		    foreach ($results as $row) { // puede ser informática o informática y matemáticas
@@ -147,36 +146,37 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 		    foreach ($results as $row) { // es el curso en letra y en número
 				$data['curso'][] = $row["B.nom_tag_id"];
 		    }
-			$query_text = "INSERT INTO documento (id_doc, nom_doc, ruta_doc) VALUES(:md5, :nom, :ruta)"; 
-			$query = $db->prepare($query_text);
-			foreach ($db->errorInfo() as $val) {
-				fwrite($fp, $val);
-			}
-
+			$sql = "INSERT INTO documento (id_doc, nom_doc, ruta_doc) VALUES($md5, $filename, $updir)"; 
+			$db->query($sql);
+			// $query = $db->prepare($sql);
+			// foreach ($db->query($sql) as $val) {
+			// 	fwrite($fp, $val);
+			// }
 			// $query->bindValue(':md5', $md5, PDO::PARAM_STR);
 			// $query->bindValue(':nom', $filename, PDO::PARAM_STR);
 			// $query->bindValue(':ruta', $updir, PDO::PARAM_STR);
 			// fwrite($fp, 'doc:'.PHP_EOL.$md5." ".$filename." ".$updir);
 			// EVERYTHING CRASH HERE!!!!!!!!!!!!!!!!!!!!!!!
-			$query->execute([$md5, $filename, $updir]);
+			// $query->execute([$md5, $filename, $updir]);
 			// $query->execute();
-			foreach ($query->errorInfo() as $val) {
-				fwrite($fp, $val);
-			}
-		    $query_text = "INSERT INTO doctag(id_doc_id, nom_tag_id, comprobado) VALUES(?, ?, ?)"; 
-		    // $query = $db->prepare($query_text);
+			// foreach ($query->errorInfo() as $val) {
+			// 	fwrite($fp, $val);
+			// }
+		    // $sql = "INSERT INTO doctag(id_doc_id, nom_tag_id, comprobado) VALUES(?, ?, ?)"; 
+		    // $query = $db->prepare($sql);
 		    fwrite($fp, 'tags:'.PHP_EOL);
 		    foreach ($data as $val) {
 		    	foreach ($val as $tag) {
+		    		$sql = "INSERT INTO doctag(id_doc_id, nom_tag_id, comprobado) VALUES($md5, $tag, 0)"; 
 		    		fwrite($fp, $tag.PHP_EOL);
-				    // $query->execute([$md5, $tag, 0]);
-				}
+		    	}
 		    }
 	    }
 		fwrite($fp, "END-file");
 	}
 }
 $db->commit();
+array_map( "unlink", glob( $updir."/*.tif" ) );
 $db=null;
 fclose($fp);
 ?>
