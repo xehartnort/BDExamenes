@@ -1,6 +1,5 @@
 <?php
 require 'vendor/autoload.php';
-ini_set('display_errors', 1);
 
 function getTags($tipo_tag, $db){
 	$tags = array();
@@ -35,7 +34,6 @@ function getSiglas($tags){
 }
 
 $db = new PDO("sqlite:../examenes.db");
-$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 $asigs = getTags("asig", $db);
 $asigSiglas = getSiglas($asigs);
 $meses =  array("oct","nov","dic","ene","feb","mar","abr","may","jun","jul","sep");
@@ -58,8 +56,8 @@ foreach($_FILES['file']['name'] as $index=>$filename){
    	$query = $db->prepare($sql);
     $query->execute([$md5]);
     $file = $updir.$ds.$filename;
-   	// Check if file is not +uploaded and if it is not in the db
    	$txt="";
+   	// Check if file is not uploaded and if it is not in the db
    	if(!file_exists($file) and $query->fetchColumn()==0){
    		fwrite($fp, PHP_EOL."BEGIN-file".PHP_EOL."name:".$filename.PHP_EOL);
         move_uploaded_file($_FILES['file']['tmp_name'][$index], $file);
@@ -124,13 +122,6 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 		    	}
 	    	}
 	    }
-	    fwrite($fp, 'tags:'.PHP_EOL);
-	    foreach ($data as $key=>$val) {
-	    	fwrite($fp, $key." ");
-	    	foreach ($val as $tag) {
-	    		fwrite($fp, $tag.PHP_EOL);
-	    	}
-	    }
 	    if( isset($data['asig']) && isset($data['anio']) ){
 		    $sql = "SELECT B.nom_tag_id FROM examen AS A, examen AS B ";
 		    $sql.= "WHERE A.nom_tag_id=? AND A.nom_doc=B.nom_doc AND A.ruta_doc=B.ruta_doc ";
@@ -148,26 +139,12 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 		    }
 			$sql = "INSERT INTO documento (id_doc, nom_doc, ruta_doc) VALUES($md5, $filename, $updir)"; 
 			$db->query($sql);
-			// $query = $db->prepare($sql);
-			// foreach ($db->query($sql) as $val) {
-			// 	fwrite($fp, $val);
-			// }
-			// $query->bindValue(':md5', $md5, PDO::PARAM_STR);
-			// $query->bindValue(':nom', $filename, PDO::PARAM_STR);
-			// $query->bindValue(':ruta', $updir, PDO::PARAM_STR);
-			// fwrite($fp, 'doc:'.PHP_EOL.$md5." ".$filename." ".$updir);
-			// EVERYTHING CRASH HERE!!!!!!!!!!!!!!!!!!!!!!!
-			// $query->execute([$md5, $filename, $updir]);
-			// $query->execute();
-			// foreach ($query->errorInfo() as $val) {
-			// 	fwrite($fp, $val);
-			// }
-		    // $sql = "INSERT INTO doctag(id_doc_id, nom_tag_id, comprobado) VALUES(?, ?, ?)"; 
-		    // $query = $db->prepare($sql);
+		    $sql = "INSERT INTO doctag(id_doc_id, nom_tag_id, comprobado) VALUES(?, ?, ?)"; 
+		    $query = $db->prepare($sql);
 		    fwrite($fp, 'tags:'.PHP_EOL);
 		    foreach ($data as $val) {
 		    	foreach ($val as $tag) {
-		    		$sql = "INSERT INTO doctag(id_doc_id, nom_tag_id, comprobado) VALUES($md5, $tag, 0)"; 
+		    		$query->execute([$md5,$tag,0]);
 		    		fwrite($fp, $tag.PHP_EOL);
 		    	}
 		    }
@@ -176,7 +153,8 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 	}
 }
 $db->commit();
-array_map( "unlink", glob( $updir."/*.tif" ) );
 $db=null;
 fclose($fp);
+//erase image files created for ocr
+array_map( "unlink", glob( $updir."/*.tif" ) );
 ?>

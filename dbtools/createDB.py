@@ -10,7 +10,7 @@ from peewee import *
 import os
 import hashlib
 
-MySQLitedb = SqliteDatabase('../examenes.db')
+MySQLitedb = SqliteDatabase('/tmp/examenes.db')
 
 class Documento(Model):
     id_doc = FixedCharField(null = False,
@@ -26,7 +26,7 @@ class Tag(Model):
                     primary_key = True)
     tipo_tag = CharField(null = False,
                     constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'otro')")])
-    #preferencia = IntegerField(default=0) # incrementa con cada visita
+    preferencia = IntegerField(default=0) # incrementa con cada visita
     class Meta:
         database = MySQLitedb # this model is in *.db database
 
@@ -39,4 +39,4 @@ class DocTag(Model):
         database = MySQLitedb # this model is in *.db database
 
 MySQLitedb.create_tables([Documento, Tag, DocTag])
-MySQLitedb.execute_sql("CREATE VIEW examen AS SELECT A.nom_doc, A.ruta_doc, B.nom_tag_id, B.comprobado, C.tipo_tag FROM doctag AS B INNER JOIN documento AS A ON A.id_doc=B.id_doc_id INNER JOIN tag AS C ON C.nom_tag=B.nom_tag_id")
+MySQLitedb.execute_sql("CREATE VIEW examen AS SELECT A.nom_doc, A.ruta_doc, B.nom_tag_id, B.comprobado, C.tipo_tag, C.preferencia FROM doctag AS B INNER JOIN documento AS A ON A.id_doc=B.id_doc_id INNER JOIN tag AS C ON C.nom_tag=B.nom_tag_id")

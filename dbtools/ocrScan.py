@@ -9,7 +9,7 @@ import os
 import json
 import re
 
-MySQLitedb = SqliteDatabase('../examenes.db')
+MySQLitedb = SqliteDatabase('/tmp/examenes.db')
 
 class Documento(Model):
     id_doc = FixedCharField(null = False,
@@ -25,7 +25,7 @@ class Tag(Model):
                     primary_key = True)
     tipo_tag = CharField(null = False,
                     constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'otro')")])
-    #preferencia = IntegerField(default=0) # incrementa con cada visita
+    preferencia = IntegerField(default=0) # incrementa con cada visita
     class Meta:
         database = MySQLitedb # this model is in *.db database
 

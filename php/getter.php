@@ -1,29 +1,39 @@
 <?php
-   //$_GET["tag0"]="Informática";
+  function getAllTags($db){
+    $tags = array();
+    $sql = "SELECT nom_tag FROM tag";
+    $query = $db->prepare($sql);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($results as $row) {
+      $tags[ $row["nom_tag"] ] = $row["nom_tag"];
+    }
+    return $tags;
+  }
+   // $_GET["tag0"]="Informática";
    // $_GET["tag1"]="tercero";
    // $_GET["tag2"]="";
    // $_GET["tag3"]="";
-   //$_GET["page"]=1;
+   // $_GET["page"]=1;
   $db = new PDO("sqlite:../examenes.db");
+  $allTags=getAllTags($db);
   $tildes=array('á','é','í','ó','ú');
   $sin_tildes=array('_','_','_','_','_');
   $page = $_GET["page"]>=1 ? $_GET["page"] : 1;
-  unset($_GET["page"]);
   foreach ($_GET as $key => $value) {
-    $_GET[$key] = str_ireplace($tildes, $sin_tildes, $_GET[$key]);
-  }
-  $query_text = "";
-  foreach ($_GET as $key => $value) { # http://stackoverflow.com/questions/2621382/alternative-to-intersect-in-mysql
-    $query_text.="SELECT nom_doc, ruta_doc FROM examen WHERE nom_tag_id LIKE :".$key;
-    if($value != end($_GET)){ // if not last iteration
-      $query_text .= " INTERSECT ";
+    if($key!="page" && $value!=""){
+      $tags[$key] = str_ireplace($tildes, $sin_tildes, $_GET[$key]);
     }
   }
-  $query = $db->prepare($query_text);
-  foreach ($_GET as $key => $value) {
-    if($value == ""){
-      $value = '%';
+  $sql = "";
+  foreach ($tags as $key => $value) {
+    $sql.="SELECT nom_doc, ruta_doc FROM examen WHERE nom_tag_id LIKE :".$key;
+    if($value != end($tags)){ // if not last iteration
+      $sql .= " INTERSECT ";
     }
+  }
+  $query = $db->prepare($sql);
+  foreach ($tags as $key => $value) {
     $query->bindValue(":".$key, $value, PDO::PARAM_STR);    
   }
   $row_count = 20;
@@ -35,6 +45,13 @@
     if( isset($results[$i])){
       $row=$results[$i];
       $result[$row["nom_doc"]] = $row["ruta_doc"];
+    }
+  }
+  $sql = "UPDATE tag SET preferencia = preferencia + 1 WHERE nom_tag = ?";
+  $query = $db->prepare($sql);
+  foreach ($_GET as $key => $value) {
+    if( isset($allTags[$value]) ){
+      $query->execute([$value]);
     }
   }
   echo json_encode($result);
