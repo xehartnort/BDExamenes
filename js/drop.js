@@ -38,7 +38,7 @@ Dropzone.options.drop = {
  	    myDropzone.on("complete", function (file) {
 	      if (myDropzone.getUploadingFiles().length === 0 && 
 	      	  myDropzone.getQueuedFiles().length === 0) {
-	        // window.location.reload();
+	        window.location.reload();
 	    	}
 		  });
 	  }

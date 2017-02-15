@@ -8,7 +8,7 @@ function getTags($tipo_tag, $db){
 	$query->execute([$tipo_tag]);
 	$results = $query->fetchAll(PDO::FETCH_ASSOC);
 	foreach ($results as $row) {
-		$tags[] = $row["nom_tag"];
+		$tags[] = $row["nom_tag"]; 
 	}
 	return $tags;
 }
@@ -137,8 +137,9 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 		    foreach ($results as $row) { // es el curso en letra y en número
 				$data['curso'][] = $row["B.nom_tag_id"];
 		    }
-			$sql = "INSERT INTO documento (id_doc, nom_doc, ruta_doc) VALUES($md5, $filename, $updir)"; 
-			$db->query($sql);
+			$sql = "INSERT INTO documento (id_doc, nom_doc, ruta_doc) VALUES(?, ?, ?)"; 
+		    $query = $db->prepare($sql);
+			$query->execute([$md5, $filename, 'sinClasificar']);
 		    $sql = "INSERT INTO doctag(id_doc_id, nom_tag_id, comprobado) VALUES(?, ?, ?)"; 
 		    $query = $db->prepare($sql);
 		    fwrite($fp, 'tags:'.PHP_EOL);

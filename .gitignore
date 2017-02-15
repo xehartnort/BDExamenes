@@ -1,2 +1,3 @@
 tmp/*
 *.tif
+php/log.txt
