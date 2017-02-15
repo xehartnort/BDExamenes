@@ -46,8 +46,8 @@ $updir='../sinClasificar';
 $ds=DIRECTORY_SEPARATOR;
 $fp=fopen("./log.txt", 'a') or die();
 $parser = new \Smalot\PdfParser\Parser();
-$image = new Gmagick();
-$image->setResolution( 204*2, 196*2 ); 
+$image = new Imagick();
+$image->setResolution( 408, 392 ); 
 
 $db->beginTransaction(); 
 foreach($_FILES['file']['name'] as $index=>$filename){
@@ -71,9 +71,9 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 	       	$file.='[0]';
 	    }
 	    if( $txt == "" ){
-		    $image->readImage( $file );
-		    $image = $image->cropimage($image->getimagewidth(), $image->getimageheight()/5, 0, 0);
-		    $image->write($file.'.tif');
+		    $image->readImage( $file )
+		    	->cropimage($image->getimagewidth(), $image->getimageheight()/5, 0, 0)
+		    	->write($file.'.tif');
 		    $txt = (new TesseractOCR($file.'.tif'))->lang('spa')->run();
 	    }
 	    $thereIsAsig = FALSE;
@@ -144,7 +144,7 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 		    fwrite($fp, 'tags:'.PHP_EOL);
 		    foreach ($data as $val) {
 		    	foreach ($val as $tag) {
-		    		$query->execute([$md5,$tag,0]);
+		    		$query->execute([$md5, $tag, 0]);
 		    		fwrite($fp, $tag.PHP_EOL);
 		    	}
 		    }
@@ -156,5 +156,5 @@ $db->commit();
 $db=null;
 fclose($fp);
 //erase image files created for ocr
-array_map( "unlink", glob( $updir."/*.tif" ) );
+// array_map( "unlink", glob( $updir."/xcopy.png" ) );
 ?>

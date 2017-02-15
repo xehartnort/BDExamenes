@@ -1,6 +1,6 @@
 {
     "require": {
         "thiagoalessio/tesseract_ocr": "1.0.0-RC",
-	"smalot/pdfparser": "*"
+		"smalot/pdfparser": "*"
     }
 }

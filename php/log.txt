@@ -1,0 +1,14 @@
+
+BEGIN-file
+name:Charmed_Triquetra.jpg
+
+BEGIN-file
+name:learning_agreement (1)MC_1819.pdf
+tags:
+Modelos de Computación
+1617
+Informática
+Informática y Matemáticas
+3
+tercero
+END-file
