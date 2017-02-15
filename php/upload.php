@@ -47,7 +47,7 @@ $ds=DIRECTORY_SEPARATOR;
 $fp=fopen("./log.txt", 'a') or die();
 $parser = new \Smalot\PdfParser\Parser();
 $image = new Imagick();
-$image->setResolution( 408, 392 ); 
+$image->setResolution( 408, 392 );
 
 $db->beginTransaction(); 
 foreach($_FILES['file']['name'] as $index=>$filename){
@@ -71,9 +71,9 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 	       	$file.='[0]';
 	    }
 	    if( $txt == "" ){
-		    $image->readImage( $file )
-		    	->cropimage($image->getimagewidth(), $image->getimageheight()/5, 0, 0)
-		    	->write($file.'.tif');
+		    $image->readImage( $file );
+		    $image->cropimage($image->getimagewidth(), $image->getimageheight()/5, 0, 0);
+		    $image->writeimage($file.'.tif');
 		    $txt = (new TesseractOCR($file.'.tif'))->lang('spa')->run();
 	    }
 	    $thereIsAsig = FALSE;
@@ -156,5 +156,5 @@ $db->commit();
 $db=null;
 fclose($fp);
 //erase image files created for ocr
-// array_map( "unlink", glob( $updir."/xcopy.png" ) );
+array_map( "unlink", glob( $updir."/*.tif" ) );
 ?>

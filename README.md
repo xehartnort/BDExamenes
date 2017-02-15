@@ -1,35 +1,57 @@
----
-layout: page
-title: BDExámenes
-permalink: /BDExamenes/
-feature-img: "img/about.svg"
-order: 4
----
+## BD
 
-Bienvenido al buscador de exámenes (enlace al final de la página) de la Delegación de Estudiantes de la [ETSIIT](http://etsiit.ugr.es/). Es bien sabido que los exámenes de años anteriores ayudan al mejor estudio y asimilación de los conceptos fundamentales de una asignatura. Así como a entender más extensamente la puesta en práctica de los criterios de evaluación del docente que imparte la asignatura, pues la descripción proporcionada en la guía docente acostumbra a ser breve y poco concisa.
+### BD - Estructuración lógica de la base de datos
+Vamos al lío. Primero comencemos explicando el modelo relacional que sostiene al nivel conceptual de la base de datos, sí, estoy hablando del diagrama entidad-relación:
 
-Casi siempre que una nueva generación de estudiantes comienza un grado en la ETSIIT se crean una o más carpetas compartidas en servicios como Dropbox o Google Drive con la finalidad de albergar material útil (práticas, exámenes, ejercicios resueltos, etc.). Desde la Delegación de estudiantes queremos acercar a tod@s todo el material disponible para que vuestro paso por la ETSIIT sea lo más enriquecedor posible y no un circo en llamas. Además de que vosotros mismos podais compartir el material del que dispongais. Esta última frase suele causar que uno piense: *me parece muy bonito todo el tema de compartir pero:*
+La entidad *Documento* representa a todos los exámenes guardados:
+  - id_doc : cada archivo se identifica univocamente por su hash sha1.
+  - nom_doc : el correspondiente nombre del examen almacenado.
+  - ruta_doc : la correspondiente ruta al examen en la *jungla de directorios*.
 
-### ¿Qué gano compartiendo aquí los exámenes de la asignatura X?
+La entidad *Tag* representa una etiqueta que clasifica un elemento de la entidad *Documento*:
+  - nom_tag : es el nombre o identificativo único de cada etiqueta.
+  - tipo_tag : categoría en la que se sitúa la etiqueta, se consideran 5: año, curso, asignatura, grado y otro.
+  - preferencia : indica el uso de una etiqueta, a mayor preferencia, mayor uso de la etiqueta y por tanto más importancia  tendrá en la clasificación.
 
-Ganamos todos y a varios niveles:
+La entidad *DocTag* representa en duplas la asociación de un *Documento* a un *Tag* y viceversa, añade también un nuevo atributo: **comprobado**.
 
-- Haciendo públicos los exámenes se crea la posibilidad de someter a *revisión los criterios de evaluación presentes en los exámenes*, acercando el proceso de evaluación a l@s estudiantes. Esto repercute directamente en la mejora de calidad de las asignaturas.
-- L@s próximos estudiantes de la asignatura y compañer@s de clase que no consigan aprobar la asignatura, tendrán una manera de poner a prueba sus conocimientos de la misma y preparse mejor para futuros exámenes.
-- Estas apoyando la idea de que los exámenes de años anteriores deben de ser publicados por los docentes que impartan la asignatura y dejar de ocultarlos en un feo baúl subterráneo.
+<a href="http://imgur.com/yNXJwKs"><img src="http://i.imgur.com/yNXJwKs.png" title="source: imgur.com" /></a>
 
-### ¿El/la docente se enfadará, cambiará el examen y nos someterá a torturas posteriores?
+En el nivel externo de la base de datos se encuentran las vistas *examen*. La primera es, en términos del [álgebra relacional](https://es.wikipedia.org/wiki/%C3%81lgebra_relacional), la únion natural de la tabla *Documento*, la tabla *DocTag* y la tabla *Tag*.
 
-En primer lugar, decir que no hay motivos para enfadarse, un/una docente responsable debe:
+### BD - Implementación
+El administrador de la base de datos es por simplicidad [SQlite](https://sqlite.org/), en un futuro próximo se portará a MySQL. El código correspondiente a la creación de la base de datos se encuentra en el archivo *createDB.py* dentro de la carpeta *dbtools*.
 
-- Cambiar razonablemente los exámenes convocatoria tras convocatoria para que todos nos evaluemos bajo igualdad de condiciones.
-- Asegurar que los criterios de evaluación presentes en los exámenes realmente evaluen qué conceptos y técnicas hemos aprendido durante el curso.
+#### BD - Estructura de la **jungla de directorios**
 
-### ¿Es legal compartir los exámenes?
+Cada archivo de examen se encuentra almacenado en las profundidades de la *jungla de directorios* atendiendo a los siguientes criterios: grado al que pertenece el examen, curso de la asignatura del examen, asignatura del examen y año del curso en el que se realiza el examen. En caso de no poder determinar el año o ser este anterior a 2011-2012, el valor de año es UNKN (de Unknown, desconocido) o ANTE (de Anterior ~~al origen del mundo~~ al año 1112).
 
-Por supuesto que sí, los exámenes no tienen ningún tipo de licencia que impida su libre distribución.
+Por ejemplo, si tenemos un examen del *curso 1º*, *año 2013-2014*, asignatura *Héchizos y Pócimas* del grado en *Artes Oscuras* y un tipo test de dicha asígnatura que no sabemos de que año es ~~pero tienen hasta telarañas~~, sus rutas en la jungla sería:
 
-Dicho esto, espero haberte convencido para contribuir y mantener este buscador de exámenes :)
+- Artes Oscuras/1/Héchizos y Pócimas/1314/examen
+- Artes Oscuras/1/Héchizos y Pócimas/UNKN/tipo_test
 
-[Buscador de exámenes](search.html)
+#### BD - Actualización
+Una vez añadidos nuevos archivos a la *jungla de directorios* es suficiente con ejecutar el siguiente comando en la carpeta raiz del proyecto: `make db`. Este comando buscará y borrará automágicamente los archivos duplicados de la *jungla de directorios*, además de clasificar en la base de datos los nuevos archivos.
 
+### BD - Interfaz web
+La lógica del servidor, esto es, código destinado a ejecutarse en el servidor durante la interacción de un usuario con la interfaz web está implementado en php y se encuentra en el directorio *php*. La lógica de la interfaz se encuentra repartida en dos directorios: *css* y *js* y los ficheros html. Para programar en CSS se ha empleado *[{less}](http://lesscss.org/)*, por lo que es necesario compilar el archivo *css/style.less*, por otra parte el código Javascript se minifica utilizando *[UglifyJS](https://github.com/mishoo/UglifyJS)*. Estas operaciones se llevan a cabo ejecutando `make css` y `make js`.
+
+### BD - Dependencias
+
+Python:
+- [peewee](http://peewee.readthedocs.io)
+- [PIL](http://pythonware.com/products/pil/)
+- [PyOCR](https://github.com/jflesch/pyocr)
+
+PHP:
+- Administradas con *[composer](https://getcomposer.org/doc/00-intro.md)*, consultar el fichero *php/composer.json*. La librería de *[Tesseract para PHP](https://github.com/thiagoalessio/tesseract-ocr-for-php)* requiere de la instalación de *[Tesseract OCR](https://github.com/tesseract-ocr/tesseract/wiki)* y del [paquete de idioma español](https://github.com/tesseract-ocr/tesseract/blob/master/doc/tesseract.1.asc#languages).
+- Administradas manualmente: [Image Magick](https://pecl.php.net/package/imagick) y [PDO](http://php.net/manual/en/book.pdo.php) ambas tienen que ser habilitadas en el fichero de configuración de php, php.ini, el cual se suele encontrar en el directorio `/etc`. 
+
+Javascript:
+- [jQuery UI](http://jqueryui.com/)
+- [DropzoneJS](http://www.dropzonejs.com/)
+- [UglifyJS](https://github.com/mishoo/UglifyJS)
+
+CSS:
+- [{less}](http://lesscss.org/)
