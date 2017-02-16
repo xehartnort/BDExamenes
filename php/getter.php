@@ -10,11 +10,11 @@
     }
     return $tags;
   }
-   // $_GET["tag0"]="Informatica";
-   // $_GET["tag1"]="tercero";
-   // $_GET["tag2"]="";
-   // $_GET["tag3"]="";
-   // $_GET["page"]=1;
+  // $_GET["tag0"]="Informatica";
+  // $_GET["tag1"]="tercero";
+  // $_GET["tag2"]="";
+  // $_GET["tag3"]="";
+  // $_GET["page"]=1;
   $db = new PDO("sqlite:../examenes.db");
   $allTags=getAllTags($db);
   $patterns = array('/a|á/','/e|é/','/i|í/','/o|ó/','/u|ú/');
@@ -22,7 +22,6 @@
   $page = $_GET["page"]>=1 ? $_GET["page"] : 1;
   foreach ($_GET as $key => $value) {
     if($key!="page" && $value!=""){
-      // $tags[$key] = str_ireplace($tildes, $sin_tildes, $_GET[$key]);
       $tags[$key] = preg_replace($patterns, $replacements, $value);
     }
   }
@@ -48,12 +47,10 @@
       $result[$row["nom_doc"]] = $row["ruta_doc"];
     }
   }
-  $sql = "UPDATE tag SET preferencia = preferencia + 1 WHERE nom_tag = ?";
+  $sql = "UPDATE tag SET preferencia = preferencia + 1 WHERE nom_tag LIKE ?";
   $query = $db->prepare($sql);
-  foreach ($_GET as $key => $value) {
-    if( isset($allTags[$value]) ){
+  foreach ($tags as $key => $value) {
       $query->execute([$value]);
-    }
   }
   echo json_encode($result);
 ?>

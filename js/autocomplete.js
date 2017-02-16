@@ -42,14 +42,33 @@ $(document).ready(function() {
   $("button#up").hide();
   $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
 
-  $( '#input' ).autocomplete({
+  $( '.search-input' ).autocomplete({
     autoFocus: true,
     create: function( event, ui ) {
-      $( '#input' ).val("");
+      $( '.search-input' ).val("");
       $.getJSON( "./php/tagger.php", 
         function(data, status){
-          if(status=="success"){
-            cache = data;
+          cache = data;
+          var max = 20, cont=0;
+          for(var i=0;cont<max ; i++){
+            if(data[i].length>1){
+              cont += data[i].length;
+              var li = document.createElement('li');
+              li.innerHTML = data[i];
+              li.onclick = function(){
+                var terms = split( $( '.search-input' ).val() );
+                if(terms[terms.length-1]==""){
+                  terms.pop();
+                }
+                terms.push(this.innerHTML);
+                terms.push("");
+                $( '.search-input' ).val( terms.join( ", " ) );
+                mostrarResultados(pag);
+              }
+              $('#suglist').append(li);
+            }else{
+              max++;
+            }
           }
         }
       );
@@ -85,7 +104,7 @@ $(document).ready(function() {
       terms.push(ui.item.value);
       // add placeholder to get the comma-and-space at the end
       terms.push( "" );
-      $( '#input' ).val(terms.join( ", " ));
+      $( '.search-input' ).val(terms.join( ", " ));
       mostrarResultados(pag); // sin timeout no toma el último valor
       return false;
     }

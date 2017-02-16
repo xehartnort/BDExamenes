@@ -41,7 +41,6 @@ body, html {
     background: @BackgroundColor;
     padding: 15px;
     margin: 5px 5px 0px 5px;
-    // padding: 15px;
     .border(0px); 
     .shadow();
 }
@@ -58,35 +57,52 @@ body, html {
     .shadow();
 }
 
-ul.results{
+ul#suglist{
+    list-style-type: none;
+    background: @BackgroundColor;
+    margin: 0px;
+    padding: 0px;
+    .setFont();
+}
+
+ul#suglist li{
+    display: inline;
+    background: @TextBack;
+    margin: 5px 5px 5px 0px;
+    padding: 5px;
+    .border(0px,@defaultRadius/2);
+    .shadow();
+}
+
+ul#suglist li:hover {
+    background-color: @AccentColor;
+    color: @TextBack;
+}
+
+ul#lista{
 	list-style-type: none;
     background: @BackgroundColor;
     padding: 0px;
-    .border(0px);
+    margin: 0px;
+    .setFont();
 }
 
-ul.results li{
-	list-style-type: none;
+ul#lista li{
     background: @TextBack;
-    margin: 5px;
-    .setFont();
+    margin: 5px 5px 5px 0px;
     .border(0px,@defaultRadius/2);
     .shadow();
-
 }
 
-ul.results li a{
+ul#lista li a{
     padding: 5px 30px 5px 10px;
     display: block;
 	text-decoration: none;
 	color:@SmallFontColor;
 }
 
-ul.results li:hover {
+ul#lista li:hover {
 	background-color: @AccentColor;
-}
-
-ul.results li:hover a {
 	color: @TextBack;
 }
 
@@ -105,6 +121,16 @@ ul.results li:hover a {
 .subheader-text{
 	display:inline;
 	.setFont(@midFont, @BigFontColor);
+}
+
+.subheader-text a:link{
+    color: @SmallFontColor;
+    // text-decoration: none;
+}
+
+.subheader-text a:visited{
+    color: @SmallFontColor;
+    // text-decoration: none;
 }
 
 button#up{
