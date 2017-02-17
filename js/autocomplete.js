@@ -49,11 +49,11 @@ $(document).ready(function() {
       $.getJSON( "./php/tagger.php", 
         function(data, status){
           cache = data;
-          var max = 20, cont=0;
-          for(var i=0;cont<max ; i++){
+          var max = 10;
+          for(var i=0; i<max ; i++){
             if(data[i].length>1){
-              cont += data[i].length;
               var li = document.createElement('li');
+              // li.innerHTML = "<a href=\"#\">"+data[i]+"</a>";
               li.innerHTML = data[i];
               li.onclick = function(){
                 var terms = split( $( '.search-input' ).val() );

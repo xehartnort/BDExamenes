@@ -1,3 +1,4 @@
 tmp/*
 *.tif
 php/log.txt
+examenes.db

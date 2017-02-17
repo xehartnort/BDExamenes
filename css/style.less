@@ -48,10 +48,10 @@ body, html {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE SEARCH.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .search-input{
-    display: block;
-    padding: 10px 5px 10px 5px;
+    margin-down: 5px; 
+    padding: 10px;
     margin: 0px;
-  	width: 98%;
+  	width: 97%;
     .setFont();
     .border(0px, @defaultRadius, @AccentColor);
     .shadow();
@@ -60,18 +60,18 @@ body, html {
 ul#suglist{
     list-style-type: none;
     background: @BackgroundColor;
-    margin: 0px;
     padding: 0px;
-    .setFont();
+    margin: 0px;
 }
 
 ul#suglist li{
-    display: inline;
+    display: inline-flex;
     background: @TextBack;
-    margin: 5px 5px 5px 0px;
-    padding: 5px;
+    margin: 5px 5px 0px 0px;
+    padding: 10px;
     .border(0px,@defaultRadius/2);
     .shadow();
+    .setFont();
 }
 
 ul#suglist li:hover {
@@ -83,7 +83,7 @@ ul#lista{
 	list-style-type: none;
     background: @BackgroundColor;
     padding: 0px;
-    margin: 0px;
+    margin: 0px 0px 5px 0px;
     .setFont();
 }
 
@@ -163,3 +163,9 @@ button:hover{
 	color: @TextBack;
 	background-color: @AccentColor;
 }
+
+
+#menu {display:table; width:auto}
+#menu ul {display:table-row; width: 100%}
+#menu li.left {display: table-cell; text-align: left; width: 20px; white-space:nowrap;}
+#menu li {display: table-cell; text-align: right; width: auto;}

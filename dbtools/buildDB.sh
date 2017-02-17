@@ -43,3 +43,6 @@ fi
 if [[ -f "/tmp/examenes.db" ]]; then
 	mv '/tmp/examenes.db' '.'
 fi
+
+sudo chown http:http examenes.db
+

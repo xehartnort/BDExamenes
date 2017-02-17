@@ -1,5 +1,5 @@
 Dropzone.options.drop = {
-    url: "/BDExamenes/php/upload.php",
+    url: "/BDExamenes/php/uploader.php",
     clickable: true,
     autoProcessQueue: false,
     uploadMultiple: true,
