@@ -48,7 +48,7 @@ body, html {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE SEARCH.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .search-input{
-    margin-down: 5px; 
+    // margin-down: 5px; 
     padding: 10px;
     margin: 0px;
   	width: 97%;
@@ -151,7 +151,7 @@ button#up{
 
 button{
 	width: 100%;
-	margin: 4px;
+	margin: 4px 0px 0px 0px;
 	padding: 8px 8px;
 	background-color: @TextBack;
 	.setFont();
@@ -162,4 +162,31 @@ button{
 button:hover{
 	color: @TextBack;
 	background-color: @AccentColor;
+}
+
+button.inverted{
+    color: @TextBack;
+    background-color: @AccentColor;
+}
+
+ul#upfiles{
+    list-style-type: none;
+    background: @BackgroundColor;
+    padding: 0px;
+    margin: 0px;
+}
+
+ul#upfiles li{
+    display: inline-flex;
+    background: @TextBack;
+    margin: 5px 5px 0px 0px;
+    padding: 10px;
+    .border(0px,@defaultRadius/2);
+    .shadow();
+    .setFont();
+}
+
+ul#upfiles li:hover {
+    background-color: @AccentColor;
+    color: @TextBack;
 }

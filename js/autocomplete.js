@@ -16,24 +16,22 @@ function mostrarResultados(numpag) {
   };
   args += "page="+numpag;
   $.getJSON( './php/getter.php', args, function (data, status) { // success handler
-    if(status == "success"){
-      if(numpag==1){
-        $("#lista").empty();
-      }
-      page_limit = Math.floor(data["num_r"]/20) + 1;
-      if( data["num_r"] > 0 ){
-        $.each(data, function(key, value) {
-          if(key!="num_r"){
-            if(value != null){
-              var path2file = encodeURI(value+"/"+key);
-              $('#lista').append('<li><a href='+path2file+' target="_blank">'+key+'</a></li>');
-            }
+    if(numpag==1){
+      $("#lista").empty();
+    }
+    page_limit = Math.floor(data["num_r"]/20) + 1;
+    if( data["num_r"] > 0 ){
+      $.each(data, function(key, value) {
+        if(key!="num_r"){
+          if(value != null){
+            var path2file = encodeURI(value+"/"+key);
+            $('#lista').append('<li><a href='+path2file+' target="_blank">'+key+'</a></li>');
           }
-        });
-      }else{
-        $("#lista").empty();
-        $("#lista").append("<li><a>No se encontraron resultados</a></li>");
-      }
+        }
+      });
+    }else{
+      $("#lista").empty();
+      $("#lista").append("<li><a>No se encontraron resultados</a></li>");
     }
   });
 }
@@ -53,7 +51,6 @@ $(document).ready(function() {
           for(var i=0; i<max ; i++){
             if(data[i].length>1){
               var li = document.createElement('li');
-              // li.innerHTML = "<a href=\"#\">"+data[i]+"</a>";
               li.innerHTML = data[i];
               li.onclick = function(){
                 var terms = split( $( '.search-input' ).val() );

@@ -1,3 +1,4 @@
+var count=0;
 Dropzone.options.drop = {
     url: "/BDExamenes/php/uploader.php",
     clickable: true,
@@ -23,10 +24,6 @@ Dropzone.options.drop = {
       $("button#delete-all").click(function (e) {
           myDropzone.removeAllFiles();
       });
-      // Max accepted files reached
-      // this.on("maxfilesreached",function(file){
-        
-      // });
       // Remove exceeded files
       myDropzone.on("maxfilesexceeded",function(file){
         myDropzone.removeFile(file);
@@ -38,8 +35,27 @@ Dropzone.options.drop = {
  	    myDropzone.on("complete", function (file) {
 	      if (myDropzone.getUploadingFiles().length === 0 && 
 	      	  myDropzone.getQueuedFiles().length === 0) {
-	        window.location.reload();
+	        // window.location.reload();
 	    	}
+        if(file.status=="success"){
+          var args ="nomdoc="+file.name;
+          $.getJSON('./php/getClassif.php', args,
+            function (data, status) {
+              for(var i=0; i<data.length; i++){
+                $("#upfiles").append("<li name="+count+">"+data[i]+"</li>");
+                console.log(count);
+              }
+              $("#upfiles").append("<button type=\"submit\" class=\"inverted\" id=\""+count+"\">Haz click aquí si "+file.name+" está bien clasificado</button>");
+              $('#'+count).click( function (){
+                $('[name='+count+']').each(function(key,value){
+                  this.remove();
+                });
+                this.remove();
+              });
+            }
+          );
+        }
+        count++;
 		  });
 	  }
 };
