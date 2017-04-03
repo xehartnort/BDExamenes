@@ -1,5 +1,4 @@
 <?php
-$_GET["nomdoc"]="learning_agreement (1)MC_1819.pdf";
 $db = new PDO("sqlite:../examenes.db");
 $sql = "UPDATE tag SET comprobado=1 WHERE comprobado=0 AND nom_doc=?";
 $query = $db->prepare($sql);
