@@ -47,25 +47,21 @@ $(document).ready(function() {
       $.getJSON( "./php/tagger.php", 
         function(data, status){
           cache = data;
-          var max = 10;
+          var max = 7;
           for(var i=0; i<max ; i++){
-            if(data[i].length>1){
-              var li = document.createElement('li');
-              li.innerHTML = data[i];
-              li.onclick = function(){
-                var terms = split( $( '.search-input' ).val() );
-                if(terms[terms.length-1]==""){
-                  terms.pop();
-                }
-                terms.push(this.innerHTML);
-                terms.push("");
-                $( '.search-input' ).val( terms.join( ", " ) );
-                mostrarResultados(pag);
+            var li = document.createElement('li');
+            li.innerHTML = data[i];
+            li.onclick = function(){
+              var terms = split( $( '.search-input' ).val() );
+              if(terms[terms.length-1]==""){
+                terms.pop();
               }
-              $('#suglist').append(li);
-            }else{
-              max++;
+              terms.push(this.innerHTML);
+              terms.push("");
+              $( '.search-input' ).val( terms.join( ", " ) );
+              mostrarResultados(pag);
             }
+            $('#suglist').append(li);
           }
         }
       );
@@ -90,7 +86,7 @@ $(document).ready(function() {
     },
     change: function() {
       pag=1;
-      mostrarResultados(pag); // sin timeout no toma el último valor
+      mostrarResultados(pag);
     },
     select: function( event, ui) {
       pag=1;
@@ -102,7 +98,7 @@ $(document).ready(function() {
       // add placeholder to get the comma-and-space at the end
       terms.push( "" );
       $( '.search-input' ).val(terms.join( ", " ));
-      mostrarResultados(pag); // sin timeout no toma el último valor
+      mostrarResultados(pag);
       return false;
     }
   });

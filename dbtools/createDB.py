@@ -10,7 +10,7 @@ from peewee import *
 import os
 import hashlib
 
-MySQLitedb = SqliteDatabase('/tmp/examenes.db')
+MySQLitedb = SqliteDatabase('../examenes.db')
 
 class Documento(Model):
     id_doc = FixedCharField(null = False,
@@ -25,7 +25,7 @@ class Tag(Model):
     nom_tag = CharField(null = False,
                     primary_key = True)
     tipo_tag = CharField(null = False,
-                    constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'otro')")])
+                    constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'apuntes')")] )
     preferencia = IntegerField(default=0) # incrementa con cada visita
     class Meta:
         database = MySQLitedb # this model is in *.db database

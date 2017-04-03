@@ -1,6 +1,6 @@
 <?php
 $db = new PDO("sqlite:../examenes.db");
-$query_text = "SELECT nom_tag_id FROM examen GROUP BY nom_tag_id ORDER BY preferencia DESC, LENGTH(nom_tag_id)";
+$query_text = "SELECT nom_tag_id FROM examen WHERE tipo_tag='asig' OR tipo_tag='grado' GROUP BY nom_tag_id ORDER BY preferencia DESC, LENGTH(nom_tag_id)";
 $query = $db->prepare($query_text);
 $query->execute();
 $results = $query->fetchAll(PDO::FETCH_ASSOC);

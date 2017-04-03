@@ -7,7 +7,7 @@ import os
 import hashlib
 import re
 
-MySQLitedb = SqliteDatabase('/tmp/examenes.db')
+MySQLitedb = SqliteDatabase('../examenes.db')
 
 class Documento(Model):
     id_doc = FixedCharField(null = False,
@@ -22,7 +22,7 @@ class Tag(Model):
     nom_tag = CharField(null = False,
                     primary_key = True)
     tipo_tag = CharField(null = False,
-                    constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'otro')")])
+                    constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'apuntes')")] )
     preferencia = IntegerField(default=0) # incrementa con cada visita
     class Meta:
         database = MySQLitedb # this model is in *.db database
@@ -52,33 +52,22 @@ def fill_existing_tags(tipo_tag):
         tags+= [i.nom_tag]
     return tags
 
-def getSigla(tag):
-    dupla=[]
-    regex = re.compile("[A-Z]|Á")
-    capitals=""
-    matches = regex.findall(tag)
-    if len(matches)>2:
-        for j in matches:
-            capitals+=j.replace("Á","A")
-    return capitals
-
-primero_dgiim = ["Fundamentos de Software", "Lógica y Métodos Discretos",
+dgiim_cursos = [0]*4
+dgiim_cursos[0] = ["Fundamentos de Software", "Lógica y Métodos Discretos",
         "Tecnología y Organización de Computadores", "Metodología de la Programación",
         "Fundamentos Físicos y Tecnológicos"]
-segundo_dgiim =["Estructura de Computadores","Estructura de Datos","Sistemas Operativos",
+dgiim_cursos[1] =["Estructura de Computadores","Estructura de Datos","Sistemas Operativos",
         "Programación y Diseño Orientado a Objetos","Arquitectura de Computadores","Algorítmica"]
-tercero_dgiim = ["Sistemas Concurrentes y Distribuidos",
+dgiim_cursos[2] = ["Sistemas Concurrentes y Distribuidos",
     "Fundamentos de Bases de Datos","Inteligencia Artificial",
     "Fundamentos de Ingeniería del Software","Fundamentos de Redes",
     "Modelos de Computación", "Ingeniería de Servidores"]
-cuarto_dgiim = ["Informática Gráfica","Diseño y Desarrollo de Sistemas de Información"]
+dgiim_cursos[3] = ["Informática Gráfica","Diseño y Desarrollo de Sistemas de Información"]
 
 anios=fill_existing_tags("anio")
 cursos=fill_existing_tags("curso")
 asigs=fill_existing_tags("asig")
 grados=fill_existing_tags("grado")
-siglas=[]
-
 num2word=["","primero", "segundo", "tercero", "cuarto"]
 
 for (dirpath, dirnames, files) in os.walk(".."):
@@ -94,10 +83,6 @@ for (dirpath, dirnames, files) in os.walk(".."):
             tags_insert += [{'nom_tag':anio, 'tipo_tag':'anio'}]
         if asig not in asigs:
             asigs += [asig]
-            # sigla = getSigla(asig)
-            # if sigla not in siglas:
-            #     siglas += [sigla]
-            #     tags_insert += [{'nom_tag':sigla, 'tipo_tag':'asig'}]
             tags_insert += [{'nom_tag':asig, 'tipo_tag':'asig'}]
         if curso not in cursos:
             cursos += [curso]
@@ -117,26 +102,12 @@ for (dirpath, dirnames, files) in os.walk(".."):
                         {'id_doc':hashed, 'nom_tag':curso},
                         {'id_doc':hashed, 'nom_tag':num2word[int(curso)]}, 
                         {'id_doc':hashed, 'nom_tag':grado}]
-            if asig in primero_dgiim:
-                doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
-                if curso != '1':
-                    doc_tags += [{'id_doc':hashed, 'nom_tag':'primero'}]
-                    doc_tags += [{'id_doc':hashed, 'nom_tag':'1'}]
-            if asig in segundo_dgiim:
-                doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
-                if curso != '2':
-                    doc_tags += [{'id_doc':hashed, 'nom_tag':'segundo'}]
-                    doc_tags += [{'id_doc':hashed, 'nom_tag':'2'}]
-            if asig in tercero_dgiim:
-                doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
-                if curso != '3':
-                    doc_tags += [{'id_doc':hashed, 'nom_tag':'tercero'}]
-                    doc_tags += [{'id_doc':hashed, 'nom_tag':'3'}]
-            if asig in cuarto_dgiim:
-                doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
-                if curso != '4':
-                    doc_tags += [{'id_doc':hashed, 'nom_tag':'cuarto'}]
-                    doc_tags += [{'id_doc':hashed, 'nom_tag':'4'}]
+            for i in range(1, len(dgiim_cursos)+1):
+                if asig in dgiim_cursos[i-1]:
+                    doc_tags += [{'id_doc':hashed, 'nom_tag':'Informática y Matemáticas'}]
+                    if curso != str(i):
+                        doc_tags += [{'id_doc':hashed, 'nom_tag':num2word[i]}]
+                        doc_tags += [{'id_doc':hashed, 'nom_tag':i}]
             try:
                 with MySQLitedb.atomic():
                     Documento.insert_many(docs).execute()
