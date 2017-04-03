@@ -58,7 +58,8 @@ foreach($_FILES['file']['name'] as $index=>$filename){
     $file = $updir.$ds.$filename;
    	$txt="";
    	// Check if file is not uploaded and if it is not in the db
-   	if(!file_exists($file) and $query->fetchColumn()==0){
+   	if($query->fetchColumn()==0){
+   	// if(!file_exists($file) and $query->fetchColumn()==0){
    		fwrite($fp, PHP_EOL."BEGIN-file".PHP_EOL."name:".$filename.PHP_EOL);
         move_uploaded_file($_FILES['file']['tmp_name'][$index], $file);
 	    if( mime_content_type($file) == 'application/pdf' ) {
@@ -85,7 +86,7 @@ foreach($_FILES['file']['name'] as $index=>$filename){
 	    		$thereIsAsig = TRUE;
 	    	}elseif( isset($asigSiglas[$val]) ){
 	    		$pattern = $asigSiglas[$val];
-		    	if(  preg_match('/\s'.$pattern.'\s/', $txt, $matches) || preg_match('/'.$pattern.'/', $filename, $matches) ){
+		    	if(  preg_match('/'.$pattern.'/', $txt, $matches) || preg_match('/'.$pattern.'/', $filename, $matches) ){
 		    		$data['asig'][0] = $val;
 		    		$thereIsAsig = TRUE;
 		    	}

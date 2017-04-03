@@ -10,7 +10,7 @@ Dropzone.options.drop = {
     acceptedFiles: "image/*,application/pdf",
     dictRemoveFile: "Eliminar",
     dictCancelUpload: "Cancelar",
-  	dictDefaultMessage: "Arrastra y suelta, o haz click para añadir tus exámenes",
+  	dictDefaultMessage: "Haz click para añadir tus exámenes",
   	dictFileTooBig: "El tamaño máximo permitido es 10 MiB",
   	dictMaxFilesExceeded: "El número máximo de archivos está limitado a 10",
   	init: function(){
@@ -38,8 +38,8 @@ Dropzone.options.drop = {
 	        // window.location.reload();
 	    	}
         if(file.status=="success"){
-          var args ="nomdoc="+file.name;
-          $.getJSON('./php/getClassif.php', args,
+          var args ="nom_doc="+file.name;
+          $.getJSON('./php/classifier.php', args+"&get=0",
             function (data, status) {
               for(var i=0; i<data.length; i++){
                 $("#upfiles").append("<li name="+count+">"+data[i]+"</li>");
@@ -47,6 +47,10 @@ Dropzone.options.drop = {
               }
               $("#upfiles").append("<button type=\"submit\" class=\"inverted\" id=\""+count+"\">Haz click aquí si "+file.name+" está bien clasificado</button>");
               $('#'+count).click( function (){
+                $.ajax({
+                  url: './php/classifier.php',
+                  data: args+"&set=0",
+                });
                 $('[name='+count+']').each(function(key,value){
                   this.remove();
                 });
