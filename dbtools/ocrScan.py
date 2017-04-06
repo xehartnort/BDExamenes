@@ -128,5 +128,3 @@ for (dirpath, dirnames, files) in os.walk("../sinClasificar"):
                             else: 
                                 data['anio']= str(anio-1) + str(anio)                                                 
             print(data)
-            #insertar en la BD
-            # if( anio in data ):

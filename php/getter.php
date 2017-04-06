@@ -27,7 +27,7 @@
   }
   $sql = "";
   foreach ($tags as $key => $value) {
-    $sql.="SELECT nom_doc, ruta_doc FROM examen WHERE nom_tag_id LIKE :".$key;
+    $sql.="SELECT nom_doc, ruta_doc, id_doc FROM examen WHERE nom_tag_id LIKE :".$key;
     if($value != end($tags)){ // if not last iteration
       $sql .= " INTERSECT ";
     }
@@ -42,9 +42,13 @@
   $results = $query->fetchAll(PDO::FETCH_ASSOC);
   $result["num_r"] = count($results); // número de resultados de la consulta
   for($i=$offset; $i<$offset+$row_count; ++$i){
-    if( isset($results[$i])){
+    if( isset($results[$i]) ){
       $row=$results[$i];
-      $result[$row["nom_doc"]] = $row["ruta_doc"];
+      if ( file_exists('../img/'.$row["id_doc"].'.png') ){
+        $result[$row["nom_doc"]] = array($row["ruta_doc"], $row["id_doc"]);
+      }else{
+        $result[$row["nom_doc"]] = array($row["ruta_doc"], 'default');
+      }
     }
   }
   $sql = "UPDATE tag SET preferencia = preferencia + 1 WHERE nom_tag LIKE ?";

@@ -24,8 +24,8 @@ function mostrarResultados(numpag) {
       $.each(data, function(key, value) {
         if(key!="num_r"){
           if(value != null){
-            var path2file = encodeURI(value+"/"+key);
-            $('#lista').append('<li><a href='+path2file+' target="_blank">'+key+'</a></li>');
+            var path2file = encodeURI(value[0]+"/"+key);
+            $('#lista').append('<li><a href='+path2file+' target="_blank"><img class="image" src="./img/'+value[1]+'.png"><div class="imagetext">'+key+'</div></a></li>');
           }
         }
       });
@@ -37,6 +37,7 @@ function mostrarResultados(numpag) {
 }
 
 $(document).ready(function() {
+
   $("button#up").hide();
   $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
 

@@ -35,9 +35,7 @@ body, html {
 }
 
 .shape{
-    display: inline-block;
-    width: 97%;
-	height: auto;
+    display: block;
     background: @BackgroundColor;
     padding: 15px;
     margin: 5px 5px 0px 5px;
@@ -48,16 +46,18 @@ body, html {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE SEARCH.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .search-input{
-    // margin-down: 5px; 
-    padding: 10px;
-    margin: 0px;
+    display: block;
+    padding: 12px;
+    margin: 0;
   	width: 97%;
     .setFont();
-    .border(0px, @defaultRadius, @AccentColor);
-    .shadow();
+    // .border(0px, @defaultRadius, @AccentColor);
+    // .shadow();
 }
 
 ul#suglist{
+    display: inline-flex;
+    flex-wrap: wrap;
     list-style-type: none;
     background: @BackgroundColor;
     padding: 0px;
@@ -65,7 +65,6 @@ ul#suglist{
 }
 
 ul#suglist li{
-    display: inline-flex;
     background: @TextBack;
     margin: 5px 5px 0px 0px;
     padding: 10px;
@@ -75,12 +74,16 @@ ul#suglist li{
 }
 
 ul#suglist li:hover {
+    cursor: pointer;
     background-color: @AccentColor;
     color: @TextBack;
 }
 
 ul#lista{
-	list-style-type: none;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: top;
+    list-style-type: none;
     background: @BackgroundColor;
     padding: 0px;
     margin: 0px 0px 5px 0px;
@@ -88,20 +91,28 @@ ul#lista{
 }
 
 ul#lista li{
+    flex-grow: 1.5;
+    flex-shrink: 1.5;
     background: @TextBack;
-    margin: 5px 5px 5px 0px;
+    padding: 5px;
+    margin: 5px;
     .border(0px,@defaultRadius/2);
     .shadow();
 }
 
 ul#lista li a{
-    padding: 5px 30px 5px 10px;
-    display: block;
+    padding: 0;
 	text-decoration: none;
 	color:@SmallFontColor;
 }
 
+img.image{
+    object-fit: contain;
+    width: 100%;
+}
+
 ul#lista li:hover {
+    cursor: pointer;
 	background-color: @AccentColor;
 	color: @TextBack;
 }
@@ -150,16 +161,17 @@ button#up{
 }
 
 button{
-	width: 100%;
-	margin: 4px 0px 0px 0px;
-	padding: 8px 8px;
-	background-color: @TextBack;
-	.setFont();
-	.border(0px,@defaultRadius,@TextBack); 
+    width: 100%;
+    margin: 4px 0px 0px 0px;
+    padding: 8px 8px;
+    background-color: @TextBack;
+    .setFont();
+    .border(0px,@defaultRadius,@TextBack); 
     .shadow();
 }
 
 button:hover{
+    cursor: pointer;
 	color: @TextBack;
 	background-color: @AccentColor;
 }
@@ -190,3 +202,4 @@ ul#upfiles li:hover {
     background-color: @AccentColor;
     color: @TextBack;
 }
+
