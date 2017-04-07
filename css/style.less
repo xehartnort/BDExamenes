@@ -1,9 +1,9 @@
 @defaultRadius: 0em;
 @Color: #E64A19;
 @BackgroundColor: #FF5722;
+@AccentColor: #03A9F4;
 @BigFontColor: #FFFFFF;
 @SmallFontColor: #212121;
-@AccentColor: #03A9F4;
 @TextBack: white;
 @Font: "Trebuchet MS", Helvetica, sans-serif;
 @smallFont: 1em;
@@ -46,18 +46,18 @@ body, html {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ FILE SEARCH.HTML ~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .search-input{
-    display: block;
+    box-sizing: border-box;
+  	width: 100%;
     padding: 12px;
     margin: 0;
-  	width: 97%;
-    .setFont();
-    // .border(0px, @defaultRadius, @AccentColor);
-    // .shadow();
+    .setFont(1.05em);
+    .border(3px, @defaultRadius, @AccentColor);
 }
 
 ul#suglist{
     display: inline-flex;
     flex-wrap: wrap;
+    align-content: center;
     list-style-type: none;
     background: @BackgroundColor;
     padding: 0px;
@@ -67,9 +67,7 @@ ul#suglist{
 ul#suglist li{
     background: @TextBack;
     margin: 5px 5px 0px 0px;
-    padding: 10px;
-    .border(0px,@defaultRadius/2);
-    .shadow();
+    padding: 9px;
     .setFont();
 }
 
@@ -94,9 +92,8 @@ ul#lista li{
     flex-grow: 1.5;
     flex-shrink: 1.5;
     background: @TextBack;
-    padding: 5px;
-    margin: 5px;
-    .border(0px,@defaultRadius/2);
+    padding: 9px;
+    margin: 5px 5px 0px 0px;
     .shadow();
 }
 
@@ -136,12 +133,10 @@ ul#lista li:hover {
 
 .subheader-text a:link{
     color: @SmallFontColor;
-    // text-decoration: none;
 }
 
 .subheader-text a:visited{
     color: @SmallFontColor;
-    // text-decoration: none;
 }
 
 button#up{
@@ -156,7 +151,7 @@ button#up{
 
 .dropzone{
 	.setFont(@midFont, @SmallFontColor);
-	.border(1px,@defaultRadius,@BackgroundColor); 
+	.border(0px,@defaultRadius,@BackgroundColor); 
     .shadow();
 }
 
@@ -193,7 +188,6 @@ ul#upfiles li{
     background: @TextBack;
     margin: 5px 5px 0px 0px;
     padding: 10px;
-    .border(0px,@defaultRadius/2);
     .shadow();
     .setFont();
 }
