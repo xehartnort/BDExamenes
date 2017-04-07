@@ -1,0 +1,23 @@
+2|10
+Topología I|1
+Informática|129
+Fundamentos de Programación|5
+Estadística|3
+Lógica y Métodos Discretos|78
+Tecnología y Organización de Computadores|2
+Estructuras de Datos|1
+Programación y Diseño Orientado a Objetos|27
+Fundamentos de Bases de Datos|196
+Inteligencia Artificial|4
+Arquitectura de Computadores|270
+Fundamentos de Ingeniería del Software|15
+Algorítmica|44
+Informática Gráfica|6
+Fundamentos de Redes|1
+Ingeniería de Servidores|1
+Administración de Bases de Datos|4
+Sistemas Lineales|2
+Teoría de la Comunicación|8
+Infraestructuras y Redes de Comunicación|2
+Comunicaciones I|35
+Seguridad en Redes de Comunicación|2
