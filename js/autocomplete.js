@@ -48,7 +48,7 @@ $(document).ready(function() {
       $.getJSON( "./php/tagger.php", 
         function(data, status){
           cache = data;
-          var max = 7;
+          var max = 5;
           for(var i=0; i<max ; i++){
             var li = document.createElement('li');
             li.innerHTML = data[i];
