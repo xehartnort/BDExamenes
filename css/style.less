@@ -17,7 +17,7 @@
 }
 
 .shadow(){
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);	
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);	
 }
 
 .setFont(@size:@smallFont, @color:@SmallFontColor, @weight:normal){
@@ -28,6 +28,7 @@
 }
 
 body, html {
+    // background: @Color;
     margin: 0;
     padding: 0;
     height: 100%;
@@ -57,7 +58,6 @@ body, html {
 ul#suglist{
     display: inline-flex;
     flex-wrap: wrap;
-    align-content: center;
     list-style-type: none;
     background: @BackgroundColor;
     padding: 0px;
@@ -80,7 +80,6 @@ ul#suglist li:hover {
 ul#lista{
     display: inline-flex;
     flex-wrap: wrap;
-    align-items: top;
     list-style-type: none;
     background: @BackgroundColor;
     padding: 0px;
@@ -93,7 +92,7 @@ ul#lista li{
     flex-shrink: 1.5;
     background: @TextBack;
     padding: 9px;
-    margin: 5px 5px 0px 0px;
+    margin: 7px 7px 0px 0px;
     .shadow();
 }
 

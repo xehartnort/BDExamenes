@@ -40,7 +40,7 @@ $(document).ready(function() {
 
   $("button#up").hide();
   $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
-
+  $('.clearable').clearSearch();
   $( '.search-input' ).autocomplete({
     autoFocus: true,
     create: function( event, ui ) {
@@ -54,11 +54,16 @@ $(document).ready(function() {
             li.innerHTML = data[i];
             li.onclick = function(){
               var terms = split( $( '.search-input' ).val() );
-              if(terms[terms.length-1]==""){
-                terms.pop();
+              var pos = terms.indexOf(this.innerHTML);
+              if(pos != -1){
+                terms.splice(pos, 1);
+              }else{
+                if(terms[terms.length-1]==""){
+                  terms.pop();
+                }
+                terms.push(this.innerHTML);
+                terms.push("");
               }
-              terms.push(this.innerHTML);
-              terms.push("");
               $( '.search-input' ).val( terms.join( ", " ) );
               mostrarResultados(pag);
             }

@@ -6,7 +6,7 @@ FILESCSS=style
 JS=uglifyjs
 OPTJS=--screw-ie8 --mangle --compress -o
 DIRJS=js
-FILESJS=drop autocomplete
+FILESJS=drop autocomplete clearsearch
 
 all: js css db
 
@@ -21,6 +21,9 @@ autocomplete :
 	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
 
 drop :
+	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
+
+clearsearch :
 	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
 
 style :
