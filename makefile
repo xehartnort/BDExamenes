@@ -1,7 +1,7 @@
 CSS=lessc
 OPTCSS=--clean-css="--s1 --advanced"
 DIRCSS=css
-FILESCSS=style
+FILESCSS=style new_style
 
 JS=uglifyjs
 OPTJS=--screw-ie8 --mangle --compress -o
@@ -17,16 +17,19 @@ css: $(FILESCSS)
 db: 
 	dbtools/buildDB.sh
 
-autocomplete :
+autocomplete:
 	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
 
-drop :
+drop:
 	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
 
-clearsearch :
+clearsearch:
 	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
 
-style :
+style:
+	$(CSS) $(DIRCSS)/$@.less $(OPTCSS) $(DIRCSS)/$@.min.css
+
+new_style:
 	$(CSS) $(DIRCSS)/$@.less $(OPTCSS) $(DIRCSS)/$@.min.css
 
 # PHONY rule

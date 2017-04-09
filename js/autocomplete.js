@@ -10,14 +10,14 @@ function extractLast( term ) {
 }
 
 function mostrarResultados(numpag) {
-  var args="", array_tags = split( $(".search-input").val() );
+  var args="", array_tags = split( $(".search").val() );
   for (var i = 0; i < array_tags.length; i++) {
     args += "tag"+i+"="+encodeURI(array_tags[i])+"&";
   };
   args += "page="+numpag;
   $.getJSON( './php/getter.php', args, function (data, status) { // success handler
     if(numpag==1){
-      $("#lista").empty();
+      $(".results").empty();
     }
     page_limit = Math.floor(data["num_r"]/20) + 1;
     if( data["num_r"] > 0 ){
@@ -25,26 +25,55 @@ function mostrarResultados(numpag) {
         if(key!="num_r"){
           if(value != null){
             var path2file = encodeURI(value[0]+"/"+key);
-            $('#lista').append('<li><a href='+path2file+' target="_blank"><img class="image" src="./img/'+value[1]+'.png"><div class="imagetext">'+key+'</div></a></li>');
+            $('.results').append('<li><a href='+path2file+' target="_blank"><img class="image" src="./img/'+value[1]+'.png"><br>'+key+'</a></li>');
           }
         }
       });
     }else{
-      $("#lista").empty();
-      $("#lista").append("<li><a>No se encontraron resultados</a></li>");
+      $(".results").val("");
+      $(".results").append("<li><a>No se encontraron resultados</a></li>");
     }
   });
 }
 
 $(document).ready(function() {
 
+  // SCROLLING FUN
+  var previous_values = [ $('.search').css("margin-top"), 
+    $('.header').css("font-size"), $('.header').css("height"),
+    $('.logo').css("width"), $('.hline_text').css("margin") ];
+
+  $('.search').click(function(){
+     $('.search').css("margin-top", "0"); 
+     $('.header').css("font-size", "0"); 
+     $('.header').css("height", "0"); 
+     $('.logo').css("width", "0"); 
+     $('.hline_text').css("margin", "1%");
+  });
+  var lastScrollTop = 0;
+  $(window).scroll(function(){
+    var st = window.pageYOffset || document.documentElement.scrollTop;
+    if (st <= lastScrollTop){ // scroll top
+      if( document.body.scrollTop === 0 ){ // reached top of the screen
+        $('.search').css("margin-top", previous_values[0]); 
+        $('.header').css("font-size", previous_values[1]); 
+        $('.header').css("height", previous_values[2]); 
+        $('.logo').css("width", previous_values[3]); 
+        $('.hline_text').css("margin", previous_values[4]);
+      }
+    }
+    lastScrollTop = st;
+  });
+  // END SCROLLING FUN
+
   $("button#up").hide();
-  $("#lista").append("<li><a>Los resultados se mostrarán aquí</a></li>");
+  $(".results").append("<li><a>Los resultados se mostrarán aquí</a></li>");
   $('.clearable').clearSearch();
-  $( '.search-input' ).autocomplete({
+
+  $( '.search' ).autocomplete({
     autoFocus: true,
     create: function( event, ui ) {
-      $( '.search-input' ).val("");
+      $( '.search' ).val("");
       $.getJSON( "./php/tagger.php", 
         function(data, status){
           cache = data;
@@ -53,7 +82,7 @@ $(document).ready(function() {
             var li = document.createElement('li');
             li.innerHTML = data[i];
             li.onclick = function(){
-              var terms = split( $( '.search-input' ).val() );
+              var terms = split( $( '.search' ).val() );
               var pos = terms.indexOf(this.innerHTML);
               if(pos != -1){
                 terms.splice(pos, 1);
@@ -64,10 +93,10 @@ $(document).ready(function() {
                 terms.push(this.innerHTML);
                 terms.push("");
               }
-              $( '.search-input' ).val( terms.join( ", " ) );
+              $( '.search' ).val( terms.join( ", " ) );
               mostrarResultados(pag);
             }
-            $('#suglist').append(li);
+            $('.suggestions').append(li);
           }
         }
       );
@@ -103,19 +132,19 @@ $(document).ready(function() {
       terms.push(ui.item.value);
       // add placeholder to get the comma-and-space at the end
       terms.push( "" );
-      $( '.search-input' ).val(terms.join( ", " ));
+      $( '.search' ).val(terms.join( ", " ));
       mostrarResultados(pag);
       return false;
     }
   });
 
-  $("button#up").on('click',function(){ 
-    $("html, body").animate({ scrollTop: 0 }, "fast");
+  $(".buttom_up").on('click',function(){ 
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   });
 
   $(window).scroll(function(){
     if( ($(window).scrollTop()+$(window).height() > $(document).height() - 50 ) && pag < page_limit){
-      $("button#up").show();
+      $("buttom_up").show();
       mostrarResultados(++pag);
     }
   });
