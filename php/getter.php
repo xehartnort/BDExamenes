@@ -44,7 +44,7 @@
   for($i=$offset; $i<$offset+$row_count; ++$i){
     if( isset($results[$i]) ){
       $row=$results[$i];
-      if ( file_exists('../img/'.$row["id_doc"].'.png') ){
+      if ( file_exists('../img/'.$row["id_doc"].'.jpg') ){
         $result[$row["nom_doc"]] = array($row["ruta_doc"], $row["id_doc"]);
       }else{
         $result[$row["nom_doc"]] = array($row["ruta_doc"], 'default');

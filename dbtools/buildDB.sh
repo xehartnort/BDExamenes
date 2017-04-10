@@ -18,6 +18,7 @@ fi
 
 
 $update_db_script
+./thumbailGen.py
 
 if [[ -f $duplicates ]]; then
 	echo "Duplicated files found"

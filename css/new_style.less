@@ -40,38 +40,40 @@ body, html {
     text-align: right;
 }
 .header{
-    align-items:center;
+    height: 1.2em;    
     .custom_font(@big-font,@main-color,bold);
+    transition: height 0.5s, font-size 0.5s;
     -moz-transition: height 0.5s, font-size 0.5s;
     -webkit-transition: height 0.5s, font-size 0.5s;
     -o-transition: height 0.5s, font-size 0.5s;
 }
 img.logo{
     float: left;
-    height: 1em;
+    height: 1.5em;
     width: auto;
+    vertical-align:middle;
+    transition: width 0.5s;
     -o-transition: width 0.5s;
     -moz-transition: width 0.5s;
     -webkit-transition: width 0.5s;
 }
 
 input.search{
+    border: 0;
     width: 100%;
     margin-top: 10%;
+    margin-bottom: 5%;
     padding: 12px 0 12px 12px;
     box-sizing: border-box;
+    transition: margin 0.5s;
     -moz-transition: margin 0.5s;
     -webkit-transition: margin 0.5s;
     -o-transition: margin 0.5s;
-    -moz-transition-timing-function: ease-out;
-    -webkit-transition-timing-function: ease-out;
-    -o-transition-timing-function: ease-out;
-    border: 0;
     .custom_font(@smallest-font,@SmallFontColor);
 }
 
 .hline_text{
-    margin-top: 5%;
+    transition: margin 0.5s;
     -moz-transition: margin 0.5s;
     -webkit-transition: margin 0.5s;
     -o-transition: margin 0.5s;

@@ -8,7 +8,7 @@ import hashlib
 def hash_file(path, block_size=4096):
     hash_string = hashlib.md5()
     with open(path, 'rb') as f:
-        for chunk in iter(lambda: f.read(block_size*4), b''):
+        for chunk in iter(lambda: f.read(block_size), b''):
             hash_string.update(chunk)
     return hash_string.hexdigest()
 
@@ -21,4 +21,4 @@ for (dirpath, dirnames, files) in os.walk("../exámenes"):
         	fpath = dirpath+"/"+filename
         if( fpath != None):
         	md5 = hash_file(dirpath+"/"+filename)
-        	subprocess.call(['gm', 'convert', '-crop', '100x50%', '-resize', '315x384','-quality','80', fpath, "../img/"+md5+".png"])
+        	subprocess.call(['gm', 'convert', '-crop', '100x50%', '-resize', '315x384','-quality','50', fpath, "../img/"+md5+".jpg"])
