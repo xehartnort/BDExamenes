@@ -37,6 +37,11 @@ function mostrarResultados(numpag) {
 }
 
 $(document).ready(function() {
+  // SCROLLING FUN
+  var previous_values = [ $('.search').css("margin-top"), $('.search').css("margin-bottom"),
+    $('.header').css("font-size"), $('.header').css("height"),
+    $('.logo').css("height"), $('.hline_text').css("font-size"),
+    $(".suggestions").css("display") ];
 
   $('.search').on('focus', function(){ 
     $('.search').css("margin-top", "0"); 
@@ -44,12 +49,10 @@ $(document).ready(function() {
     $('.header').css("font-size", "0"); 
     $('.header').css("height", "0"); 
     $('.logo').css("height", "0"); 
+    $('.hline_text').css("font-size", "0"); 
+    $('.suggestions').css("display", "none"); 
     this.select(); 
   });
-  // SCROLLING FUN
-  var previous_values = [ $('.search').css("margin-top"), $('.search').css("margin-bottom"),
-    $('.header').css("font-size"), $('.header').css("height"),
-    $('.logo').css("height") ];
   var lastScrollTop = 0;
   $(window).scroll(function(){
     var st = window.pageYOffset || document.documentElement.scrollTop;
@@ -60,6 +63,8 @@ $(document).ready(function() {
         $('.header').css("font-size", previous_values[2]); 
         $('.header').css("height", previous_values[3]); 
         $('.logo').css("height", previous_values[4]); 
+        $('.hline_text').css("font-size", previous_values[5]); 
+        $('.suggestions').css("display", previous_values[6]); 
       }
     }
     lastScrollTop = st;
