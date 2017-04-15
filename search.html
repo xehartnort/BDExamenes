@@ -6,20 +6,24 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link type="text/css" rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="./js/autocomplete.min.js"></script>
-    <script type="text/javascript" src="./js/clearsearch.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="./css/new_style.min.css" />
+    <script type="text/javascript" src="js/autocomplete.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/new_style.min.css" />
     <title>Base de datos de exámenes</title>
   </head>
   <body>
     <div class="main-body">
-    <div class="header"><img class="logo" src="./img/logo1.png">Buscador de exámenes</div>
-    <input class="search clearable" placeholder="Prueba buscando: algorítmica, 1213">
+    <div class="header">
+        <a title="Buscador de exámenes"><img class="logo" src="img/search_on.png"></a>
+        <a title="Añadir exámenes" href="add.html"><img class="logo" src="img/upload_off.png"></a>
+        <a title="Sobre nosotros" href="about.html"><img class="logo" src="img/about_off.png"></a>
+        <div class="text">Buscador de exámenes</div>
+    </div>
+    <input class="search" placeholder="Prueba buscando: algorítmica, 1213">
     <div class="hline_text">Sugerencias<div/>
     <hr id="hline" />
     <ul class="suggestions"></ul> 
     <ul class="results"></ul>
-    <div class="buttom_up"><a href="#"><img src="./img/up.png"></a></div>
+    <div class="buttom_up"><a href="#"><img src="img/up.png"></a></div>
     </div>
   </body>
 </html>

@@ -68,7 +68,7 @@ $(document).ready(function() {
 
   $(".button_up").hide();
   $(".results").append("<li><a>Los resultados se mostrarán aquí</a></li>");
-  $('.clearable').clearSearch();
+  // $('.clearable').clearSearch();
 
   $( '.search' ).autocomplete({
     autoFocus: true,
