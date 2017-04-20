@@ -25,7 +25,7 @@ function mostrarResultados(numpag) {
         if(key!="num_r"){
           if(value != null){
             var path2file = encodeURI(value[0]+"/"+key);
-            $('.results').append('<li><a href='+path2file+' target="_blank"><img class="image" src="./img/'+value[1]+'.jpg"><br>'+key+'</a></li>');
+            $('.results').append('<li><a href='+path2file+' target="_blank"><img class="image" src="img/'+value[1]+'.jpg"><br>'+key+'</a></li>');
           }
         }
       });
@@ -99,8 +99,8 @@ $(document).ready(function() {
                 terms.push("");
               }
               $( '.search' ).val( terms.join( ", " ) );
-              mostrarResultados(pag);
-            }
+              mostrarResultados(1);
+            };
             $('.suggestions').append(li);
           }
         }

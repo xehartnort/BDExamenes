@@ -1,36 +1,39 @@
-CSS=lessc
+CSSMIN=lessc
 OPTCSS=--clean-css="--s1 --advanced"
 DIRCSS=css
-FILESCSS=style new_style
+CSSFILES=new_style
 
-JS=uglifyjs
+JSMIN=uglifyjs
 OPTJS=--screw-ie8 --mangle --compress -o
 DIRJS=js
-FILESJS=add autocomplete clearsearch
+JSFILES=add autocomplete
 
-all: js css db
+COMPRESSOR=gzip
+OPTCOMP=--keep --best --force
 
-js: $(FILESJS)
+HTMLFILES=add about search
 
-css: $(FILESCSS)
+all: html js css db
+
+js: 
+	for i in $(JSFILES); do \
+		$(JSMIN) $(DIRJS)/$$i.js $(OPTJS) $(DIRJS)/$$i.min.js; \
+		$(COMPRESSOR) $(OPTCOMP) $(DIRJS)/$$i.min.js; \
+	done
+
+css:
+	for i in $(CSSFILES); do \
+		$(CSSMIN) $(DIRCSS)/$$i.less $(OPTCSS) $(DIRCSS)/$$i.min.css; \
+		$(COMPRESSOR) $(OPTCOMP) $(DIRCSS)/$$i.min.css; \
+	done
+
+html:
+	for i in $(HTMLFILES); do \
+		$(COMPRESSOR) $(OPTCOMP) $$i.html; \
+	done
 
 db: 
 	dbtools/buildDB.sh
 
-autocomplete:
-	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
-
-add:
-	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
-
-clearsearch:
-	$(JS) $(DIRJS)/$@.js $(OPTJS) $(DIRJS)/$@.min.js
-
-style:
-	$(CSS) $(DIRCSS)/$@.less $(OPTCSS) $(DIRCSS)/$@.min.css
-
-new_style:
-	$(CSS) $(DIRCSS)/$@.less $(OPTCSS) $(DIRCSS)/$@.min.css
-
 # PHONY rule
-.PHONY: all js css $(FILESJS) $(FILESCSS) db
+.PHONY: all js css db
