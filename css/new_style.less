@@ -39,20 +39,18 @@ body, html {
     margin: 5%;
     text-align: right;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     .text{
         display: none;
     }
+    // input.search{
+    //     margin-top: 25px;
+    //     margin-bottom: 25px;
+    // }
 }
 
-.header a{
-    height: 1.5em;
-    width: auto;
-    display: block;
-    float: left;
-}
 .header{
-    height: 1.2em;    
+    height: 40px;    
     .custom_font(@big-font,@main-color,bold);
     transition: height 0.5s, font-size 0.5s;
     -moz-transition: height 0.5s, font-size 0.5s;
@@ -60,6 +58,7 @@ body, html {
     -o-transition: height 0.5s, font-size 0.5s;
 }
 img.logo{
+    float: left;
     margin-right: 25px;
     height: 1.5em;
     width: auto;
@@ -69,12 +68,32 @@ img.logo{
     -webkit-transition: width 0.5s;
 }
 
+.container{
+    margin-top: 75px;
+    margin-bottom: 50px;
+}
+
+img.a{
+    height: 20px;
+    width: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.icon{
+    position: absolute;
+    right: 5%;
+    z-index: 1;
+    padding: 9px 8px 7px 8px;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+}
+
 input.search{
     border: 0;
     width: 100%;
-    margin-top: 100px;
-    margin-bottom: 50px;
-    padding: 12px 0 12px 12px;
+    padding: 12px 40px 12px 12px;
     box-sizing: border-box;
     transition: margin 0.5s;
     -moz-transition: margin 0.5s;
@@ -122,12 +141,6 @@ ul.suggestions li{
     .custom_font(@smallest-font);
 }
 
-ul.suggestions li:hover {
-    cursor: pointer;
-    color: white;
-    background-color: @special-color;
-}
-
 ul.results{
     display: flex;
     flex-wrap: wrap;
@@ -140,8 +153,8 @@ ul.results{
 ul.results li{
     flex: 0.5 0 auto;
     text-align: center;
-    padding: 9px;
-    margin: 7px 7px 0px 0px;
+    padding: 10px;
+    margin: 0px;
     .custom_font(@smallest-font);
 }
 

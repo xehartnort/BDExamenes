@@ -38,17 +38,14 @@ function mostrarResultados(numpag) {
 
 $(document).ready(function() {
   // SCROLLING FUN
-  var previous_values = [ $('.search').css("margin-top"), $('.search').css("margin-bottom"),
-    $('.header').css("font-size"), $('.header').css("height"),
-    $('.logo').css("height"), $('.hline_text').css("font-size"),
+  var previous_values = [ $('.container').css("marginTop"), $('.container').css("marginBottom"),
+    $('.header').css("font-size"), $('.hline_text').css("font-size"),
     $(".suggestions").css("display") ];
 
   $('.search').on('focus', function(){ 
-    $('.search').css("margin-top", "0"); 
-    $('.search').css("margin-bottom", "1%"); 
+    $('.container').css("marginTop", "0"); 
+    $('.container').css("marginBottom", "0"); 
     $('.header').css("font-size", "0"); 
-    $('.header').css("height", "0"); 
-    $('.logo').css("height", "0"); 
     $('.hline_text').css("font-size", "0"); 
     $('.suggestions').css("display", "none"); 
     this.select(); 
@@ -58,23 +55,27 @@ $(document).ready(function() {
     var st = window.pageYOffset || document.documentElement.scrollTop;
     if (st <= lastScrollTop){ // scroll top
       if( document.body.scrollTop === 0 ){ // reached top of the screen
-        $('.search').css("margin-top", previous_values[0]); 
-        $('.search').css("margin-bottom", previous_values[1]); 
-        $('.header').css("font-size", previous_values[2]); 
-        $('.header').css("height", previous_values[3]); 
-        $('.logo').css("height", previous_values[4]); 
-        $('.hline_text').css("font-size", previous_values[5]); 
-        $('.suggestions').css("display", previous_values[6]); 
+        $('.container').css("marginTop", previous_values[0]); 
+        $('.container').css("marginBottom", previous_values[1]); 
+        $('.header').css("font-size", "40px"); 
+        $('.hline_text').css("font-size", previous_values[3]); 
+        $('.suggestions').css("display", previous_values[4]); 
       }
     }
     lastScrollTop = st;
   });
   // END SCROLLING FUN
 
-  $(".button_up").hide();
   $(".results").append("<li><a>Los resultados se mostrarán aquí</a></li>");
-  // $('.clearable').clearSearch();
 
+  $( '.search' ).keydown(function(event){
+      if(event.keyCode == 13){
+          mostrarResultados(1);
+      }
+  });
+  $( '.icon' ).click(function(){
+    mostrarResultados(1);
+  });
   $( '.search' ).autocomplete({
     autoFocus: true,
     create: function( event, ui ) {
@@ -99,6 +100,7 @@ $(document).ready(function() {
                 terms.push("");
               }
               $( '.search' ).val( terms.join( ", " ) );
+              pag=1
               mostrarResultados(1);
             };
             $('.suggestions').append(li);
@@ -116,17 +118,6 @@ $(document).ready(function() {
           return matcher.test( item );
         })
       );
-    },
-    search: function() {
-      // custom minLength
-      var term = extractLast( this.value );
-      if ( term.length < 2 ) {
-        return false;
-      }
-    },
-    change: function() {
-      pag=1;
-      mostrarResultados(pag);
     },
     select: function( event, ui) {
       pag=1;
@@ -149,7 +140,7 @@ $(document).ready(function() {
 
   $(window).scroll(function(){
     if( ($(window).scrollTop()+$(window).height() > $(document).height() - 50 ) && pag < page_limit){
-      $(".buttom_up").show();
+      // $(".buttom_up").css("display","block");
       mostrarResultados(++pag);
     }
   });
