@@ -13,7 +13,7 @@ OPTCOMP=--keep --best --force
 
 HTMLFILES=add about search
 
-all: html js css db
+all: html js css db thumbnail
 
 js: 
 	for i in $(JSFILES); do \
@@ -35,5 +35,8 @@ html:
 db: 
 	dbtools/buildDB.sh
 
+thumbnail:
+	./dbtools/thumbailGen.py
+
 # PHONY rule
-.PHONY: all js css db
+.PHONY: all js css db thumbnail

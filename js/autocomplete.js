@@ -37,12 +37,38 @@ function mostrarResultados(numpag) {
 }
 
 $(document).ready(function() {
-  // SCROLLING FUN
+
+  if (window.history && window.history.pushState) {
+
+    $(window).on('popstate', function() {
+      var hashLocation = location.hash;
+      var hashSplit = hashLocation.split("#!/");
+      var hashName = hashSplit[1];
+      if (hashName !== '') {
+        var hash = window.location.hash;
+        if (hash === '') {
+          if( document.body.scrollTop === 0 ){ // reached top of the screen
+            $('.container').css("marginTop", previous_values[0]); 
+            $('.container').css("marginBottom", previous_values[1]); 
+            $('.header').css("font-size", "40px"); 
+            $('.hline_text').css("font-size", previous_values[3]); 
+            $('.suggestions').css("display", previous_values[4]); 
+          }
+
+        }
+      }
+    });
+    // window.history.pushState('forward', null, './#forward');
+  }
+
+
   var previous_values = [ $('.container').css("marginTop"), $('.container').css("marginBottom"),
     $('.header').css("font-size"), $('.hline_text').css("font-size"),
     $(".suggestions").css("display") ];
 
+  // SCROLLING FUN
   $('.search').on('focus', function(){ 
+    window.history.pushState('forward', null, './#forward');
     $('.container').css("marginTop", "0"); 
     $('.container').css("marginBottom", "0"); 
     $('.header').css("font-size", "0"); 
@@ -50,20 +76,20 @@ $(document).ready(function() {
     $('.suggestions').css("display", "none"); 
     this.select(); 
   });
-  var lastScrollTop = 0;
-  $(window).scroll(function(){
-    var st = window.pageYOffset || document.documentElement.scrollTop;
-    if (st <= lastScrollTop){ // scroll top
-      if( document.body.scrollTop === 0 ){ // reached top of the screen
-        $('.container').css("marginTop", previous_values[0]); 
-        $('.container').css("marginBottom", previous_values[1]); 
-        $('.header').css("font-size", "40px"); 
-        $('.hline_text').css("font-size", previous_values[3]); 
-        $('.suggestions').css("display", previous_values[4]); 
-      }
-    }
-    lastScrollTop = st;
-  });
+  // var lastScrollTop = 0;
+  // $(window).scroll(function(){
+  //   var st = window.pageYOffset || document.documentElement.scrollTop;
+  //   if (st <= lastScrollTop){ // scroll top
+  //     if( document.body.scrollTop === 0 ){ // reached top of the screen
+  //       $('.container').css("marginTop", previous_values[0]); 
+  //       $('.container').css("marginBottom", previous_values[1]); 
+  //       $('.header').css("font-size", "40px"); 
+  //       $('.hline_text').css("font-size", previous_values[3]); 
+  //       $('.suggestions').css("display", previous_values[4]); 
+  //     }
+  //   }
+  //   lastScrollTop = st;
+  // });
   // END SCROLLING FUN
 
   $(".results").append("<li><a>Los resultados se mostrarán aquí</a></li>");
@@ -135,7 +161,7 @@ $(document).ready(function() {
   });
 
   $(".buttom_up").on('click',function(){ 
-    $("html, body").animate({ scrollTop: 0 }, "slow");
+    $("html, body").animate({ scrollTop: 0 });
   });
 
   $(window).scroll(function(){

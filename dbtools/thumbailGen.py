@@ -1,4 +1,4 @@
-#!/usr/bin/python3 -OO
+#!/usr/bin/python -OO
 # -*- coding: utf-8 -*-
 
 import subprocess
@@ -21,4 +21,4 @@ for (dirpath, dirnames, files) in os.walk("../exámenes"):
         	fpath = dirpath+"/"+filename
         if( fpath != None):
         	md5 = hash_file(dirpath+"/"+filename)
-        	subprocess.call(['gm', 'convert', '-crop', '100x50%', '-resize', '315x384','-quality','50', fpath, "../img/"+md5+".jpg"])
+        	subprocess.call(['gm', 'convert','-sampling-factor', '4:2:0', '-colorspace', 'RGB', '-strip', '-crop', '100x50%', '-resize', '315x384','-quality','50', fpath, "../img/"+md5+".jpg"])
