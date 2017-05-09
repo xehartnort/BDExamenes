@@ -1,7 +1,7 @@
 CSSMIN=lessc
 OPTCSS=--clean-css="--s1 --advanced"
 DIRCSS=css
-CSSFILES=new_style
+CSSFILES=style
 
 JSMIN=uglifyjs
 OPTJS=--screw-ie8 --mangle --compress -o

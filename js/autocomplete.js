@@ -38,28 +38,26 @@ function mostrarResultados(numpag) {
   });
 }
 
+function compressView(css_values){
+  $('.container')
+    .css("marginTop", "0")
+    .css("marginBottom", parseInt(css_values[1], 10)/2.0); 
+  $('.header').css("font-size", "0"); 
+}
+
+function decompressView(css_values){
+  $('.container')
+    .css("marginTop", css_values[0])
+    .css("marginBottom", css_values[1]); 
+  $('.header').css("font-size", css_values[2]); 
+}
+
 $(document).ready(function() {
 
-  var previous_values = [ $('.container').css("marginTop"), $('.container').css("marginBottom"),
+  var css_values = [ $('.container').css("marginTop"), $('.container').css("marginBottom"),
     $('.header').css("font-size")];
 
   $(window)
-    .on('popstate', function() {
-      var hashLocation = location.hash;
-      var hashSplit = hashLocation.split("#!/");
-      var hashName = hashSplit[1];
-      if (hashName !== '') {
-        var hash = window.location.hash;
-        if (hash === '') {
-          if( document.body.scrollTop === 0 ){ // reached top of the screen
-            $('.container')
-              .css("marginTop", previous_values[0])
-              .css("marginBottom", previous_values[1]); 
-            $('.header').css("font-size", previous_values[2]); 
-          }
-        }
-      }
-    })
     .scroll(function(){
       if( ($(window).scrollTop()+$(window).height() > $(document).height() - 50 ) && pag < page_limit){
         mostrarResultados(++pag);
@@ -76,11 +74,7 @@ $(document).ready(function() {
 
   $('.search')
     .one('input', function(){ 
-      window.history.pushState('forward', null, '#forward');
-      $('.container')
-        .css("marginTop", "0")
-        .css("marginBottom", parseInt(previous_values[1], 10)/2.0); 
-      $('.header').css("font-size", "0"); 
+      compressView(css_values);
     })
     .on('click', function(){
       this.select(); 
@@ -91,18 +85,10 @@ $(document).ready(function() {
       }
     })
     .focusout(function(){
-      $('.container')
-        .css("marginTop", previous_values[0]) 
-        .css("marginBottom", previous_values[1]); 
-      $('.header').css("font-size", previous_values[2]); 
-      $('.search')
-        .one('input', function(){ 
-          window.history.pushState('forward', null, '#forward');
-          $('.container')
-            .css("marginTop", "0")
-            .css("marginBottom", parseInt(previous_values[1], 10)/2.0); 
-          $('.header').css("font-size", "0"); 
-        });
+      decompressView(css_values);
+      $('.search').one('input', function(){ 
+          compressView(css_values);
+      });
     })
     .autocomplete({
       autoFocus: true,
@@ -138,8 +124,9 @@ $(document).ready(function() {
       },
       source: function( request, response ) {
         var escapedString = $.ui.autocomplete.escapeRegex(extractLast( request.term ));
-        escapedString = escapedString.replace(/[aá]/gi, '[aá]').replace(/[eé]/gi, '[eé]');
-        escapedString = escapedString.replace(/[ií]/gi, '[ií]').replace(/[oó]/gi, '[oó]');
+        escapedString = escapedString
+          .replace(/[aá]/gi, '[aá]').replace(/[eé]/gi, '[eé]')
+          .replace(/[ií]/gi, '[ií]').replace(/[oó]/gi, '[oó]');
         var matcher = new RegExp( "^" + escapedString, "i" );
         response( $.grep( cache, 
           function( item ){
