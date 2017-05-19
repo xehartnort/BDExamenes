@@ -19,8 +19,8 @@ if( isset($_GET['asig']) && isset($_GET['anio']) && isset($_GET['file']) ){
     foreach ($results as $row) { // es el curso en letra y en número
 		$data['curso'][] = $row["B.nom_tag_id"];
     }
-    $data['asig'][] = $_GET['asig'];
-    $data['anio'][] = $_GET['anio'];
+    $data['asig'][] = basename($_GET['asig']);
+    $data['anio'][] = basename($_GET['anio']);
     //move file to its folder
     $path = 'exámenes/';
     // nos tenemos que quedar con el curso asociado a informática, que siempre es menor o igual que el de el doble
