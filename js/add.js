@@ -22,7 +22,6 @@ function genThumbnail(file, data) {
     var gallery = document.querySelector(".gallery");
     var thumb = document.createElement("div");
     thumb.classList.add('thumbnail'); // Add the class thumbnail to the created div
-    console.log(data.duplicate);
     if( !data.duplicate ){
         var img = document.createElement("img");
         img.src="img/default.jpg";  
@@ -77,7 +76,6 @@ function genThumbnail(file, data) {
         var delet = document.createElement("button");
         delet.innerHTML = "Eliminar";
         delet.addEventListener('click', function () {
-
           this.parentElement.parentElement.style.display = 'none';
         });
         x3.appendChild(delet);
@@ -97,14 +95,16 @@ function genThumbnail(file, data) {
 document.addEventListener('DOMContentLoaded', function() {
 
   var uploadfiles = document.querySelector('#fileinput');
+  
   uploadfiles.addEventListener('change', function () {
-      if( document.querySelector(".gallery").innerHTML == "Aquí se previsualizarán los archivos"){
-        document.querySelector(".gallery").innerHTML="";
-      }
-      for(var i=0; i<this.files.length; i++){
-          uploadFile(this.files[i]);
-      }
-
+    document.querySelector(".loading").style.display = "block";
+    if( document.querySelector(".gallery").innerHTML == "Aquí se previsualizarán los archivos"){
+      document.querySelector(".gallery").innerHTML="";
+    }
+    for(var i=0; i<this.files.length; i++){
+      uploadFile(this.files[i]);
+    }
+    document.querySelector(".loading").style.display = "none";
   }, false);
 
 });

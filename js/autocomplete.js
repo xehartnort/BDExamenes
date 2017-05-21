@@ -15,7 +15,9 @@ function mostrarResultados(numpag) {
     args += "tag"+i+"="+encodeURI(array_tags[i])+"&";
   };
   args += "page="+numpag;
-  $.getJSON( './php/getter.php', args, function (data, status) { // success handler
+  $(".loading").css("display", "block");
+  $.getJSON( 'php/getter.php', args, function (data, status) { // success handler
+    $(".loading").css("display", "none");
     if(numpag==1){
       $(".results").empty();
     }
@@ -43,6 +45,8 @@ function compressView(css_values){
     .css("marginTop", "0")
     .css("marginBottom", parseInt(css_values[1], 10)/2.0); 
   $('.header').css("font-size", "0"); 
+  $('.hline_text').css("font-size", "0"); 
+  $('.suggestions').css("display", "none"); 
 }
 
 function decompressView(css_values){
@@ -50,21 +54,24 @@ function decompressView(css_values){
     .css("marginTop", css_values[0])
     .css("marginBottom", css_values[1]); 
   $('.header').css("font-size", css_values[2]); 
+  $('.hline_text').css("font-size", css_values[3]); 
+  $('.suggestions').css("display", css_values[4]); 
 }
 
 $(document).ready(function() {
 
   var css_values = [ $('.container').css("marginTop"), $('.container').css("marginBottom"),
-    $('.header').css("font-size")];
+    $('.header').css("font-size"), $('.hline_text').css("font-size"), 
+    $(".suggestions").css("display")];
 
   $(window)
     .scroll(function(){
-      if( ($(window).scrollTop()+$(window).height() > $(document).height() - 50 ) && pag < page_limit){
+      if( ($(window).scrollTop()+$(window).height() > $(document).height() - 15 ) && pag < page_limit){
         mostrarResultados(++pag);
       }
     });
 
-  $(".buttom_up").on('click',function(){ 
+  $(".buttom_up").click(function(){ 
     $("html, body").animate({ scrollTop: 0 });
   });
 
@@ -76,7 +83,7 @@ $(document).ready(function() {
     .one('input', function(){ 
       compressView(css_values);
     })
-    .on('click', function(){
+    .click(function(){
       this.select(); 
     })
     .keydown(function(event){
@@ -97,8 +104,7 @@ $(document).ready(function() {
         $.getJSON( "./php/tagger.php", 
           function(data, status){
             cache = data;
-            var max = 5;
-            for(var i=0; i<max ; i++){
+            for(var i=0; i<5 ; i++){
               var li = document.createElement('li');
               li.innerHTML = data[i];
               li.onclick = function(){
