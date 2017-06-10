@@ -57,54 +57,9 @@ $txt="";
 if($query->fetchColumn()==0){
 	// if(!file_exists($file) and $query->fetchColumn()==0){
     move_uploaded_file($_FILES['file']['tmp_name'], $file);
-    if( mime_content_type($file) == 'application/pdf' ) {
-    	$parser = new \Smalot\PdfParser\Parser();
-       	$pdf_pages = $parser->parseFile($file)->getPages();
-       	$txt= $pdf_pages[0]->getText();
-       	if(str_word_count($txt) < 10){ // if there is less than 10 words, discard the information
-       		$txt="";
-       	}
-       	$txt = mb_strimwidth($txt, 0, strlen($txt)/4); // only the first quarter of info is useful
-       	$file.='[0]';
-    }else{
-    	$image = new Imagick();
-    	$image->setResolution( 408, 392 );
-    	echo($file);
-	    $image->readImage( $file );
-	    $image->cropimage($image->getimagewidth(), $image->getimageheight()/5, 0, 0);
-	    $image->writeimage($file.'.tif');
-	    $txt = (new TesseractOCR($file.'.tif'))->lang('spa')->run();
-		array_map( "unlink", glob( $updir."/*.tif" ) );
-    }
-    foreach ($asigs as $val) {
-    	$pattern = '/'.preg_replace($patterns, $replacements, $val).'/i';
-    	if( preg_match($pattern, $txt, $matches) ){
-    		$data['asig'][] = $val;
-    	}elseif( isset($asigSiglas[$val]) ){
-    		$pattern = $asigSiglas[$val];
-	    	if(  preg_match('/'.$pattern.'/', $txt, $matches) || preg_match('/'.$pattern.'/', $filename, $matches) ){
-	    		$data['asig'][] = $val;
-	    	}
-    	}
-    }
-    foreach ($anios as $val) {
-    	$num = $val-2000;
-   		$pattern2 = "/".$val."|".$num."/";
-    	$pattern1 = '/'.$val.'/';
-    	if(  preg_match($pattern1, $txt, $matches) || preg_match($pattern2, $filename, $matches) ){
-    		if( $matches[0]>2000 ){
-    			$matches[0] -= 2000;
-    		}
-    		$data['anio'][] = $matches[0];
-    	}
-    }          
-	if(! isset($data['asig']) ){
-		$data['asig'] = $asigs;
-	}
-	if(! isset($data['anio']) ){
-		foreach ($anios as $value) {
-			$data['anio'][] = $value-2000;
-		}
+	$data['asig'] = $asigs;
+	foreach ($anios as $value) {
+		$data['anio'][] = $value-2000;
 	}
 }else{
 	$data['duplicate'] = TRUE;
