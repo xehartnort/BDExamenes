@@ -52,7 +52,7 @@ function genThumbnail(file, data) {
         span_anio.innerHTML = "Año académico: ";
         var anio = document.createElement("select"); 
         for(var i in data.anio){
-          anio.add( newOption( data.anio[i].toString() + (+data.anio[i]+1).toString() ) );
+          anio.add( newOption(data.anio[i]) );
         }
         span_anio.appendChild(anio);
         x2.appendChild(span_anio);
@@ -64,9 +64,9 @@ function genThumbnail(file, data) {
         accept.addEventListener('click', function(){
             var grandad = this.parentElement.parentElement;
             var one = grandad.children[1];
-            var asig = encodeURI(one.children[0].children[0].value); // first select value
-            var anio = encodeURI(one.children[1].children[0].value); // first select value
-            var url = 'php/classifier.php?'+"asig="+asig+"&anio="+anio+"&file="+encodeURI(this.id);
+            var asig = one.children[0].children[0].value; // first select value
+            var anio = one.children[1].children[0].value; // first select value
+            var url = encodeURI('php/classifier.php?'+"asig="+asig+"&anio="+anio+"&file="+this.id);
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
             xhr.send();

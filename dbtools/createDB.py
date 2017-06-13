@@ -25,7 +25,7 @@ class Tag(Model):
     nom_tag = CharField(null = False,
                     primary_key = True)
     tipo_tag = CharField(null = False,
-                    constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'apuntes')")] )
+                    constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado')")] )
     preferencia = IntegerField(default=0) # incrementa con cada visita
     class Meta:
         database = MySQLitedb # this model is in *.db database
@@ -38,5 +38,13 @@ class DocTag(Model):
         primary_key = CompositeKey('id_doc', 'nom_tag')
         database = MySQLitedb # this model is in *.db database
 
-MySQLitedb.create_tables([Documento, Tag, DocTag])
+class InfoAsig(Model):
+    asig = ForeignKeyField(Tag, related_name='tagAsig')
+    curso = ForeignKeyField(Tag, related_name='tagCurso')
+    grado = ForeignKeyField(Tag, related_name='tagGrado')
+    class Meta:
+        primary_key = CompositeKey('asig', 'curso', 'grado')
+        database = MySQLitedb # this model is in *.db database
+
+MySQLitedb.create_tables([Documento, Tag, DocTag, InfoAsig])
 MySQLitedb.execute_sql("CREATE VIEW examen AS SELECT A.nom_doc, A.ruta_doc, A.id_doc, B.nom_tag_id, B.comprobado, C.tipo_tag, C.preferencia FROM doctag AS B INNER JOIN documento AS A ON A.id_doc=B.id_doc_id INNER JOIN tag AS C ON C.nom_tag=B.nom_tag_id")
