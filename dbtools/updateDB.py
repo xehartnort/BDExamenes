@@ -19,26 +19,25 @@ class Documento(Model):
         database = MySQLitedb # this model is in *.db database
 
 class Tag(Model):
-    nom_tag = CharField(null = False,
-                    primary_key = True)
-    tipo_tag = CharField(null = False,
-                    constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado', 'apuntes')")] )
+    nom_tag = CharField()
+    tipo_tag = CharField(constraints=[Check("tipo_tag in ('anio', 'curso', 'asig', 'grado')")] )
     preferencia = IntegerField(default=0) # incrementa con cada visita
     class Meta:
+        primary_key = CompositeKey('nom_tag', 'tipo_tag')
         database = MySQLitedb # this model is in *.db database
 
 class DocTag(Model):
     id_doc = ForeignKeyField(Documento, related_name='documentos')
-    nom_tag = ForeignKeyField(Tag, related_name='tags')
+    nom_tag = ForeignKeyField(Tag, to_field="nom_tag", related_name='nom_tags')
     comprobado = BooleanField(default = True) 
     class Meta:
         primary_key = CompositeKey('id_doc', 'nom_tag')
         database = MySQLitedb # this model is in *.db database
 
 class InfoAsig(Model):
-    asig = ForeignKeyField(Tag, related_name='tagAsig')
-    curso = ForeignKeyField(Tag, related_name='tagCurso')
-    grado = ForeignKeyField(Tag, related_name='tagGrado')
+    asig = ForeignKeyField(Tag, to_field="nom_tag", related_name='tagAsig')
+    curso = ForeignKeyField(Tag, to_field="nom_tag", related_name='tagCurso')
+    grado = ForeignKeyField(Tag, to_field="nom_tag", related_name='tagGrado')
     class Meta:
         primary_key = CompositeKey('asig', 'curso', 'grado')
         database = MySQLitedb # this model is in *.db database
