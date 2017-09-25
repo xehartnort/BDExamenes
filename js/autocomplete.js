@@ -35,7 +35,7 @@ function mostrarResultados(numpag) {
     }else{
       $(".results")
         .val("")
-        .append("<li><a>No se encontraron resultados</a></li>");
+        .append("<li><a>No se encontraron resultados</a><br><br><b><u><a href='add.html'>Añadir exámenes :)</a></b></u></li>");
     }
   });
 }
@@ -101,29 +101,29 @@ $(document).ready(function() {
       autoFocus: true,
       create: function( event, ui ) {
         $( '.search' ).val("");
-        $.getJSON( "./php/tagger.php", 
+        $.getJSON( "php/tagger.php", 
           function(data, status){
             cache = data;
-            for(var i=0; i<5 ; i++){
-              var li = document.createElement('li');
-              li.innerHTML = data[i];
-              li.onclick = function(){
-                var terms = split( $( '.search' ).val() );
-                var pos = terms.indexOf(this.innerHTML);
-                if(pos != -1){
-                  terms.splice(pos, 1);
-                }else{
+            var num_asig=5;
+            for(var i=0; i<num_asig ; i++){
+              if (data[i].length<5){
+                num_asig++;
+              }else{
+                var li = document.createElement('li');
+                li.innerHTML = data[i];
+                li.onclick = function(){
+                  var terms = split( $( '.search' ).val() );
                   if(terms[terms.length-1]==""){
                     terms.pop();
                   }
                   terms.push(this.innerHTML);
                   terms.push("");
-                }
-                $( '.search' ).val( terms.join( ", " ) );
-                pag=1
-                mostrarResultados(1);
-              };
-              $('.suggestions').append(li);
+                  $( '.search' ).val( terms.join( ", " ) );
+                  pag=1
+                  mostrarResultados(1);
+                };
+                $('.suggestions').append(li);
+              }
             }
           }
         );

@@ -40,20 +40,27 @@ function genThumbnail(file, data) {
         x3.classList.add("div-buttons");
         
         var span_asig = document.createElement("span");
-        span_asig.innerHTML = "Asignatura: ";
-        var asig = document.createElement("select"); 
-        for(var i in data.asig){
-          asig.add( newOption(data.asig[i]) );
-        }
+        // span_asig.innerHTML = "Asignatura: ";
+        var asig = document.createElement("select");
+        var $asig = $(asig);
+        $asig.selectivity({
+            allowClear: true,
+            placeholder: 'Seleciona una asignatura',
+            items: eval(data.asig)
+        });
         span_asig.appendChild(asig);
         x2.appendChild(span_asig);
 
         var span_anio = document.createElement("span");
-        span_anio.innerHTML = "Año académico: ";
+        // span_anio.innerHTML = "Año académico: ";
         var anio = document.createElement("select"); 
-        for(var i in data.anio){
-          anio.add( newOption(data.anio[i]) );
-        }
+        var $anio = $(anio);
+        console.log(data.anio);
+        $('.div-select').selectivity({
+            allowClear: true,
+            placeholder: 'Seleciona un año académico',
+            items: eval(data.anio)
+        });
         span_anio.appendChild(anio);
         x2.appendChild(span_anio);
         thumb.appendChild(x2);

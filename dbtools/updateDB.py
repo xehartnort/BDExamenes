@@ -78,7 +78,7 @@ grados=fill_existing_tags("grado")
 num2word=["","primero", "segundo", "tercero", "cuarto", "quinto"]
 
 for (dirpath, dirnames, files) in os.walk(".."):
-    if "exámenes/" in dirpath and files: # folder exámenes and files not empty
+    if "Exámenes/" in dirpath and files: # folder exámenes and files not empty
         tags_insert = []
         infoasig_insert = []
         tags = dirpath.split('/')

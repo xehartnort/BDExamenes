@@ -40,8 +40,9 @@ replacements ={"Q.":"Química", "Lab.":"Laboratorio", "SIST.":"Sistemas", "INFOR
 		"INVEST SOCIAL Y PARTICIPACIÓN EN MEDIO AMBIENTE":"Investigación Social y Participación en Medio Ambiente",
 		"AGEN FÍSICOS, SALUD Y GESTIÓN DE RESIDUOS RADIOACT":"Agentes Físicos, Salud y Gestión de Residuos Radioactivos",
 		"RECURSOS NAT": "Recursos Naturales", "INGENIERIA GEOL":"Ingeniería Geológica", "CARTOGRAFIA GEOL II Y SIG":"Cartografía Geológica II y Sismografía"}
+r2 = {" Iii":" III", " Ii":" II", " Iv":" IV"}
 basedir = "../exámenes"
-if len(sys.argv)>1:
+if len(sys.argv)>2:
 	files = sys.argv[1:]
 	for i in files:
 		df = t.read_pdf(i, pages="all")
@@ -57,7 +58,7 @@ if len(sys.argv)>1:
 					firstTime = False
 					asignatura = multireplace(j[1].split("/")[0].encode("utf-8"), replacements)
 					directory = basedir + "/" + grado + "/" + str(curso) + "/" + asignatura
-					directory = directory.decode("utf-8").lower()
+					directory = multireplace(directory.decode("utf-8").title(), r2)
 					print(directory)
  					createDir(directory)
  					createEmptyFile(directory + "/.empty")

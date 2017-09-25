@@ -23,7 +23,7 @@ if( isset($_GET['asig']) && isset($_GET['anio']) && isset($_GET['file']) ){
         $data['asig'][] = basename($_GET['asig']);
         $data['anio'][] = basename($_GET['anio']);
         //move file to its folder
-        $path = 'exámenes/';
+        $path = 'Exámenes/';
         // nos tenemos que quedar con el curso asociado a informática, que siempre es menor o igual que el de el doble
         if( count($data['grado'])==2 ){
             $path .= (strlen($data['grado'][0]) < strlen($data['grado'][1]) ? $data['grado'][0] : $data['grado'][1]).'/';
