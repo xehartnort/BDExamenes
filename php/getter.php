@@ -10,8 +10,8 @@
     }
     return $tags;
   }
-  // $_GET["tag0"]="Informatica";
-  // $_GET["tag1"]="tercero";
+  // $_GET["tag0"]="Inform_tica";
+  // $_GET["tag1"]="segundo";
   // $_GET["tag2"]="";
   // $_GET["tag3"]="";
   // $_GET["page"]=1;

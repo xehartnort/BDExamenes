@@ -9,7 +9,7 @@ function uploadFile(file){
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+        if (xhr.readyState == 4 && xhr.status == 200) { // ya se ha subido al servidor
             genThumbnail(file, JSON.parse(xhr.responseText));
         }
     };
@@ -17,6 +17,16 @@ function uploadFile(file){
     fd.append("file", file);
     xhr.send(fd);
 }
+
+function showToast(msg) {
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar")
+    x.innerHTML = msg
+    // Add the "show" class to DIV
+    x.className = "show";
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+} 
 
 function genThumbnail(file, data) {
     var gallery = document.querySelector(".gallery");
@@ -64,12 +74,13 @@ function genThumbnail(file, data) {
         accept.addEventListener('click', function(){
             var grandad = this.parentElement.parentElement;
             var one = grandad.children[1];
-            var asig = one.children[0].children[0].value; // first select value
-            var anio = one.children[1].children[0].value; // first select value
+            var asig = one.children[0].children[0].value; // first selected value
+            var anio = one.children[1].children[0].value; // first selected value
             var url = encodeURI('php/classifier.php?'+"asig="+asig+"&anio="+anio+"&file="+this.id);
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
             xhr.send();
+            showToast("El archivo se ha añadido con éxito");
             this.parentElement.parentElement.style.display = 'none';
         });
         x3.appendChild(accept);
@@ -80,16 +91,18 @@ function genThumbnail(file, data) {
         });
         x3.appendChild(delet);
         thumb.appendChild(x3);
+        gallery.appendChild(thumb);
     }else{
-        thumb.innerHTML = thumb.innerHTML+file.name+" ya se encuentra clasificado en la base de datos<br>";
-        var delet = document.createElement("button");
-        delet.innerHTML = "Eliminar";
-        delet.addEventListener('click', function () {
-          this.parentElement.parentElement.style.display = 'none';
-        });
-        thumb.appendChild(delet);
+        showToast("El archivo ya se encuentra en la base de datos");
+        
+        // thumb.innerHTML = thumb.innerHTML+file.name+" ya se encuentra clasificado en la base de datos<br>";
+        // var delet = document.createElement("button");
+        // delet.innerHTML = "Cerrar";
+        // delet.addEventListener('click', function () {
+        //   this.parentElement.parentElement.style.display = 'none';
+        // });
+        // thumb.appendChild(delet);
     }
-    gallery.appendChild(thumb);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
