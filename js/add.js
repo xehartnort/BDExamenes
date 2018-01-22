@@ -80,7 +80,7 @@ function genThumbnail(file, data) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
             xhr.send();
-            showToast("El archivo se ha añadido con éxito");
+            showToast("El archivo se ha añadido con éxito, pronto será revisado");
             this.parentElement.parentElement.style.display = 'none';
         });
         x3.appendChild(accept);
@@ -93,7 +93,7 @@ function genThumbnail(file, data) {
         thumb.appendChild(x3);
         gallery.appendChild(thumb);
     }else{
-        showToast("El archivo ya se encuentra en la base de datos");
+        showToast("El archivo ya se encuentra en la base de datos o en estado de revisión");
         
         // thumb.innerHTML = thumb.innerHTML+file.name+" ya se encuentra clasificado en la base de datos<br>";
         // var delet = document.createElement("button");
