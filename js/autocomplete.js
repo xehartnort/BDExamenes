@@ -40,33 +40,10 @@ function mostrarResultados(numpag) {
   });
 }
 
-function compressView(css_values){
-  $('.container')
-    .css("marginTop", "0")
-    .css("marginBottom", parseInt(css_values[1], 10)/2.0); 
-  $('.header').css("font-size", "0"); 
-  $('.hline_text').css("font-size", "0"); 
-  $('.suggestions').css("display", "none"); 
-}
-
-function decompressView(css_values){
-  $('.container')
-    .css("marginTop", css_values[0])
-    .css("marginBottom", css_values[1]); 
-  $('.header').css("font-size", css_values[2]); 
-  $('.hline_text').css("font-size", css_values[3]); 
-  $('.suggestions').css("display", css_values[4]); 
-}
-
 $(document).ready(function() {
-
-  var css_values = [ $('.container').css("marginTop"), $('.container').css("marginBottom"),
-    $('.header').css("font-size"), $('.hline_text').css("font-size"), 
-    $(".suggestions").css("display")];
-
   $(window)
     .scroll(function(){
-      if( ($(window).scrollTop()+$(window).height() > $(document).height() - 15 ) && pag < page_limit){
+      if( ($(window).scrollTop()+$(window).height() > $(document).height() - 15 ) && pag <= page_limit){
         mostrarResultados(++pag);
       }
     });
@@ -80,9 +57,6 @@ $(document).ready(function() {
   });
 
   $('.search')
-    .one('input', function(){ 
-      compressView(css_values);
-    })
     .click(function(){
       this.select(); 
     })
@@ -91,13 +65,8 @@ $(document).ready(function() {
           mostrarResultados(1);
       }
     })
-    .focusout(function(){
-      decompressView(css_values);
-      $('.search').one('input', function(){ 
-          compressView(css_values);
-      });
-    })
     .autocomplete({
+      minLength: 2,
       autoFocus: true,
       create: function( event, ui ) {
         $( '.search' ).val("");
@@ -137,7 +106,7 @@ $(document).ready(function() {
         response( $.grep( cache, 
           function( item ){
             return matcher.test( item );
-          })
+          }).slice(0, 10)
         );
       },
       select: function( event, ui) {
